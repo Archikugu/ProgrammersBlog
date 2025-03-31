@@ -1,16 +1,16 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using ProgrammersBlog.DataAccess.Concrete.EntityFramework.Mappings;
 using ProgrammersBlog.Entities.Concrete;
 
 namespace ProgrammersBlog.DataAccess.Concrete.EntityFramework.Contexts;
 
 public class ProgrammersBlogContext : DbContext
 {
-    private readonly IConfiguration _configuration;
-
-    public ProgrammersBlogContext(IConfiguration configuration)
+    public ProgrammersBlogContext(DbContextOptions<ProgrammersBlogContext> options)
+        : base(options)
     {
-        _configuration = configuration;
+
     }
 
     public DbSet<Article> Articles { get; set; }
@@ -19,12 +19,12 @@ public class ProgrammersBlogContext : DbContext
     public DbSet<Role> Roles { get; set; }
     public DbSet<User> Users { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        if (!optionsBuilder.IsConfigured)
-        {
-            var connectionString = _configuration.GetConnectionString("DefaultConnection");
-            optionsBuilder.UseSqlServer(connectionString);
-        }
+        modelBuilder.ApplyConfiguration(new ArticleMapping());
+        modelBuilder.ApplyConfiguration(new CategoryMapping());
+        modelBuilder.ApplyConfiguration(new CommentMapping());
+        modelBuilder.ApplyConfiguration(new RoleMapping());
+        modelBuilder.ApplyConfiguration(new UserMapping());
     }
 }
