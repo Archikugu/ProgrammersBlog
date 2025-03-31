@@ -21,5 +21,19 @@ public class RoleMapping : IEntityTypeConfiguration<Role>
         builder.Property(r => r.Note).HasMaxLength(500);
 
         builder.ToTable("Roles");
+
+        builder.HasData(new Role
+        {
+            Id = 1,
+            Name = "Admin",
+            Description = "Admin Role",
+            IsActive = true,
+            IsDeleted = false,
+            CreatedByName = "InitialCreate",
+            CreatedDate = new DateTime(2025, 3, 31),
+            ModifiedByName = "InitialCreate",
+            ModifiedDate = new DateTime(2025, 3, 31),
+            Note = "Admin Role"
+        });
     }
 }

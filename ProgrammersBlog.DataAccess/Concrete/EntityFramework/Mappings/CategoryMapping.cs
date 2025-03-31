@@ -25,6 +25,48 @@ namespace ProgrammersBlog.DataAccess.Concrete.EntityFramework.Mappings
             builder.Property(c => c.Note).HasMaxLength(500);
 
             builder.ToTable("Categories");
+
+            builder.HasData(
+                new Category
+                {
+                    Id = 1,
+                    Name = "C#",
+                    Description = "C# Programming Language",
+                    IsActive = true,
+                    IsDeleted = false,
+                    CreatedByName = "InitialCreate",
+                    CreatedDate = new DateTime(2025, 3, 31),
+                    ModifiedByName = "InitialCreate",
+                    ModifiedDate = new DateTime(2025, 3, 31),
+                    Note = "C# Category",
+                },
+                new Category
+                {
+                    Id = 2,
+                    Name = "C++",
+                    Description = "C++ Programming Language",
+                    IsActive = true,
+                    IsDeleted = false,
+                    CreatedByName = "InitialCreate",
+                    CreatedDate = new DateTime(2025, 3, 31),
+                    ModifiedByName = "InitialCreate",
+                    ModifiedDate = new DateTime(2025, 3, 31),
+                    Note = "C++ Category",
+                },
+                new Category
+                {
+                    Id = 3,
+                    Name = "JavaScript",
+                    Description = "JavaScript Programming Language",
+                    IsActive = true,
+                    IsDeleted = false,
+                    CreatedByName = "InitialCreate",
+                    CreatedDate = new DateTime(2025, 3, 31),
+                    ModifiedByName = "InitialCreate",
+                    ModifiedDate = new DateTime(2025, 3, 31),
+                    Note = "JavaScript Category",
+                }
+             );
         }
     }
 }
