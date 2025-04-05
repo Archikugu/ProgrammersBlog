@@ -53,15 +53,11 @@ public class ArticleManager : IArticleService
         var article = await _unitOfWork.Articles.GetAsync(a => a.Id == articleId, a => a.User, a => a.Category);
         if (article != null)
         {
-            //return new DataResult<ArticleDto>(ResultStatus.Success, new ArticleDto
-            //{
-            //    Article = article,
-            //    ResultStatus = ResultStatus.Success
-            //});
-
-            var articleDto = _mapper.Map<ArticleDto>(article);
-            return new DataResult<ArticleDto>(ResultStatus.Success, articleDto);
-
+            return new DataResult<ArticleDto>(ResultStatus.Success, new ArticleDto
+            {
+                Article = article,
+                ResultStatus = ResultStatus.Success
+            });
         }
         return new DataResult<ArticleDto>(ResultStatus.Error, message: "An error occurred while getting the article", data: null);
     }
@@ -71,13 +67,11 @@ public class ArticleManager : IArticleService
         var articles = await _unitOfWork.Articles.GetAllAsync(null, a => a.User, a => a.Category);
         if (articles.Count > -1)
         {
-            //return new DataResult<ArticleListDto>(ResultStatus.Success, new ArticleListDto
-            //{
-            //    Articles = articles,
-            //    ResultStatus = ResultStatus.Success
-            //});
-            var articleDto = _mapper.Map<ArticleListDto>(articles);
-            return new DataResult<ArticleListDto>(ResultStatus.Success, articleDto);
+            return new DataResult<ArticleListDto>(ResultStatus.Success, new ArticleListDto
+            {
+                Articles = articles,
+                ResultStatus = ResultStatus.Success
+            });
         }
         return new DataResult<ArticleListDto>(ResultStatus.Error, message: "An error occurred while getting the articles", data: null);
     }
@@ -90,13 +84,11 @@ public class ArticleManager : IArticleService
             var articles = await _unitOfWork.Articles.GetAllAsync(a => a.CategoryId == categoryId && !a.IsDeleted && a.IsActive, a => a.User, a => a.Category);
             if (articles.Count > -1)
             {
-                //return new DataResult<ArticleListDto>(ResultStatus.Success, new ArticleListDto
-                //{
-                //    Articles = articles,
-                //    ResultStatus = ResultStatus.Success
-                //});
-                var articleDto = _mapper.Map<ArticleListDto>(articles);
-                return new DataResult<ArticleListDto>(ResultStatus.Success, articleDto);
+                return new DataResult<ArticleListDto>(ResultStatus.Success, new ArticleListDto
+                {
+                    Articles = articles,
+                    ResultStatus = ResultStatus.Success
+                });
             }
             return new DataResult<ArticleListDto>(ResultStatus.Error, message: "An error occurred while getting the articles", data: null);
         }
@@ -108,13 +100,11 @@ public class ArticleManager : IArticleService
         var articles = await _unitOfWork.Articles.GetAllAsync(a => !a.IsDeleted, a => a.User, a => a.Category);
         if (articles.Count > -1)
         {
-            //return new DataResult<ArticleListDto>(ResultStatus.Success, new ArticleListDto
-            //{
-            //    Articles = articles,
-            //    ResultStatus = ResultStatus.Success
-            //});
-            var articleDto = _mapper.Map<ArticleListDto>(articles);
-            return new DataResult<ArticleListDto>(ResultStatus.Success, articleDto);
+            return new DataResult<ArticleListDto>(ResultStatus.Success, new ArticleListDto
+            {
+                Articles = articles,
+                ResultStatus = ResultStatus.Success
+            });
         }
         return new DataResult<ArticleListDto>(ResultStatus.Error, message: "An error occurred while getting the articles", data: null);
     }
@@ -124,13 +114,11 @@ public class ArticleManager : IArticleService
         var articles = await _unitOfWork.Articles.GetAllAsync(a => !a.IsDeleted && a.IsActive, a => a.User, a => a.Category);
         if (articles.Count > -1)
         {
-            //return new DataResult<ArticleListDto>(ResultStatus.Success, new ArticleListDto
-            //{
-            //    Articles = articles,
-            //    ResultStatus = ResultStatus.Success
-            //});
-            var articleDto = _mapper.Map<ArticleListDto>(articles);
-            return new DataResult<ArticleListDto>(ResultStatus.Success, articleDto);
+            return new DataResult<ArticleListDto>(ResultStatus.Success, new ArticleListDto
+            {
+                Articles = articles,
+                ResultStatus = ResultStatus.Success
+            });
         }
         return new DataResult<ArticleListDto>(ResultStatus.Error, message: "An error occurred while getting the articles", data: null);
     }

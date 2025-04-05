@@ -12,6 +12,5 @@ public class ArticleProfile : Profile
         CreateMap<ArticleUpdateDto, Article>().ForMember(dest => dest.ModifiedDate, opt => opt.MapFrom(x => DateTime.Now));
 
         CreateMap<Article, ArticleDto>();
-        CreateMap<Article, ArticleListDto>();
     }
 }

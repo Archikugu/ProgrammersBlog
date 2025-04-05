@@ -1,11 +1,12 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileSystemGlobbing.Internal;
 using ProgrammersBlog.Business.Extensions;
 using ProgrammersBlog.DataAccess.Concrete.EntityFramework.Contexts;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 builder.Services.LoadMyServices();
 
 builder.Services.AddDbContext<ProgrammersBlogContext>(options =>
@@ -26,12 +27,22 @@ app.UseRouting();
 
 app.UseAuthorization();
 
+app.UseStatusCodePages();
+
+app.UseStaticFiles();
+
 app.MapStaticAssets();
+
+app.MapAreaControllerRoute(
+    name: "Admin",
+    areaName: "Admin",
+    pattern: "Admin/{controller=Home}/{action=Index}/{id?}");
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
+
 
 
 app.Run();

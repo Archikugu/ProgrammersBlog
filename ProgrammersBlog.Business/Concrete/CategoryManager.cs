@@ -96,13 +96,11 @@ public class CategoryManager : ICategoryService
         var category = await _unitOfWork.Categories.GetAsync(c => c.Id == categoryId, c => c.Articles);
         if (category != null)
         {
-            //return new DataResult<CategoryDto>(ResultStatus.Success, new CategoryDto
-            //{
-            //    Category = category,
-            //    ResultStatus = ResultStatus.Success,
-            //});
-            var categoryDto = _mapper.Map<CategoryDto>(category);
-            return new DataResult<CategoryDto>(ResultStatus.Success, categoryDto);
+            return new DataResult<CategoryDto>(ResultStatus.Success, new CategoryDto
+            {
+                Category = category,
+                ResultStatus = ResultStatus.Success,
+            });
         }
         return new DataResult<CategoryDto>(ResultStatus.Error, "An error occurred while fetching the category", null);
 
@@ -113,16 +111,18 @@ public class CategoryManager : ICategoryService
         var categories = await _unitOfWork.Categories.GetAllAsync(null, c => c.Articles);
         if (categories.Count > -1)
         {
-            //return new DataResult<CategoryListDto>(ResultStatus.Success, new CategoryListDto
-            //{
-            //    Categories = categories,
-            //    ResultStatus = ResultStatus.Success
-            //});
-
-            var categoryDto = _mapper.Map<CategoryListDto>(categories);
-            return new DataResult<CategoryListDto>(ResultStatus.Success, categoryDto);
+            return new DataResult<CategoryListDto>(ResultStatus.Error, new CategoryListDto
+            {
+                Categories = categories,
+                ResultStatus = ResultStatus.Success,
+            });
         }
-        return new DataResult<CategoryListDto>(ResultStatus.Error, "An error occurred while fetching the categories", null);
+        return new DataResult<CategoryListDto>(ResultStatus.Error, "An error occurred while fetching the categories", new CategoryListDto
+        {
+            Categories = null,
+            ResultStatus = ResultStatus.Error,
+            Message = "No categories found"
+        });
     }
 
     public async Task<IDataResult<CategoryListDto>> GetAllByNonDeleted()
@@ -130,13 +130,11 @@ public class CategoryManager : ICategoryService
         var categories = await _unitOfWork.Categories.GetAllAsync(c => !c.IsDeleted, c => c.Articles);
         if (categories.Count > -1)
         {
-            //return new DataResult<CategoryListDto>(ResultStatus.Success, new CategoryListDto
-            //{
-            //    Categories = categories,
-            //    ResultStatus = ResultStatus.Success
-            //});
-            var categoryDto = _mapper.Map<CategoryListDto>(categories);
-            return new DataResult<CategoryListDto>(ResultStatus.Success, categoryDto);
+            return new DataResult<CategoryListDto>(ResultStatus.Success, new CategoryListDto
+            {
+                Categories = categories,
+                ResultStatus = ResultStatus.Success
+            });
         }
         return new DataResult<CategoryListDto>(ResultStatus.Error, "An error occurred while fetching the categories", null);
     }
@@ -146,14 +144,11 @@ public class CategoryManager : ICategoryService
         var categories = await _unitOfWork.Categories.GetAllAsync(c => !c.IsDeleted && c.IsActive, c => c.Articles);
         if (categories.Count > -1)
         {
-            //return new DataResult<CategoryListDto>(ResultStatus.Success, new CategoryListDto
-            //{
-            //    Categories = categories,
-            //    ResultStatus = ResultStatus.Success
-            //});
-
-            var categoryDto = _mapper.Map<CategoryListDto>(categories);
-            return new DataResult<CategoryListDto>(ResultStatus.Success, categoryDto);
+            return new DataResult<CategoryListDto>(ResultStatus.Success, new CategoryListDto
+            {
+                Categories = categories,
+                ResultStatus = ResultStatus.Success
+            });
         }
         return new DataResult<CategoryListDto>(ResultStatus.Error, "An error occurred while fetching the categories", null);
     }

@@ -12,6 +12,5 @@ public class CategoryProfile: Profile
         CreateMap<CategoryUpdateDto, Category>().ForMember(dest => dest.ModifiedDate, opt => opt.MapFrom(x => DateTime.Now));
 
         CreateMap<Category, CategoryDto>();
-        CreateMap<List<Category>, CategoryListDto>();
     }
 }
