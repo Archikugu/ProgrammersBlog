@@ -20,7 +20,7 @@ public class CategoryManager : ICategoryService
         _mapper = mapper;
     }
 
-    public async Task<IResult> Add(CategoryAddDto categoryAddDto, string createdByName)
+    public async Task<IDataResult<CategoryDto>> Add(CategoryAddDto categoryAddDto, string createdByName)
     {
         //await _unitOfWork.Categories.AddAsync(new Category
         //{
@@ -43,12 +43,18 @@ public class CategoryManager : ICategoryService
         var category = _mapper.Map<Category>(categoryAddDto);
         category.CreatedByName = createdByName;
         category.ModifiedByName = createdByName;
-        await _unitOfWork.Categories.AddAsync(category);
+        var addedCategory = await _unitOfWork.Categories.AddAsync(category);
         await _unitOfWork.SaveAsync();
-        return new Result(ResultStatus.Success, $"{categoryAddDto.Name} category has been successfully added");
+        return new DataResult<CategoryDto>(ResultStatus.Success, $"{categoryAddDto.Name} category has been successfully added",
+            new CategoryDto
+            {
+                Category = addedCategory,
+                ResultStatus = ResultStatus.Success,
+                Message = $"{categoryAddDto.Name} category has been successfully added"
+            });
 
     }
-    public async Task<IResult> Update(CategoryUpdateDto categoryUpdateDto, string modifiedByName)
+    public async Task<IDataResult<CategoryDto>> Update(CategoryUpdateDto categoryUpdateDto, string modifiedByName)
     {
         //var category = await _unitOfWork.Categories.GetAsync(c => c.Id == categoryUpdateDto.Id);
 
@@ -68,14 +74,22 @@ public class CategoryManager : ICategoryService
 
         //Add Auto Mapper
 
-        var category = _mapper.Map<Category>(categoryUpdateDto);
+        var oldCategory = await _unitOfWork.Categories.GetAsync(c => c.Id == categoryUpdateDto.Id);
+
+        var category = _mapper.Map<CategoryUpdateDto, Category>(categoryUpdateDto, oldCategory);
         category.ModifiedByName = modifiedByName;
-        await _unitOfWork.Categories.UpdateAsync(category);
+        var updatedCategory = await _unitOfWork.Categories.UpdateAsync(category);
         await _unitOfWork.SaveAsync();
-        return new Result(ResultStatus.Success, $"{categoryUpdateDto.Name} category has been successfully updated");
+        return new DataResult<CategoryDto>(ResultStatus.Success, $"{categoryUpdateDto.Name} category has been successfully updated",
+            new CategoryDto
+            {
+                Category = updatedCategory,
+                ResultStatus = ResultStatus.Success,
+                Message = $"{categoryUpdateDto.Name} category has been successfully updated"
+            });
     }
 
-    public async Task<IResult> Delete(int categoryId, string modifiedByName)
+    public async Task<IDataResult<CategoryDto>> Delete(int categoryId, string modifiedByName)
     {
         var category = await _unitOfWork.Categories.GetAsync(c => c.Id == categoryId, c => c.Articles);
         if (category != null)
@@ -84,11 +98,23 @@ public class CategoryManager : ICategoryService
             category.IsActive = false;
             category.ModifiedByName = modifiedByName;
             category.ModifiedDate = DateTime.Now;
-            await _unitOfWork.Categories.UpdateAsync(category);
+            var deletedCategory = await _unitOfWork.Categories.UpdateAsync(category);
             await _unitOfWork.SaveAsync();
-            return new Result(ResultStatus.Success, $"{category.Name} category has been successfully deleted");
+            return new DataResult<CategoryDto>(ResultStatus.Success, $"{deletedCategory.Name} category has been successfully deleted",
+                new CategoryDto
+                {
+                    Category = deletedCategory,
+                    ResultStatus = ResultStatus.Success,
+                    Message = $"{deletedCategory.Name} category has been successfully updated"
+                });
         }
-        return new Result(ResultStatus.Error, "An error occurred while deleting the category. Category cannot be found", null);
+        return new DataResult<CategoryDto>(ResultStatus.Error, "An error occurred while deleting the category. Category cannot be found",
+               new CategoryDto
+               {
+                   Category = null,
+                   ResultStatus = ResultStatus.Error,
+                   Message = "An error occurred while deleting the category. Category cannot be found"
+               });
     }
 
     public async Task<IDataResult<CategoryDto>> Get(int categoryId)
@@ -102,7 +128,12 @@ public class CategoryManager : ICategoryService
                 ResultStatus = ResultStatus.Success,
             });
         }
-        return new DataResult<CategoryDto>(ResultStatus.Error, "An error occurred while fetching the category", null);
+        return new DataResult<CategoryDto>(ResultStatus.Error, "An error occurred while fetching the category", new CategoryDto
+        {
+            Category = null,
+            ResultStatus = ResultStatus.Error,
+            Message = "No categories found"
+        });
 
     }
 
@@ -130,13 +161,18 @@ public class CategoryManager : ICategoryService
         var categories = await _unitOfWork.Categories.GetAllAsync(c => !c.IsDeleted, c => c.Articles);
         if (categories.Count > -1)
         {
-            return new DataResult<CategoryListDto>(ResultStatus.Success, new CategoryListDto
+            return new DataResult<CategoryListDto>(ResultStatus.Error, new CategoryListDto
             {
                 Categories = categories,
-                ResultStatus = ResultStatus.Success
+                ResultStatus = ResultStatus.Success,
             });
         }
-        return new DataResult<CategoryListDto>(ResultStatus.Error, "An error occurred while fetching the categories", null);
+        return new DataResult<CategoryListDto>(ResultStatus.Error, "An error occurred while fetching the categories", new CategoryListDto
+        {
+            Categories = null,
+            ResultStatus = ResultStatus.Error,
+            Message = "No categories found"
+        });
     }
 
     public async Task<IDataResult<CategoryListDto>> GetAllByNonDeletedAndActive()
@@ -165,5 +201,19 @@ public class CategoryManager : ICategoryService
         return new Result(ResultStatus.Error, "An error occurred while deleting the category. Category cannot be found", null);
     }
 
+    public async Task<IDataResult<CategoryUpdateDto>> GetCategoryUpdateDto(int categoryId)
+    {
+        var result = await _unitOfWork.Categories.AnyAsync(c => c.Id == categoryId);
+        if (result)
+        {
+            var category = await _unitOfWork.Categories.GetAsync(c => c.Id == categoryId);
+            var categoryUpdateDto = _mapper.Map<CategoryUpdateDto>(category);
+            return new DataResult<CategoryUpdateDto>(ResultStatus.Success, categoryUpdateDto);
+        }
+        else
+        {
+            return new DataResult<CategoryUpdateDto>(ResultStatus.Error, "An error occurred while fetching the category", null);
+        }
 
+    }
 }

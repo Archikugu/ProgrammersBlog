@@ -15,10 +15,10 @@ public class EfEntityRepositoryBase<TEntity> : IEntityRepository<TEntity>
         _context = context;
     }
 
-    public async Task AddAsync(TEntity entity)
+    public async Task<TEntity> AddAsync(TEntity entity)
     {
         await _context.Set<TEntity>().AddAsync(entity);
-        await _context.SaveChangesAsync();
+        return entity;
     }
 
     public async Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate)
@@ -36,7 +36,6 @@ public class EfEntityRepositoryBase<TEntity> : IEntityRepository<TEntity>
         //await Task.Run(() => { _context.Set<TEntity>().Remove(entity); });
 
         _context.Set<TEntity>().Remove(entity);
-        await _context.SaveChangesAsync();
     }
 
     public async Task<IList<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>>? predicate = null, params Expression<Func<TEntity, object>>[] includeProperties)
@@ -73,9 +72,9 @@ public class EfEntityRepositoryBase<TEntity> : IEntityRepository<TEntity>
         return await query.SingleOrDefaultAsync();
     }
 
-    public async Task UpdateAsync(TEntity entity)
+    public async Task<TEntity> UpdateAsync(TEntity entity)
     {
         _context.Set<TEntity>().Update(entity);
-        await _context.SaveChangesAsync();
+        return entity;
     }
 }

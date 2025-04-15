@@ -1,72 +1,101 @@
-﻿@using ProgrammersBlog.Core.Utilities.Results.ComplexTypes
+﻿﻿@using ProgrammersBlog.Core.Utilities.Results.ComplexTypes
 @using ProgrammersBlog.Entities.Dtos.CategoryDtos
 @model CategoryListDto
 @{
 	Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 	ViewBag.Title = "Category Index";
-	int count = 0;
+	// int count = 0;
 }
 
 @if (Model.ResultStatus == ResultStatus.Success)
 {
-	<div class="card mb-4 mt-2">
-		<div class="card-header">
-			<i class="fas fa-table mr-1"></i>
-			Categories
-		</div>
-		<div class="card-body">
-			<div class="table-responsive">
-				<table class="table table-bordered" id="categoriesTable" width="100%" cellspacing="0">
-					<thead>
-						<tr>
-							<th>ID</th>
-							<th>Category Name</th>
-							<th>Description</th>
-							<th>Is Active ?</th>
-							<th>Is Deleted ?</th>
-							<th>Note</th>
-							<th>Created Date</th>
-							<th>Created By Name</th>
-							<th>Updated Date</th>
-							<th>Updated By Name</th>
-						</tr>
-					</thead>
-					<tfoot>
-						<tr>
-							<th>ID</th>
-							<th>Category Name</th>
-							<th>Description</th>
-							<th>Is Active ?</th>
-							<th>Is Deleted ?</th>
-							<th>Note</th>
-							<th>Created Date</th>
-							<th>Created By Name</th>
-							<th>Modified Date</th>
-							<th>Modified By Name</th>
-						</tr>
-					</tfoot>
-					<tbody>
-						@foreach (var category in Model.Categories)
-						{
-							count++;
-							<tr>
-								<td>@count</td>
-								<td>@category.Name</td>
-								<td>@category.Description</td>
-								<td>@(category.IsActive ? "Yes" : "No")</td>
-								<td>@(category.IsDeleted ? "Yes" : "No")</td>
-								<td>@category.Note</td>
-								<td>@category.CreatedDate.ToShortDateString()</td>
-								<td>@category.CreatedByName</td>
-								<td>@category.ModifiedDate.ToShortDateString()</td>
-								<td>@category.ModifiedByName</td>
-							</tr>
-						}
-					</tbody>
-				</table>
+	<div id="modalPlaceHolder" aria-hidden="true"></div>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="card">
+				<div class="card-header">
+					<h4 class="card-title">Categories</h4>
+					<div class="spinner-border text-info" role="status" style="display: none;">
+						<span class="visually-hidden">Loading...</span>
+					</div>
+					<div class="d-flex align-items-center">
+						<button class="btn btn-primary btn-round ms-auto"
+								id="btnAdd">
+							<i class="fa fa-plus"></i>
+							Add Category
+						</button>
+						<button class="btn btn-warning btn-round ms-1"
+								id="btnRefresh">
+							<i class="fas fa-rotate fa-spin"></i>
+							Refresh
+						</button>
+					</div>
+				</div>
+
+				<div class="card-body">
+					<div class="table-responsive">
+						<table id="categoriesTable" class="display table table-striped table-hover">
+							<thead>
+								<tr>
+									<th>ID</th>
+									<th>Category Name</th>
+									<th>Description</th>
+									<th>Is Active?</th>
+									<th>Is Deleted?</th>
+									<th>Note</th>
+									<th>Created Date</th>
+									<th>Created By Name</th>
+									<th>Updated Date</th>
+									<th>Updated By Name</th>
+									<th>Action</th>
+								</tr>
+							</thead>
+							<tfoot>
+								<tr>
+									<th>ID</th>
+									<th>Category Name</th>
+									<th>Description</th>
+									<th>Is Active?</th>
+									<th>Is Deleted?</th>
+									<th>Note</th>
+									<th>Created Date</th>
+									<th>Created By Name</th>
+									<th>Updated Date</th>
+									<th>Updated By Name</th>
+									<th>Action</th>
+								</tr>
+							</tfoot>
+							<tbody>
+								@foreach (var category in Model.Categories)
+								{
+									//count++; count olarak ekle sonra scripten dolayı yine id geliyor
+									<tr name="@category.Id">
+										<td>@category.Id</td>
+										<td>@category.Name</td>
+										<td>@category.Description</td>
+										<td>@(category.IsActive ? "Yes" : "No")</td>
+										<td>@(category.IsDeleted ? "Yes" : "No")</td>
+										<td>@category.Note</td>
+										<td>@category.CreatedDate.ToShortDateString()</td>
+										<td>@category.CreatedByName</td>
+										<td>@category.ModifiedDate.ToShortDateString()</td>
+										<td>@category.ModifiedByName</td>
+										<td>
+											<div class="form-button-action">
+												<button class="btn btn-link btn-primary btn-update" data-id="@category.Id"><span class="fas fa-pen-to-square"></span></button>
+												<button class="btn btn-link btn-danger btn-delete" data-id="@category.Id"><span class="fas fa-trash"></span></button>
+											</div>
+										</td>
+									</tr>
+								}
+							</tbody>
+						</table>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
+
 }
 
 @if (Model.ResultStatus == ResultStatus.Error)
@@ -77,36 +106,5 @@
 	</div>
 }
 @section Scripts {
-	<script>
-		$(document).ready(function () {
-			$('#categoriesTable').DataTable({
-				dom:
-					"<'row'<'col-sm-3'l><'col-sm-6 text-center'B><'col-sm-3'f>>" +
-					"<'row'<'col-sm-12'tr>>" +
-					"<'row'<'col-sm-5'i><'col-sm-7'p>>",
-				buttons: [
-					{
-						extend: 'copy',
-						text: '<i class="fas fa-copy"></i> Copy',
-						className: 'btn btn-secondary'
-					},
-					{
-						extend: 'excel',
-						text: '<i class="fas fa-file-excel"></i> Excel',
-						className: 'btn btn-success'
-					},
-					{
-						extend: 'pdf',
-						text: '<i class="fas fa-file-pdf"></i> PDF',
-						className: 'btn btn-danger'
-					},
-					{
-						extend: 'print',
-						text: '<i class="fas fa-print"></i> Print',
-						className: 'btn btn-warning'
-					}
-				],
-			});
-		});
-	</script>
+	<script src="~/js/categoryIndex.js" type="application/ecmascript"></script>
 }

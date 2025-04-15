@@ -1,26 +1,97 @@
-﻿<script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
-<script src="~/AdminTemplate/dist/js/scripts.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-<script src="~/AdminTemplate/dist/assets/demo/chart-area-demo.js"></script>
-<script src="~/AdminTemplate/dist/assets/demo/chart-bar-demo.js"></script>
-<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
-<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js" crossorigin="anonymous"></script>
-<script src="~/AdminTemplate/dist/assets/demo/datatables-demo.js"></script>
+﻿<!-- jQuery (İlk yüklenmeli) -->
+<script src="~/KaiAdminTemplate/assets/js/core/jquery-3.7.1.min.js"></script>
 
-<script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.bootstrap5.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.colVis.min.js"></script>
+<script src="~/js/site.js"></script>
 
-<!-- Export Helpers -->
+<!-- DataTables -->
+<script src="~/KaiAdminTemplate/assets/js/plugin/datatables/datatables.min.js"></script>
+
+<!-- DataTables Buttons JS -->
+<script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.bootstrap5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- Popper ve Bootstrap -->
+<script src="~/KaiAdminTemplate/assets/js/core/popper.min.js"></script>
+<script src="~/KaiAdminTemplate/assets/js/core/bootstrap.min.js"></script>
+
+<!-- Pluginler -->
+<script src="~/KaiAdminTemplate/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+<script src="~/KaiAdminTemplate/assets/js/plugin/chart.js/chart.min.js"></script>
+<script src="~/KaiAdminTemplate/assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js"></script>
+<script src="~/KaiAdminTemplate/assets/js/plugin/chart-circle/circles.min.js"></script>
+<script src="~/KaiAdminTemplate/assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
+<script src="~/KaiAdminTemplate/assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>
+<script src="~/KaiAdminTemplate/assets/js/plugin/jsvectormap/world.js"></script>
+<script src="~/KaiAdminTemplate/assets/js/plugin/sweetalert/sweetalert.min.js"></script>
+
+<!-- KaiAdmin JS -->
+<script src="~/KaiAdminTemplate/assets/js/kaiadmin.min.js"></script>
+
+<!-- Demo JS (projede kullanma) -->
+<script src="~/KaiAdminTemplate/assets/js/setting-demo.js"></script>
+<script src="~/KaiAdminTemplate/assets/js/demo.js"></script>
+
+<!-- WebFont (isteğe bağlı) -->
+<script src="~/KaiAdminTemplate/assets/js/plugin/webfont/webfont.min.js"></script>
+<script>
+	WebFont.load({
+		google: { families: ["Public Sans:300,400,500,600,700"] },
+		custom: {
+			families: [
+				"Font Awesome 5 Solid",
+				"Font Awesome 5 Regular",
+				"Font Awesome 5 Brands",
+				"simple-line-icons",
+			],
+			urls: ["/KaiAdminTemplate/assets/css/fonts.min.css"],
+		},
+		active: function () {
+			sessionStorage.fonts = true;
+		},
+	});
+</script>
+
+<!-- Sparkline Chart Init (DOM hazırken çalışmalı) -->
+<script>
+	$(document).ready(function () {
+		$("#lineChart").sparkline([102, 109, 120, 99, 110, 105, 115], {
+			type: "line",
+			height: "70",
+			width: "100%",
+			lineWidth: "2",
+			lineColor: "#177dff",
+			fillColor: "rgba(23, 125, 255, 0.14)",
+		});
+
+		$("#lineChart2").sparkline([99, 125, 122, 105, 110, 124, 115], {
+			type: "line",
+			height: "70",
+			width: "100%",
+			lineWidth: "2",
+			lineColor: "#f3545d",
+			fillColor: "rgba(243, 84, 93, .14)",
+		});
+
+		$("#lineChart3").sparkline([105, 103, 123, 100, 95, 105, 115], {
+			type: "line",
+			height: "70",
+			width: "100%",
+			lineWidth: "2",
+			lineColor: "#ffa534",
+			fillColor: "rgba(255, 165, 52, .14)",
+		});
+	});
+</script>
 
 
-<!-- Font Awesome 6.5.0 -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js" crossorigin="anonymous"></script>
+<!--Toastr Js-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@@11"></script>
