@@ -26,47 +26,47 @@ namespace ProgrammersBlog.DataAccess.Concrete.EntityFramework.Mappings
 
             builder.ToTable("Comments");
 
-            builder.HasData(
-                new Comment
-                {
-                    Id = 1,
-                    ArticleId = 1,
-                    Text = "Great explanation of C# 12 features!",
-                    IsActive = true,
-                    IsDeleted = false,
-                    CreatedByName = "InitialCreate",
-                    CreatedDate = new DateTime(2025, 3, 31),
-                    ModifiedByName = "InitialCreate",
-                    ModifiedDate = new DateTime(2025, 3, 31),
-                    Note = "C# Comment"
-                },
-                new Comment
-                {
-                    Id = 2,
-                    ArticleId = 2,
-                    Text = "C++ 20 concepts and coroutines are now much clearer to me!",
-                    IsActive = true,
-                    IsDeleted = false,
-                    CreatedByName = "InitialCreate",
-                    CreatedDate = new DateTime(2025, 3, 31),
-                    ModifiedByName = "InitialCreate",
-                    ModifiedDate = new DateTime(2025, 3, 31),
-                    Note = "C++ Comment"
-                },
-                new Comment
-                {
-                    Id = 3,
-                    ArticleId = 3,
-                    Text = "JavaScript ES6+ features like async/await and modules are well explained here!",
-                    IsActive = true,
-                    IsDeleted = false,
-                    CreatedByName = "InitialCreate",
-                    CreatedDate = new DateTime(2025, 3, 31),
-                    ModifiedByName = "InitialCreate",
-                    ModifiedDate = new DateTime(2025, 3, 31),
-                    Note = "JavaScript Comment"
-                }
-            );
+            //builder.HasData(
+            //    new Comment
+            //    {
+            //        Id = 1,
+            //        ArticleId = 1,
+            //        Text = "Great explanation of C# 12 features!",
+            //        IsActive = true,
+            //        IsDeleted = false,
+            //        CreatedByName = "InitialCreate",
+            //        CreatedDate = new DateTime(2025, 3, 31),
+            //        ModifiedByName = "InitialCreate",
+            //        ModifiedDate = new DateTime(2025, 3, 31),
+            //        Note = "C# Comment"
+            //    },
+            //    new Comment
+            //    {
+            //        Id = 2,
+            //        ArticleId = 2,
+            //        Text = "C++ 20 concepts and coroutines are now much clearer to me!",
+            //        IsActive = true,
+            //        IsDeleted = false,
+            //        CreatedByName = "InitialCreate",
+            //        CreatedDate = new DateTime(2025, 3, 31),
+            //        ModifiedByName = "InitialCreate",
+            //        ModifiedDate = new DateTime(2025, 3, 31),
+            //        Note = "C++ Comment"
+            //    },
+            //    new Comment
+            //    {
+            //        Id = 3,
+            //        ArticleId = 3,
+            //        Text = "JavaScript ES6+ features like async/await and modules are well explained here!",
+            //        IsActive = true,
+            //        IsDeleted = false,
+            //        CreatedByName = "InitialCreate",
+            //        CreatedDate = new DateTime(2025, 3, 31),
+            //        ModifiedByName = "InitialCreate",
+            //        ModifiedDate = new DateTime(2025, 3, 31),
+            //        Note = "JavaScript Comment"
+            //    }
+            //);
         }
     }
 }

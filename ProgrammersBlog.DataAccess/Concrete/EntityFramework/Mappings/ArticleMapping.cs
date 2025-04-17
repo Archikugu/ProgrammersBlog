@@ -48,75 +48,75 @@ namespace ProgrammersBlog.DataAccess.Concrete.EntityFramework.Mappings
 
             builder.ToTable("Articles");
 
-            builder.HasData(
-                new Article
-                {
-                    Id = 1,
-                    CategoryId = 1,
-                    UserId = 1,
-                    Title = "C# 12 and .NET 8 - New Features and Improvements",
-                    Content = "C# 12 and .NET 8 bring significant improvements and new features. In this article, we will explore primary constructors, collection expressions, and performance enhancements in .NET 8.",
-                    Thumbnail = "Default.jpg",
-                    SeoDescription = "Explore the latest features of C# 12 and .NET 8, including primary constructors, collection expressions, and performance optimizations.",
-                    SeoTags = "C#, C# 12, .NET 8, .NET Core, Modern C#",
-                    SeoAuthor = "engokhangok",
-                    Date = new DateTime(2025, 3, 31),
-                    IsActive = true,
-                    IsDeleted = false,
-                    CreatedByName = "InitialCreate",
-                    CreatedDate = new DateTime(2025, 3, 31),
-                    ModifiedByName = "InitialCreate",
-                    ModifiedDate = new DateTime(2025, 3, 31),
-                    Note = "C# Category",
-                    ViewsCount=100,
-                    CommentCount = 1
-                },
+            //builder.HasData(
+            //    new Article
+            //    {
+            //        Id = 1,
+            //        CategoryId = 1,
+            //        UserId = 1,
+            //        Title = "C# 12 and .NET 8 - New Features and Improvements",
+            //        Content = "C# 12 and .NET 8 bring significant improvements and new features. In this article, we will explore primary constructors, collection expressions, and performance enhancements in .NET 8.",
+            //        Thumbnail = "Default.jpg",
+            //        SeoDescription = "Explore the latest features of C# 12 and .NET 8, including primary constructors, collection expressions, and performance optimizations.",
+            //        SeoTags = "C#, C# 12, .NET 8, .NET Core, Modern C#",
+            //        SeoAuthor = "engokhangok",
+            //        Date = new DateTime(2025, 3, 31),
+            //        IsActive = true,
+            //        IsDeleted = false,
+            //        CreatedByName = "InitialCreate",
+            //        CreatedDate = new DateTime(2025, 3, 31),
+            //        ModifiedByName = "InitialCreate",
+            //        ModifiedDate = new DateTime(2025, 3, 31),
+            //        Note = "C# Category",
+            //        ViewsCount=100,
+            //        CommentCount = 1
+            //    },
 
-                new Article
-                {
-                    Id = 2,
-                    CategoryId = 2,
-                    UserId = 1,
-                    Title = "C++ 20 and Modern C++ - New Features and Improvements",
-                    Content = "C++ 20 introduces many new features. In this article, we will examine these improvements, including concepts, ranges, coroutines, and modules.",
-                    Thumbnail = "Default.jpg",
-                    SeoDescription = "C++ 20 introduces new features like concepts, ranges, coroutines, and modules. This article explores these improvements.",
-                    SeoTags = "C++, C++ 20, Modern C++, Programming",
-                    SeoAuthor = "engokhangok",
-                    Date = new DateTime(2025, 3, 31),
-                    IsActive = true,
-                    IsDeleted = false,
-                    CreatedByName = "InitialCreate",
-                    CreatedDate = new DateTime(2025, 3, 31),
-                    ModifiedByName = "InitialCreate",
-                    ModifiedDate = new DateTime(2025, 3, 31),
-                    Note = "C++ Category",
-                    ViewsCount = 250,
-                    CommentCount = 1
-                },
-                new Article
-                {
-                    Id = 3,
-                    CategoryId = 3,
-                    UserId = 1,
-                    Title = "JavaScript ES6+ - New Features and Improvements",
-                    Content = "JavaScript ES6 and later versions introduced many new features. In this article, we will explore arrow functions, async/await, destructuring, modules, and more.",
-                    Thumbnail = "Default.jpg",
-                    SeoDescription = "Learn about modern JavaScript features like ES6 arrow functions, async/await, modules, and more in this article.",
-                    SeoTags = "JavaScript, ES6, Modern JS, Async, Modules",
-                    SeoAuthor = "engokhangok",
-                    Date = new DateTime(2025, 3, 31),
-                    IsActive = true,
-                    IsDeleted = false,
-                    CreatedByName = "InitialCreate",
-                    CreatedDate = new DateTime(2025, 3, 31),
-                    ModifiedByName = "InitialCreate",
-                    ModifiedDate = new DateTime(2025, 3, 31),
-                    Note = "JavaScript Category",
-                    ViewsCount = 120,
-                    CommentCount = 1
-                }
-            );
+            //    new Article
+            //    {
+            //        Id = 2,
+            //        CategoryId = 2,
+            //        UserId = 1,
+            //        Title = "C++ 20 and Modern C++ - New Features and Improvements",
+            //        Content = "C++ 20 introduces many new features. In this article, we will examine these improvements, including concepts, ranges, coroutines, and modules.",
+            //        Thumbnail = "Default.jpg",
+            //        SeoDescription = "C++ 20 introduces new features like concepts, ranges, coroutines, and modules. This article explores these improvements.",
+            //        SeoTags = "C++, C++ 20, Modern C++, Programming",
+            //        SeoAuthor = "engokhangok",
+            //        Date = new DateTime(2025, 3, 31),
+            //        IsActive = true,
+            //        IsDeleted = false,
+            //        CreatedByName = "InitialCreate",
+            //        CreatedDate = new DateTime(2025, 3, 31),
+            //        ModifiedByName = "InitialCreate",
+            //        ModifiedDate = new DateTime(2025, 3, 31),
+            //        Note = "C++ Category",
+            //        ViewsCount = 250,
+            //        CommentCount = 1
+            //    },
+            //    new Article
+            //    {
+            //        Id = 3,
+            //        CategoryId = 3,
+            //        UserId = 1,
+            //        Title = "JavaScript ES6+ - New Features and Improvements",
+            //        Content = "JavaScript ES6 and later versions introduced many new features. In this article, we will explore arrow functions, async/await, destructuring, modules, and more.",
+            //        Thumbnail = "Default.jpg",
+            //        SeoDescription = "Learn about modern JavaScript features like ES6 arrow functions, async/await, modules, and more in this article.",
+            //        SeoTags = "JavaScript, ES6, Modern JS, Async, Modules",
+            //        SeoAuthor = "engokhangok",
+            //        Date = new DateTime(2025, 3, 31),
+            //        IsActive = true,
+            //        IsDeleted = false,
+            //        CreatedByName = "InitialCreate",
+            //        CreatedDate = new DateTime(2025, 3, 31),
+            //        ModifiedByName = "InitialCreate",
+            //        ModifiedDate = new DateTime(2025, 3, 31),
+            //        Note = "JavaScript Category",
+            //        ViewsCount = 120,
+            //        CommentCount = 1
+            //    }
+            //);
         }
     }
 }
