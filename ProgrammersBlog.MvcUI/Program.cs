@@ -12,7 +12,25 @@ builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation().AddJsonO
     opt.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
 });
 
+builder.Services.AddSession();
 builder.Services.LoadMyServices();
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = new PathString("/Admin/User/Login");
+    options.LogoutPath = new PathString("/Admin/User/Logout");
+    options.Cookie = new CookieBuilder()
+    {
+        Name = "ProgrammersBlog",
+        HttpOnly = true,
+        SameSite = SameSiteMode.Strict,
+        SecurePolicy = CookieSecurePolicy.SameAsRequest // Always
+    };
+    options.SlidingExpiration = true;
+    options.ExpireTimeSpan = TimeSpan.FromDays(7);
+    options.AccessDeniedPath = new PathString("/Admin/User/AccessDenied");
+});
+
 
 builder.Services.AddDbContext<ProgrammersBlogContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -28,13 +46,16 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseRouting();
+app.UseStaticFiles();
 
+
+app.UseRouting();
+app.UseSession();
+
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.UseStatusCodePages();
-
-app.UseStaticFiles();
 
 app.MapStaticAssets();
 
@@ -47,6 +68,5 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
-
 
 app.Run();

@@ -15,7 +15,20 @@ public static class ServiceCollectionExtensions
     {
         //serviceCollection.AddDbContext<ProgrammersBlogContext>();
 
-        serviceCollection.AddIdentity<User, Role>().AddEntityFrameworkStores<ProgrammersBlogContext>();
+        serviceCollection.AddIdentity<User, Role>(options =>
+        {
+            //Test User Password Configuration
+            options.Password.RequireDigit = false;
+            options.Password.RequiredLength = 5;
+            options.Password.RequiredUniqueChars = 0;
+            options.Password.RequireNonAlphanumeric = false;
+            options.Password.RequireLowercase = false;
+
+            //Test User Name and Email Configuration
+            options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+            options.User.RequireUniqueEmail = true;
+
+        }).AddEntityFrameworkStores<ProgrammersBlogContext>();
 
         serviceCollection.AddScoped<IUnitOfWork, UnitOfWork>();
         serviceCollection.AddScoped<ICategoryService, CategoryManager>();
