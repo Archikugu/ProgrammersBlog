@@ -269,7 +269,7 @@ function initializeUpdateCategoryModal() {
 
         $.get(url, { categoryId: id }).done(function (data) {
             placeHolderDiv.html(data);
-            placeHolderDiv.find(".modal").modal('show');
+            $('#categoryUpdateModal').modal('show');
         }).fail(function () {
             toastr.error("Operation Failed!", "Error!");
         });

@@ -1,13 +1,11 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ProgrammersBlog.Business.Abstract;
 using ProgrammersBlog.Core.Utilities.Extensions;
 using ProgrammersBlog.Core.Utilities.Results.ComplexTypes;
-using ProgrammersBlog.Core.Utilities.Results.Concrete;
 using ProgrammersBlog.Entities.Dtos.CategoryDtos;
-using ProgrammersBlog.MvcUI.Areas.Admin.Models;
+using ProgrammersBlog.MvcUI.Areas.Admin.Models.CategoryAjaxViewModels;
 
 namespace ProgrammersBlog.MvcUI.Areas.Admin.Controllers;
 

@@ -33,7 +33,7 @@ public static class ServiceCollectionExtensions
         serviceCollection.AddScoped<IUnitOfWork, UnitOfWork>();
         serviceCollection.AddScoped<ICategoryService, CategoryManager>();
         serviceCollection.AddScoped<IArticleService, ArticleManager>();
-        serviceCollection.AddAutoMapper(typeof(CategoryProfile), typeof(ArticleProfile));
+        serviceCollection.AddAutoMapper(typeof(CategoryProfile), typeof(ArticleProfile), typeof(UserProfile));
         return serviceCollection;
     }
 }

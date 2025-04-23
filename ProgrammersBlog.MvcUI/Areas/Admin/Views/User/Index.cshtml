@@ -1,0 +1,94 @@
+﻿﻿@using ProgrammersBlog.Core.Utilities.Results.ComplexTypes
+@using ProgrammersBlog.Entities.Dtos.UserDtos
+@model UserListDto
+@{
+	Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+	ViewBag.Title = "User Index";
+}
+
+
+@if (Model.ResultStatus == ResultStatus.Success)
+{
+	<div id="modalPlaceHolder" aria-hidden="true"></div>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="card">
+				<div class="card-header">
+					<h4 class="card-title">Users</h4>
+					<div class="spinner-border text-info" role="status" style="display: none;">
+						<span class="visually-hidden">Loading...</span>
+					</div>
+					<div class="d-flex align-items-center">
+						<button class="btn btn-primary btn-round ms-auto"
+								id="btnAdd">
+							<i class="fa fa-plus"></i>
+							Add User
+						</button>
+						<button class="btn btn-warning btn-round ms-1"
+								id="btnRefresh">
+							<i class="fas fa-rotate fa-spin"></i>
+							Refresh
+						</button>
+					</div>
+				</div>
+
+				<div class="card-body">
+					<div class="table-responsive">
+						<table id="usersTable" class="display table table-striped table-hover">
+							<thead>
+								<tr>
+									<th>ID</th>
+									<th>User Name</th>
+									<th>E-Mail</th>
+									<th>Phone Number</th>
+									<th>Image</th>
+									<th>Action</th>
+								</tr>
+							</thead>
+							<tfoot>
+								<tr>
+									<th>ID</th>
+									<th>User Name</th>
+									<th>E-Mail</th>
+									<th>Phone Number</th>
+									<th>Image</th>
+									<th>Action</th>
+								</tr>
+							</tfoot>
+							<tbody>
+								@foreach (var user in Model.Users)
+								{
+									<tr name="@user.Id">
+										<td>@user.Id</td>
+										<td>@user.UserName</td>
+										<td>@user.Email</td>
+										<td>@user.PhoneNumber</td>
+										<td><img src="~/images/@user.Picture" alt="@user.UserName" class="my-image-table" /></td>
+										<td>
+											<div class="form-button-action">
+												<button class="btn btn-link btn-primary btn-update" data-id="@user.Id"><span class="fas fa-pen-to-square"></span></button>
+												<button class="btn btn-link btn-danger btn-delete" data-id="@user.Id"><span class="fas fa-trash"></span></button>
+											</div>
+										</td>
+									</tr>
+								}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+}
+
+@if (Model.ResultStatus == ResultStatus.Error)
+{
+	<div class="alert alert-danger" mt-3>
+		@Model.Message <br />
+		Go to the dashboard page <a class="alert-link" asp-area="Admin" asp-controller="Home" asp-action="Index">by clicking here</a>.
+	</div>
+}
+@section Scripts {
+	<script src="~/js/userIndex.js" type="application/ecmascript"></script>
+}
