@@ -28,7 +28,7 @@ builder.Services.ConfigureApplicationCookie(options =>
     };
     options.SlidingExpiration = true;
     options.ExpireTimeSpan = TimeSpan.FromDays(7);
-    options.AccessDeniedPath = new PathString("/Admin/User/AccessDenied");
+    options.AccessDeniedPath = new PathString("/ErrorPage/AccessDenied");
 });
 
 
@@ -55,7 +55,7 @@ app.UseSession();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.UseStatusCodePages();
+app.UseStatusCodePagesWithReExecute("/ErrorPage/Error404", "?code={0}");
 
 app.MapStaticAssets();
 

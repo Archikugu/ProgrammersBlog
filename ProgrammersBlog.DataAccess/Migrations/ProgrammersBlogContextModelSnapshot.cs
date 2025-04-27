@@ -284,6 +284,22 @@ namespace ProgrammersBlog.DataAccess.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ConcurrencyStamp = "4b82c981-4a0b-4d84-9f5e-cdc69c0ad2d1",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            ConcurrencyStamp = "9c7c3c6d-9137-4f0d-8e0d-47fbe677b0f8",
+                            Name = "Editor",
+                            NormalizedName = "EDITOR"
+                        });
                 });
 
             modelBuilder.Entity("ProgrammersBlog.Entities.Concrete.RoleClaim", b =>
@@ -381,6 +397,44 @@ namespace ProgrammersBlog.DataAccess.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "48b0275d-37d7-4854-a9a7-1f823bf1845b",
+                            Email = "admin@gmail.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@GMAIL.COM",
+                            NormalizedUserName = "ADMIN",
+                            PasswordHash = "AQAAAAIAAYagAAAAEJQvoXDvDZ8JohNdhu7ReQZ0y3TUNeUJDbdbGGC8fOZMPrcGbMsM2owJGQDiJ5FSkA==",
+                            PhoneNumber = "+901234567890",
+                            PhoneNumberConfirmed = true,
+                            Picture = "default.png",
+                            SecurityStamp = "c871b9bb-8c2e-4f3e-8881-9f5f1635f8a9",
+                            TwoFactorEnabled = false,
+                            UserName = "admin"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "48c9d9f2-0726-42ab-8a30-050a5b1810c5",
+                            Email = "editor@gmail.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "EDITOR@GMAIL.COM",
+                            NormalizedUserName = "EDITOR",
+                            PasswordHash = "AQAAAAIAAYagAAAAEPy5VyohFyrPK4K/wBkPcCjB3kjwajWK2Yji9DUFl7AtKDCzWNsk1zz7lvran/z4LQ==",
+                            PhoneNumber = "+901234567890",
+                            PhoneNumberConfirmed = true,
+                            Picture = "default.png",
+                            SecurityStamp = "5d8d2f57-0419-4aa6-b0f9-0fd94c6fc51b",
+                            TwoFactorEnabled = false,
+                            UserName = "editor"
+                        });
                 });
 
             modelBuilder.Entity("ProgrammersBlog.Entities.Concrete.UserClaim", b =>
@@ -443,6 +497,18 @@ namespace ProgrammersBlog.DataAccess.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = 1,
+                            RoleId = 1
+                        },
+                        new
+                        {
+                            UserId = 2,
+                            RoleId = 2
+                        });
                 });
 
             modelBuilder.Entity("ProgrammersBlog.Entities.Concrete.UserToken", b =>

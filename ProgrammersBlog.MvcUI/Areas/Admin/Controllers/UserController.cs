@@ -2,6 +2,7 @@
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -17,15 +18,17 @@ namespace ProgrammersBlog.MvcUI.Areas.Admin.Controllers;
 public class UserController : Controller
 {
     private readonly UserManager<User> _userManager;
+    private readonly SignInManager<User> _signInManager;
     private readonly IWebHostEnvironment _env;
     private readonly IMapper _mapper;
-    public UserController(UserManager<User> userManager, IWebHostEnvironment webHostEnvironment, IMapper mapper)
+    public UserController(UserManager<User> userManager, IWebHostEnvironment webHostEnvironment, IMapper mapper, SignInManager<User> signInManager)
     {
         _userManager = userManager;
         _env = webHostEnvironment;
         _mapper = mapper;
+        _signInManager = signInManager;
     }
-
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Index()
     {
         var users = await _userManager.Users.ToListAsync();
@@ -37,6 +40,7 @@ public class UserController : Controller
     }
 
     [HttpGet]
+    [Authorize(Roles = "Admin")]
     public async Task<JsonResult> GetAllUsers()
     {
         var users = await _userManager.Users.ToListAsync();
@@ -53,11 +57,13 @@ public class UserController : Controller
     }
 
     [HttpGet]
+    [Authorize(Roles = "Admin")]
     public IActionResult Add()
     {
         return PartialView("_UserAddPartial");
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpPost]
     public async Task<IActionResult> Add(UserAddDto userAddDto)
     {
@@ -102,6 +108,7 @@ public class UserController : Controller
         return Json(userAddAjaxModelStateErrorModel);
     }
 
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Delete(int userId)
     {
         var user = await _userManager.FindByIdAsync(userId.ToString());
@@ -135,13 +142,16 @@ public class UserController : Controller
     }
 
     [HttpGet]
+    [Authorize(Roles = "Admin")]
     public async Task<PartialViewResult> Update(int userId)
     {
         var user = await _userManager.Users.FirstOrDefaultAsync(u => u.Id == userId);
         var userUpdateDto = _mapper.Map<UserUpdateDto>(user);
         return PartialView("_UserUpdatePartial", userUpdateDto);
     }
+
     [HttpPost]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Update(UserUpdateDto userUpdateDto)
     {
         if (ModelState.IsValid)
@@ -199,6 +209,8 @@ public class UserController : Controller
             return Json(userUpdateModelStateErrorViewModel);
         }
     }
+
+    [Authorize(Roles = "Admin,Editor")]
     public async Task<string> ImageUpload(string userName, IFormFile pictureFile)
     {
         // `/img/user.Picture
@@ -215,6 +227,8 @@ public class UserController : Controller
         }
         return newFileName;
     }
+
+    [Authorize(Roles = "Admin,Editor")]
     public bool ImageDelete(string pictureName)
     {
         string wwwroot = _env.WebRootPath;
@@ -229,5 +243,48 @@ public class UserController : Controller
             return false;
         }
 
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Login()
+    {
+        return View("UserLogin");
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Login(UserLoginDto userLoginDto)
+    {
+        if (ModelState.IsValid)
+        {
+            var user = await _userManager.FindByEmailAsync(userLoginDto.Email);
+            if (user != null)
+            {
+                var result = await _signInManager.PasswordSignInAsync(user, userLoginDto.Password, userLoginDto.RememberMe, false);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Invalid email or password.");
+                    return View("UserLogin");
+                }
+            }
+            else
+            {
+                ModelState.AddModelError("", "User not found.");
+                return View("UserLogin");
+            }
+        }
+        else
+        {
+            return View("UserLogin");
+        }
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> AccessDenied()
+    {
+        return View();
     }
 }

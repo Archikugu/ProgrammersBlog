@@ -1,5 +1,6 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ProgrammersBlog.Business.Abstract;
 using ProgrammersBlog.Core.Utilities.Extensions;
@@ -10,6 +11,7 @@ using ProgrammersBlog.MvcUI.Areas.Admin.Models.CategoryAjaxViewModels;
 namespace ProgrammersBlog.MvcUI.Areas.Admin.Controllers;
 
 [Area("Admin")]
+[Authorize(Roles = "Admin,Editor")]
 public class CategoryController : Controller
 {
     private readonly ICategoryService _categoryService;

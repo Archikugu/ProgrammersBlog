@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using ProgrammersBlog.DataAccess.Concrete.EntityFramework.Mappings;
 using ProgrammersBlog.Entities.Concrete;
 
@@ -11,7 +13,7 @@ public class ProgrammersBlogContext : IdentityDbContext<User, Role, int, UserCla
     public ProgrammersBlogContext(DbContextOptions<ProgrammersBlogContext> options)
         : base(options)
     {
-
+        
     }
 
     public DbSet<Article> Articles { get; set; }

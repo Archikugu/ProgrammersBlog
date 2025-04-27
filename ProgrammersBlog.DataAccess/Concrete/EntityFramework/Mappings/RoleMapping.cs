@@ -32,5 +32,24 @@ public class RoleMapping : IEntityTypeConfiguration<Role>
 
         // Each Role can have many associated RoleClaims
         builder.HasMany<RoleClaim>().WithOne().HasForeignKey(rc => rc.RoleId).IsRequired();
+
+        builder.HasData(
+            new Role
+            {
+                Id = 1,
+                Name = "Admin",
+                NormalizedName = "ADMIN",
+                ConcurrencyStamp = "4b82c981-4a0b-4d84-9f5e-cdc69c0ad2d1"
+                //ConcurrencyStamp = Guid.NewGuid().ToString()
+            },
+            new Role
+            {
+                Id = 2,
+                Name = "Editor",
+                NormalizedName = "EDITOR",
+                ConcurrencyStamp = "9c7c3c6d-9137-4f0d-8e0d-47fbe677b0f8"
+                //ConcurrencyStamp = Guid.NewGuid().ToString()
+            }
+        );
     }
 }
