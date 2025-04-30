@@ -132,8 +132,13 @@ function appendNewUserRow(userAddAjaxModel) {
             <button class="btn btn-link btn-danger btn-delete" data-id="${userAddAjaxModel.UserDto.User.Id}"><span class="fas fa-trash"></span></button>
          </div>`
     ]).node();
+
     const jqueryTableRow = $(newTableRow);
     jqueryTableRow.attr(`name`, `${userAddAjaxModel.UserDto.User.Id}`);
+
+    // Yeni satırlara hizalama sınıflarını ekleyelim
+    jqueryTableRow.find('td').addClass('text-center align-middle');
+
     dataTable.row(newTableRow).draw();
 }
 
@@ -187,13 +192,18 @@ function updateUserTable(userListDto) {
             user.PhoneNumber,
             `<img src="/images/${user.Picture}" alt="${user.UserName}" class="my-image-table" />`,
             `<div class="form-button-action">
-            <button class="btn btn-link btn-primary btn-update" data-id="${user.Id}"> <span class="fas fa-pen-to-square"></span></button>
-            <button class="btn btn-link btn-danger btn-delete" data-id="${user.Id}"><span class="fas fa-trash"></span></button>
+                <button class="btn btn-link btn-primary btn-update" data-id="${user.Id}"> <span class="fas fa-pen-to-square"></span></button>
+                <button class="btn btn-link btn-danger btn-delete" data-id="${user.Id}"><span class="fas fa-trash"></span></button>
             </div>`
         ]).node();
+
         const jqueryTableRow = $(newTableRow);
-        jqueryTableRow.attr(`name`, `${user.Id}`);
+        jqueryTableRow.attr('name', `${user.Id}`);
+
+        // Yeni satırlara hizalama sınıflarını ekleyelim
+        jqueryTableRow.find('td').addClass('text-center align-middle');
     });
+
     dataTable.draw();
     $('.spinner-border').hide();
     $('#usersTable').fadeIn(1400);
@@ -291,6 +301,11 @@ function initializeUpdateUser() {
             contentType: false,
             success: function (data) {
                 const userUpdateAjaxModel = jQuery.parseJSON(data);
+
+                if (!userUpdateAjaxModel.UserDto || !userUpdateAjaxModel.UserDto.User) {
+                    toastr.error(`${userUpdateAjaxModel.UserDto?.Message ?? "Unknown error occurred."}`, "Update Failed");
+                    return;
+                }
                 const newFormBody = $('.modal-body', userUpdateAjaxModel.UserUpdatePartial);
                 placeHolderDiv.find('.modal-body').replaceWith(newFormBody);
 

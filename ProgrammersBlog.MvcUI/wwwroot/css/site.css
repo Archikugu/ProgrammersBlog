@@ -1,12 +1,15 @@
-.my-image {
-    border-radius: 5px;
-    max-height: 100px;
-    max-width: 100px;
-    border: 2px solid #4800ff; 
+﻿.my-image-table {
+    border-radius: 12px;
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border: 2px solid #4a90e2; /* Soft mavi kenarlık */
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+    display: block;
+    margin: 0 auto; /* Hücrede ortalama */
 }
-.my-image-table {
-    border-radius: 5px;
-    max-height: 75px;
-    max-width: 75px;
-    border: 2px solid #4800ff; 
-}
+
+    .my-image-table:hover {
+        transform: scale(1.05);
+    }
