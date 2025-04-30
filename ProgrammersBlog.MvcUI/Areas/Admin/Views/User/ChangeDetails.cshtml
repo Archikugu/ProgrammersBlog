@@ -1,0 +1,84 @@
+﻿@using ProgrammersBlog.Entities.Dtos.UserDtos
+@model UserUpdateDto
+
+@{
+	ViewData["Title"] = "Edit Profile Details";
+	Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+	<div class="col-lg-6 offset-lg-3">
+		<div class="card mt-2 shadow-sm border-0 rounded-4 overflow-hidden">
+			<div class="card-header bg-warning text-dark">
+				<h4 class="text-center mb-0"><i class="fas fa-user-edit me-2"></i> Edit Profile</h4>
+			</div>
+
+			<div class="card-body">
+				<form asp-controller="User" asp-action="ChangeDetails" method="post" id="form-user-update" enctype="multipart/form-data">
+					<input name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()" />
+					<div asp-validation-summary="All" class="text-danger" id="validation-summary"></div>
+					<input type="hidden" asp-for="Id" />
+
+					<!-- Username -->
+					<div class="form-group mb-2">
+						<label asp-for="UserName"></label>
+						<div class="input-group">
+							<span class="input-group-text"><i class="fas fa-user"></i></span>
+							<input class="form-control" asp-for="UserName" placeholder="Please enter your username" />
+						</div>
+						<span class="text-danger" asp-validation-for="UserName"></span>
+					</div>
+
+					<!-- Email -->
+					<div class="form-group mb-2">
+						<label asp-for="Email"></label>
+						<div class="input-group">
+							<span class="input-group-text"><i class="fas fa-envelope"></i></span>
+							<input type="email" class="form-control" asp-for="Email" placeholder="Please enter your email" />
+						</div>
+						<span class="text-danger" asp-validation-for="Email"></span>
+					</div>
+
+					<!-- Phone Number -->
+					<div class="form-group mb-2">
+						<label asp-for="PhoneNumber"></label>
+						<div class="input-group">
+							<span class="input-group-text"><i class="fas fa-phone"></i></span>
+							<input type="text" class="form-control" asp-for="PhoneNumber" placeholder="Please enter your phone number" />
+						</div>
+						<span class="text-danger" asp-validation-for="PhoneNumber"></span>
+					</div>
+
+					<!-- Current Picture -->
+					<div class="form-group mb-2">
+						<label asp-for="Picture"></label>
+						<input asp-for="Picture" type="hidden" />
+						<img class="my-image d-block mb-2 rounded-3 shadow" src="~/images/@Model.Picture" alt="@Model.UserName" style="max-width: 150px;" />
+					</div>
+
+					<!-- Upload Picture -->
+					<div class="form-group mb-2">
+						<label asp-for="PictureFile"></label>
+						<div class="input-group">
+							<span class="input-group-text"><i class="fas fa-image"></i></span>
+							<input type="file" accept="image/*" class="form-control" asp-for="PictureFile" />
+						</div>
+						<span class="text-danger" asp-validation-for="PictureFile"></span>
+					</div>
+
+					<!-- Buttons -->
+					<div class="form-group mb-2 text-center">
+						<button type="submit" class="btn btn-success btn-lg rounded-pill px-5 shadow mb-3">
+							<i class="fas fa-save me-2"></i> Save Changes
+						</button>
+						<br />
+						<a class="btn btn-danger btn-lg rounded-pill px-5 shadow" asp-area="Admin" asp-controller="User" asp-action="Index">
+							<i class="fas fa-times-circle me-2"></i> Cancel
+						</a>
+					</div>
+
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

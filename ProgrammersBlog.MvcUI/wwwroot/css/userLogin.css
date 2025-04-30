@@ -1,0 +1,109 @@
+﻿
+.divider:after, .divider:before {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: #6c757d;
+}
+
+.h-custom {
+    height: calc(100% - 73px);
+}
+
+@media (max-width: 450px) {
+    .h-custom {
+        height: 100%;
+    }
+}
+
+/* Animated Gradient Background */
+body {
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+    height: 100vh;
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+body.bg-dark,
+body.bg-dark label,
+body.bg-dark .form-check-label,
+body.bg-dark .lead,
+body.bg-dark p,
+body.bg-dark a.text-body {
+    color: #f8f9fa;
+}
+
+    body.bg-dark .form-control {
+        background: #343a40;
+        border-color: #495057;
+        color: #f8f9fa;
+    }
+
+        body.bg-dark .form-control::placeholder {
+            color: #adb5bd;
+            opacity: 1;
+        }
+
+        body.bg-dark .form-control:focus {
+            color: #f8f9fa;
+            background: #343a40;
+            border-color: #0d6efd;
+            box-shadow: 0 0 0 .25rem rgba(13,110,253,.25);
+        }
+
+.input-group-text {
+    background-color: #1f2d3d;
+    border: 1px solid #0d6efd;
+    color: #f8f9fa;
+}
+
+    .input-group-text:hover {
+        background-color: #0d6efd;
+        color: #ffffff;
+        border-color: #0d6efd;
+        box-shadow: 0 0 10px #0d6efd;
+        cursor: pointer;
+    }
+
+.btn-custom {
+    background-color: #1f2d3d;
+    color: #f8f9fa;
+    border: 1px solid #0d6efd;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+    .btn-custom:hover {
+        background-color: #0d6efd;
+        color: #ffffff;
+        border: 1px solid #0d6efd;
+        box-shadow: 0 0 10px #0d6efd;
+    }
+
+.footer-custom {
+    background: #1f2d3d;
+}
+
+    .footer-custom a {
+        color: #f8f9fa;
+    }
+
+        .footer-custom a:hover {
+            color: #0d6efd;
+        }
+

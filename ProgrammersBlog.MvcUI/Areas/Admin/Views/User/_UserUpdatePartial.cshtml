@@ -4,8 +4,8 @@
 <div class="modal fade" id="userUpdateModal" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title"><span class="fas fa-pen-to-square"></span> Editing User: @Model.UserName</h5>
+			<div class="modal-header bg-warning">
+				<h5 class="modal-title" style="color: #212529 !important;"><span class="fas fa-pen-to-square"></span> Editing User: @Model.UserName</h5>
 				<button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
@@ -15,29 +15,51 @@
 					<input name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()" />
 					<div asp-validation-summary="All" class="text-danger" id="validation-summary" aria-hidden="true" style="display: none;"></div>
 					<input type="hidden" asp-for="Id" />
-					<div class="form-group">
+
+					<!-- Username -->
+					<div class="form-group mb-3">
 						<label asp-for="UserName"></label>
-						<input class="form-control" asp-for="UserName" placeholder="Please enter your username" />
+						<div class="input-group">
+							<span class="input-group-text"><i class="fas fa-user"></i></span>
+							<input class="form-control" asp-for="UserName" placeholder="Please enter your username" />
+						</div>
 						<span class="text-danger" asp-validation-for="UserName"></span>
 					</div>
-					<div class="form-group">
+
+					<!-- Email -->
+					<div class="form-group mb-3">
 						<label asp-for="Email"></label>
-						<input type="email" class="form-control" asp-for="Email" placeholder="Please enter your email" />
+						<div class="input-group">
+							<span class="input-group-text"><i class="fas fa-envelope"></i></span>
+							<input type="email" class="form-control" asp-for="Email" placeholder="Please enter your email" />
+						</div>
 						<span class="text-danger" asp-validation-for="Email"></span>
 					</div>
-					<div class="form-group">
+
+					<!-- Phone Number -->
+					<div class="form-group mb-3">
 						<label asp-for="PhoneNumber"></label>
-						<input type="text" class="form-control" asp-for="PhoneNumber" placeholder="Please enter your phone number" />
+						<div class="input-group">
+							<span class="input-group-text"><i class="fas fa-phone"></i></span>
+							<input type="text" class="form-control" asp-for="PhoneNumber" placeholder="Please enter your phone number" />
+						</div>
 						<span class="text-danger" asp-validation-for="PhoneNumber"></span>
 					</div>
+
+					<!-- Current Picture Preview -->
 					<div class="form-group mb-3">
 						<label asp-for="Picture"></label>
 						<input asp-for="Picture" type="hidden" />
-						<img class="my-image d-block mb-2" src="~/images/@Model.Picture" alt="@Model.UserName" />
+						<img class="my-image d-block mb-2 rounded" src="~/images/@Model.Picture" alt="@Model.UserName" style="max-width: 100px;" />
 					</div>
+
+					<!-- Upload New Picture -->
 					<div class="form-group mb-3">
 						<label asp-for="PictureFile"></label>
-						<input type="file" accept="image/*" class="form-control" asp-for="PictureFile" />
+						<div class="input-group">
+							<span class="input-group-text"><i class="fas fa-image"></i></span>
+							<input type="file" accept="image/*" class="form-control" asp-for="PictureFile" />
+						</div>
 						<span class="text-danger" asp-validation-for="PictureFile"></span>
 					</div>
 				</form>
