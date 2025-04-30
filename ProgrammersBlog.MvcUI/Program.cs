@@ -2,6 +2,8 @@ using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using ProgrammersBlog.Business.Extensions;
 using ProgrammersBlog.DataAccess.Concrete.EntityFramework.Contexts;
+using ProgrammersBlog.MvcUI.Helpers.Abstract;
+using ProgrammersBlog.MvcUI.Helpers.Concrete;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +16,7 @@ builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation().AddJsonO
 
 builder.Services.AddSession();
 builder.Services.LoadMyServices();
+builder.Services.AddScoped<IImageHelper, ImageHelper>();
 
 builder.Services.ConfigureApplicationCookie(options =>
 {

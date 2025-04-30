@@ -11,6 +11,7 @@ using ProgrammersBlog.Core.Utilities.Results.ComplexTypes;
 using ProgrammersBlog.Entities.Concrete;
 using ProgrammersBlog.Entities.Dtos.UserDtos;
 using ProgrammersBlog.MvcUI.Areas.Admin.Models.UserAjaxViewModels;
+using ProgrammersBlog.MvcUI.Helpers.Abstract;
 
 namespace ProgrammersBlog.MvcUI.Areas.Admin.Controllers;
 
@@ -19,14 +20,14 @@ public class UserController : Controller
 {
     private readonly UserManager<User> _userManager;
     private readonly SignInManager<User> _signInManager;
-    private readonly IWebHostEnvironment _env;
     private readonly IMapper _mapper;
-    public UserController(UserManager<User> userManager, IWebHostEnvironment webHostEnvironment, IMapper mapper, SignInManager<User> signInManager)
+    private readonly IImageHelper _imageHelper;
+    public UserController(UserManager<User> userManager, IMapper mapper, SignInManager<User> signInManager, IImageHelper imageHelper)
     {
         _userManager = userManager;
-        _env = webHostEnvironment;
         _mapper = mapper;
         _signInManager = signInManager;
+        _imageHelper = imageHelper;
     }
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Index()
@@ -69,7 +70,11 @@ public class UserController : Controller
     {
         if (ModelState.IsValid)
         {
-            userAddDto.Picture = await ImageUpload(userAddDto.UserName, userAddDto.PictureFile);
+            var uploadedImageDtoResult = await _imageHelper.UploadUserImage(userAddDto.UserName, userAddDto.PictureFile);
+            userAddDto.Picture = uploadedImageDtoResult.ResultStatus == ResultStatus.Success
+                ? uploadedImageDtoResult.Data.FullName
+                : "userImages/defaultUser.png";
+
             var user = _mapper.Map<User>(userAddDto);
             var result = _userManager.CreateAsync(user, userAddDto.Password).Result;
             if (result.Succeeded)
@@ -116,6 +121,7 @@ public class UserController : Controller
         var result = await _userManager.DeleteAsync(user);
         if (result.Succeeded)
         {
+            _imageHelper.Delete(user.Picture);
             var deleteUser = JsonSerializer.Serialize(new UserDto
             {
                 ResultStatus = ResultStatus.Success,
@@ -161,8 +167,15 @@ public class UserController : Controller
             var oldUserPicture = oldUser.Picture;
             if (userUpdateDto.PictureFile != null)
             {
-                userUpdateDto.Picture = await ImageUpload(userUpdateDto.UserName, userUpdateDto.PictureFile);
-                isNewPictureUploaded = true;
+                var uploadedImageDtoResult = await _imageHelper.UploadUserImage(userUpdateDto.UserName, userUpdateDto.PictureFile);
+                userUpdateDto.Picture = uploadedImageDtoResult.ResultStatus == ResultStatus.Success
+                    ? uploadedImageDtoResult.Data.FullName
+                    : "userImages/defaultUser.png";
+
+                if (oldUserPicture != "userImages/defaultUser.png")
+                {
+                    isNewPictureUploaded = true;
+                }
             }
 
             var updatedUser = _mapper.Map<UserUpdateDto, User>(userUpdateDto, oldUser);
@@ -171,7 +184,7 @@ public class UserController : Controller
             {
                 if (isNewPictureUploaded)
                 {
-                    ImageDelete(oldUserPicture);
+                    _imageHelper.Delete(oldUserPicture);
                 }
                 var userUpdateVM = JsonSerializer.Serialize(new UserUpdateAjaxViewModel
                 {
@@ -208,41 +221,6 @@ public class UserController : Controller
             });
             return Json(userUpdateModelStateErrorViewModel);
         }
-    }
-
-    [Authorize(Roles = "Admin,Editor")]
-    public async Task<string> ImageUpload(string userName, IFormFile pictureFile)
-    {
-        // `/img/user.Picture
-        string wwwroot = _env.WebRootPath;
-        string fileName = Path.GetFileNameWithoutExtension(pictureFile.FileName);
-        string fileExtension = Path.GetExtension(pictureFile.FileName);
-        DateTime dateTime = DateTime.Now;
-        string newFileName = $"{userName}_{fileName}_{dateTime.FullDateAndTimeStringWithUnderscore()}{fileExtension}";
-        string path = Path.Combine(wwwroot, "images", newFileName);
-
-        await using (var stream = new FileStream(path, FileMode.Create))
-        {
-            await pictureFile.CopyToAsync(stream);
-        }
-        return newFileName;
-    }
-
-    [Authorize(Roles = "Admin,Editor")]
-    public bool ImageDelete(string pictureName)
-    {
-        string wwwroot = _env.WebRootPath;
-        var fileToDelete = Path.Combine(wwwroot, "images", pictureName);
-        if (System.IO.File.Exists(fileToDelete))
-        {
-            System.IO.File.Delete(fileToDelete);
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-
     }
 
     [HttpGet]
@@ -316,8 +294,12 @@ public class UserController : Controller
             var oldUserPicture = oldUser.Picture;
             if (userUpdateDto.PictureFile != null)
             {
-                userUpdateDto.Picture = await ImageUpload(userUpdateDto.UserName, userUpdateDto.PictureFile);
-                if (oldUserPicture != "defaultUser.png")
+                var uploadedImageDtoResult = await _imageHelper.UploadUserImage(userUpdateDto.UserName, userUpdateDto.PictureFile);
+                userUpdateDto.Picture = uploadedImageDtoResult.ResultStatus == ResultStatus.Success
+                    ? uploadedImageDtoResult.Data.FullName
+                    : "userImages/defaultUser.png";
+
+                if (oldUserPicture != "userImages/defaultUser.png")
                 {
                     isNewPictureUploaded = true;
                 }
@@ -329,7 +311,7 @@ public class UserController : Controller
             {
                 if (isNewPictureUploaded)
                 {
-                    ImageDelete(oldUserPicture);
+                    _imageHelper.Delete(oldUserPicture);
                 }
                 TempData["SuccessMessage"] = $"{updatedUser.UserName} has been successfully updated.";
 
@@ -376,6 +358,14 @@ public class UserController : Controller
                     TempData.Add("SuccessMessage", $"Your password has been successfully changed.");
                     return View();
                 }
+                else
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError("", error.Description);
+                    }
+                    return View(userPasswordChangeDto);
+                }
             }
             else
             {
@@ -387,6 +377,5 @@ public class UserController : Controller
         {
             return View(userPasswordChangeDto);
         }
-        return View();
     }
 }
