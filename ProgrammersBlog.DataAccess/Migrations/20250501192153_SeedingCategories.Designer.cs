@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProgrammersBlog.DataAccess.Concrete.EntityFramework.Contexts;
 
@@ -11,9 +12,11 @@ using ProgrammersBlog.DataAccess.Concrete.EntityFramework.Contexts;
 namespace ProgrammersBlog.DataAccess.Migrations
 {
     [DbContext(typeof(ProgrammersBlogContext))]
-    partial class ProgrammersBlogContextModelSnapshot : ModelSnapshot
+    [Migration("20250501192153_SeedingCategories")]
+    partial class SeedingCategories
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -126,9 +129,7 @@ namespace ProgrammersBlog.DataAccess.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTime>("CreatedDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("GETDATE()");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -403,13 +404,13 @@ namespace ProgrammersBlog.DataAccess.Migrations
                         {
                             Id = 1,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a592923a-b131-4e88-b18e-1a752d84622f",
+                            ConcurrencyStamp = "3c6e089e-319d-409a-af7c-270926611096",
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@GMAIL.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEDXAmwG14n411aXJZPDYif4qaEyTK09ubbIDblyOWHoeHW2dTK9PdVNW/wSxzO2Ypw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEG+buwPJbouM4CdYmH//A9YWQVAcRAX41M6wvrseEhmWdZckm+w1TdunH5GsPMlU2g==",
                             PhoneNumber = "+901234567890",
                             PhoneNumberConfirmed = true,
                             Picture = "default.png",
@@ -421,13 +422,13 @@ namespace ProgrammersBlog.DataAccess.Migrations
                         {
                             Id = 2,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c28cc5a9-41d3-4f47-8464-163ad94d032b",
+                            ConcurrencyStamp = "a90ab2c1-f16e-4e6e-adc0-52cfb02a196b",
                             Email = "editor@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "EDITOR@GMAIL.COM",
                             NormalizedUserName = "EDITOR",
-                            PasswordHash = "AQAAAAIAAYagAAAAELY2ZliZfMUlULoCRxIiVW8Ydg1oSS3oOIn8tYJA/9rOq98IuJWs/Z0jd2B7t9o0qA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEFHB3tAbzlSLAVge9ZqVkGjG9AK1tpo/bc9T/+49YuwKRsyPe3qMRq3huM+98RhnMQ==",
                             PhoneNumber = "+901234567890",
                             PhoneNumberConfirmed = true,
                             Picture = "default.png",
