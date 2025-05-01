@@ -5,4 +5,5 @@ namespace ProgrammersBlog.DataAccess.Abstract;
 
 public interface ICategoryRepository : IEntityRepository<Category>
 {
+    Task<Category> GetById(int categoryId);
 }

@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
 using ProgrammersBlog.Business.Abstract;
+using ProgrammersBlog.Business.Utilities;
 using ProgrammersBlog.Core.Utilities.Results.Abstract;
 using ProgrammersBlog.Core.Utilities.Results.ComplexTypes;
 using ProgrammersBlog.Core.Utilities.Results.Concrete;
 using ProgrammersBlog.DataAccess.Abstract;
 using ProgrammersBlog.Entities.Concrete;
 using ProgrammersBlog.Entities.Dtos.ArticleDtos;
-using ProgrammersBlog.Entities.Dtos.CategoryDtos;
 
 namespace ProgrammersBlog.Business.Concrete;
 
@@ -28,7 +28,7 @@ public class ArticleManager : IArticleService
         article.UserId = 1;
         await _unitOfWork.Articles.AddAsync(article);
         await _unitOfWork.SaveAsync();
-        return new Result(ResultStatus.Success, $"{articleAddDto.Title} article has been successfully added");
+        return new Result(ResultStatus.Success, Messages.Article.Add(article.Title));
     }
 
     public async Task<IResult> Delete(int articleId, string modifiedByName)
@@ -43,9 +43,9 @@ public class ArticleManager : IArticleService
             article.ModifiedDate = DateTime.Now;
             await _unitOfWork.Articles.UpdateAsync(article);
             await _unitOfWork.SaveAsync();
-            return new Result(ResultStatus.Success, $"{article.Title} article has been successfully deleted");
+            return new Result(ResultStatus.Success, Messages.Article.Delete(article.Title));
         }
-        return new Result(ResultStatus.Error, "An error occurred while deleting the article. Article cannot be found", null);
+        return new Result(ResultStatus.Error, Messages.Article.NotFound(isPlural: false), null);
     }
 
     public async Task<IDataResult<ArticleDto>> Get(int articleId)
@@ -59,7 +59,7 @@ public class ArticleManager : IArticleService
                 ResultStatus = ResultStatus.Success
             });
         }
-        return new DataResult<ArticleDto>(ResultStatus.Error, message: "An error occurred while getting the article", data: null);
+        return new DataResult<ArticleDto>(ResultStatus.Error, message: Messages.Article.NotFound(isPlural: false), data: null);
     }
 
     public async Task<IDataResult<ArticleListDto>> GetAll()
@@ -73,7 +73,7 @@ public class ArticleManager : IArticleService
                 ResultStatus = ResultStatus.Success
             });
         }
-        return new DataResult<ArticleListDto>(ResultStatus.Error, message: "An error occurred while getting the articles", data: null);
+        return new DataResult<ArticleListDto>(ResultStatus.Error, message: Messages.Article.NotFound(isPlural: true), data: null);
     }
 
     public async Task<IDataResult<ArticleListDto>> GetAllByCategory(int categoryId)
@@ -90,9 +90,9 @@ public class ArticleManager : IArticleService
                     ResultStatus = ResultStatus.Success
                 });
             }
-            return new DataResult<ArticleListDto>(ResultStatus.Error, message: "An error occurred while getting the articles", data: null);
+            return new DataResult<ArticleListDto>(ResultStatus.Error, message: Messages.Article.NotFound(isPlural: true), data: null);
         }
-        return new DataResult<ArticleListDto>(ResultStatus.Error, message: "An error occurred while getting the categories", data: null);
+        return new DataResult<ArticleListDto>(ResultStatus.Error, message: Messages.Category.NotFound(isPlural: true), data: null);
     }
 
     public async Task<IDataResult<ArticleListDto>> GetAllByNonDeleted()
@@ -106,7 +106,7 @@ public class ArticleManager : IArticleService
                 ResultStatus = ResultStatus.Success
             });
         }
-        return new DataResult<ArticleListDto>(ResultStatus.Error, message: "An error occurred while getting the articles", data: null);
+        return new DataResult<ArticleListDto>(ResultStatus.Error, message: Messages.Article.NotFound(isPlural: true), data: null);
     }
 
     public async Task<IDataResult<ArticleListDto>> GetAllByNonDeletedAndActive()
@@ -120,7 +120,7 @@ public class ArticleManager : IArticleService
                 ResultStatus = ResultStatus.Success
             });
         }
-        return new DataResult<ArticleListDto>(ResultStatus.Error, message: "An error occurred while getting the articles", data: null);
+        return new DataResult<ArticleListDto>(ResultStatus.Error, message: Messages.Article.NotFound(isPlural: true), data: null);
     }
 
     public async Task<IResult> HardDelete(int articleId)
@@ -131,9 +131,9 @@ public class ArticleManager : IArticleService
             var article = await _unitOfWork.Articles.GetAsync(a => a.Id == articleId);
             await _unitOfWork.Articles.DeleteAsync(article);
             await _unitOfWork.SaveAsync();
-            return new Result(ResultStatus.Success, $"{article.Title} article has been successfully deleted");
+            return new Result(ResultStatus.Success, Messages.Article.HardDelete(article.Title));
         }
-        return new Result(ResultStatus.Error, "An error occurred while deleting the article. Article cannot be found", null);
+        return new Result(ResultStatus.Error, Messages.Article.NotFound(isPlural: false), null);
     }
 
     public async Task<IResult> Update(ArticleUpdateDto articleUpdateDto, string modifiedByName)
@@ -144,6 +144,6 @@ public class ArticleManager : IArticleService
         //await _unitOfWork.Articles.UpdateAsync(article).ContinueWith(t => _unitOfWork.SaveAsync());
         await _unitOfWork.Articles.UpdateAsync(article);
         await _unitOfWork.SaveAsync();
-        return new Result(ResultStatus.Success, $"{articleUpdateDto.Title} article has been successfully updated");
+        return new Result(ResultStatus.Success, Messages.Article.Update(article.Title));
     }
 }
