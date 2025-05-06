@@ -15,5 +15,7 @@ public interface ICategoryService
     Task<IDataResult<CategoryDto>> Update(CategoryUpdateDto categoryUpdateDto, string modifiedByName);
     Task<IDataResult<CategoryDto>> Delete(int categoryId, string modifiedByName);
     Task<IResult> HardDelete(int categoryId);
+    Task<IDataResult<int>> Count();
+    Task<IDataResult<int>> CountByIsDeleted();
 
 }

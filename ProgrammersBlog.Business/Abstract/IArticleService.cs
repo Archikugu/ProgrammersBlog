@@ -16,4 +16,7 @@ public interface IArticleService
     Task<IResult> Update(ArticleUpdateDto articleUpdateDto, string modifiedByName);
     Task<IResult> Delete(int articleId, string modifiedByName);
     Task<IResult> HardDelete(int articleId);
+    Task<IDataResult<int>> Count();
+    Task<IDataResult<int>> CountByIsDeleted();
+
 }

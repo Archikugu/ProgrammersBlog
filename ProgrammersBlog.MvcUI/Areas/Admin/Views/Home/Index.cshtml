@@ -1,3 +1,199 @@
-﻿<h1>Burası Admin Area, Buraya Hoşgeldiniz.</h1>
+﻿@using ProgrammersBlog.MvcUI.Areas.Admin.Models
+@model DashboardViewModel
+@{
+	Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+	ViewBag.Title = "Admin Dashboard";
+}
 
-<a asp-area="" asp-controller="Home" asp-action="Index">Blog Area Kısmınına Geçmek İçin Tıklayın </a>
+<style>
+	.card-stats:hover {
+		transform: translateY(-5px);
+		box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+		transition: all 0.3s ease-in-out;
+		cursor: pointer;
+	}
+</style>
+
+<div class="page-inner">
+	<div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
+		<div>
+			<div class="page-header">
+				<h3 class="fw-bold mb-3">Dashboard</h3>
+				<ul class="breadcrumbs mb-3">
+					<li class="nav-home">
+						<a asp-area="Admin" asp-controller="Home" asp-action="Index">
+							<i class="icon-home"></i>
+						</a>
+					</li>
+					<li class="separator">
+						<i class="icon-arrow-right"></i>
+					</li>
+					<li class="nav-item">
+						<a asp-area="Admin" asp-controller="Home" asp-action="Index">Admin Dashboard</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+
+		<div class="ms-md-auto py-2 py-md-0">
+			<a href="#" class="btn btn-label-info btn-round me-2">Manage</a>
+			<a href="#" class="btn btn-primary btn-round">Add Customer</a>
+		</div>
+	</div>
+	<div class="row">
+		<!-- Categories - koyu mavi -->
+		<div class="col-sm-6 col-md-3">
+			<div class="card card-stats card-round" style="background-color: #dbe9ff;">
+				<div class="card-body">
+					<div class="row align-items-center">
+						<div class="col-icon">
+							<div class="icon-big text-center text-primary bubble-shadow-small">
+								<i class="fas fa-layer-group"></i>
+							</div>
+						</div>
+						<div class="col col-stats ms-3 ms-sm-0">
+							<div class="numbers">
+								<p class="card-category text-primary fw-bold">Categories</p>
+								<h4 class="card-title text-dark">@Model.CategoriesCount</h4>
+								<a class="small text-primary stretched-link" asp-area="Admin" asp-controller="Category" asp-action="Index">View Details</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Articles - turuncu -->
+		<div class="col-sm-6 col-md-3">
+			<div class="card card-stats card-round" style="background-color: #fff5e6;">
+				<div class="card-body">
+					<div class="row align-items-center">
+						<div class="col-icon">
+							<div class="icon-big text-center text-warning bubble-shadow-small">
+								<i class="fas fa-file-alt"></i>
+							</div>
+						</div>
+						<div class="col col-stats ms-3 ms-sm-0">
+							<div class="numbers">
+								<p class="card-category text-warning fw-bold">Articles</p>
+								<h4 class="card-title text-dark">@Model.ArticlesCount</h4>
+								<a class="small text-warning stretched-link" asp-area="Admin" asp-controller="Article" asp-action="Index">View Details</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Comments - yeşil -->
+		<div class="col-sm-6 col-md-3">
+			<div class="card card-stats card-round" style="background-color: #e6ffed;">
+				<div class="card-body">
+					<div class="row align-items-center">
+						<div class="col-icon">
+							<div class="icon-big text-center text-success bubble-shadow-small">
+								<i class="fas fa-comments"></i>
+							</div>
+						</div>
+						<div class="col col-stats ms-3 ms-sm-0">
+							<div class="numbers">
+								<p class="card-category text-success fw-bold">Comments</p>
+								<h4 class="card-title text-dark">@Model.CommentsCount</h4>
+								<a class="small text-success stretched-link" asp-area="Admin" asp-controller="Comment" asp-action="Index">View Details</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Users - koyu gri/mor -->
+		<div class="col-sm-6 col-md-3">
+			<div class="card card-stats card-round" style="background-color: #e0e0f8;">
+				<div class="card-body">
+					<div class="row align-items-center">
+						<div class="col-icon">
+							<div class="icon-big text-center text-secondary bubble-shadow-small">
+								<i class="fas fa-user-friends"></i>
+							</div>
+						</div>
+						<div class="col col-stats ms-3 ms-sm-0">
+							<div class="numbers">
+								<p class="card-category text-secondary fw-bold">Users</p>
+								<h4 class="card-title text-dark">@Model.UsersCount</h4>
+								<a class="small text-secondary stretched-link" asp-area="Admin" asp-controller="User" asp-action="Index">View Details</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-12">
+			<div class="card">
+				<div class="card-header">
+					<h4 class="card-title">Most Recently Added Articles</h4>
+				</div>
+				<div class="card-body">
+					<div class="table-responsive">
+						<table id="articlesTable"
+							   class="display table table-striped table-hover">
+							<thead>
+								<tr>
+									<th class="text-center align-middle">Id</th>
+									<th class="text-center align-middle">Category</th>
+									<th class="text-center align-middle">Title</th>
+									<th class="text-center align-middle">Thumbnail</th>
+									<th class="text-center align-middle">Date</th>
+									<th class="text-center align-middle">Views Count</th>
+									<th class="text-center align-middle">Comment Count</th>
+									<th class="text-center align-middle">Is Active?</th>
+									<th class="text-center align-middle">Is Deleted?</th>
+								</tr>
+							</thead>
+							<tfoot>
+								<tr>
+									<th class="text-center align-middle">Id</th>
+									<th class="text-center align-middle">Category</th>
+									<th class="text-center align-middle">Title</th>
+									<th class="text-center align-middle">Thumbnail</th>
+									<th class="text-center align-middle">Date</th>
+									<th class="text-center align-middle">Views Count</th>
+									<th class="text-center align-middle">Comment Count</th>
+									<th class="text-center align-middle">Is Active?</th>
+									<th class="text-center align-middle">Is Deleted?</th>
+								</tr>
+							</tfoot>
+							<tbody>
+								@foreach (var article in Model.Articles.Articles)
+								{
+									<tr>
+										<th class="text-center align-middle">@article.Id</th>
+										<th class="text-center align-middle">@article.Category.Name</th>
+										<th class="text-center align-middle">@article.Title</th>
+										<th class="text-center align-middle"><img src="~/images/@article.Thumbnail" class="my-image-table" /></th>
+										<th class="text-center align-middle" data-order="@article.Date.ToString("yyyy-MM-ddTHH:mm:ss")">
+											@article.Date.ToShortDateString()
+										</th>
+										<th class="text-center align-middle">@article.ViewsCount</th>
+										<th class="text-center align-middle">@article.CommentCount</th>
+										<th class="text-center align-middle">@(article.IsActive ? "Yes" : "No")</th>
+										<th class="text-center align-middle">@(article.IsDeleted ? "Yes" : "No")</th>
+									</tr>
+								}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+@section Scripts {
+	<script src="~/js/homeIndex.js" type="application/ecmascript"></script>
+}
+
