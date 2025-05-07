@@ -1,110 +1,146 @@
-﻿﻿@using ProgrammersBlog.Core.Utilities.Results.ComplexTypes
+﻿@using ProgrammersBlog.Core.Utilities.Results.ComplexTypes
 @using ProgrammersBlog.Entities.Dtos.CategoryDtos
 @model CategoryListDto
 @{
-	Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
-	ViewBag.Title = "Category Index";
-	// int count = 0;
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    ViewBag.Title = "Category Index";
 }
 
 @if (Model.ResultStatus == ResultStatus.Success)
 {
-	<div id="modalPlaceHolder" aria-hidden="true"></div>
-	<div class="row">
-		<div class="col-md-12">
-			<div class="card">
-				<div class="card-header">
-					<h4 class="card-title">Categories</h4>
-					<div class="spinner-border text-info" role="status" style="display: none;">
-						<span class="visually-hidden">Loading...</span>
-					</div>
-					<div class="d-flex align-items-center">
-						<button class="btn btn-primary btn-round ms-auto"
-								id="btnAdd">
-							<i class="fa fa-plus"></i>
-							Add Category
-						</button>
-						<button class="btn btn-warning btn-round ms-1"
-								id="btnRefresh">
-							<i class="fas fa-rotate fa-spin"></i>
-							Refresh
-						</button>
-					</div>
-				</div>
+    <style>
+        .card-stats:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease-in-out;
+            cursor: pointer;
+        }
+    </style>
 
-				<div class="card-body">
-					<div class="table-responsive">
-						<table id="categoriesTable" class="display table table-striped table-hover">
-							<thead>
-								<tr>
-									<th>ID</th>
-									<th>Category Name</th>
-									<th>Description</th>
-									<th>Is Active?</th>
-									<th>Is Deleted?</th>
-									<th>Note</th>
-									<th>Created Date</th>
-									<th>Created By Name</th>
-									<th>Updated Date</th>
-									<th>Updated By Name</th>
-									<th>Action</th>
-								</tr>
-							</thead>
-							<tfoot>
-								<tr>
-									<th>ID</th>
-									<th>Category Name</th>
-									<th>Description</th>
-									<th>Is Active?</th>
-									<th>Is Deleted?</th>
-									<th>Note</th>
-									<th>Created Date</th>
-									<th>Created By Name</th>
-									<th>Updated Date</th>
-									<th>Updated By Name</th>
-									<th>Action</th>
-								</tr>
-							</tfoot>
-							<tbody>
-								@foreach (var category in Model.Categories)
-								{
-									//count++; count olarak ekle sonra scripten dolayı yine id geliyor
-									<tr name="@category.Id">
-										<td>@category.Id</td>
-										<td>@category.Name</td>
-										<td>@category.Description</td>
-										<td>@(category.IsActive ? "Yes" : "No")</td>
-										<td>@(category.IsDeleted ? "Yes" : "No")</td>
-										<td>@category.Note</td>
-										<td>@category.CreatedDate.ToShortDateString()</td>
-										<td>@category.CreatedByName</td>
-										<td>@category.ModifiedDate.ToShortDateString()</td>
-										<td>@category.ModifiedByName</td>
-										<td>
-											<div class="form-button-action">
-												<button class="btn btn-link btn-primary btn-update" data-id="@category.Id"><span class="fas fa-pen-to-square"></span></button>
-												<button class="btn btn-link btn-danger btn-delete" data-id="@category.Id"><span class="fas fa-trash"></span></button>
-											</div>
-										</td>
-									</tr>
-								}
-							</tbody>
-						</table>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+    <div class="page-inner">
+        <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
+            <div>
+                <div class="page-header">
+                    <h3 class="fw-bold mb-3">Categories</h3>
+                    <ul class="breadcrumbs mb-3">
+                        <li class="nav-home">
+                            <a asp-area="Admin" asp-controller="Home" asp-action="Index">
+                                <i class="icon-home"></i>
+                            </a>
+                        </li>
+                        <li class="separator">
+                            <i class="icon-arrow-right"></i>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-area="Admin" asp-controller="Category" asp-action="Index">Category Index</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
 
+            <div class="ms-md-auto py-2 py-md-0">
+                <button class="btn btn-primary btn-round me-2" id="btnAdd">
+                    <i class="fa fa-plus"></i> Add Category
+                </button>
+                <button class="btn btn-warning btn-round" id="btnRefresh">
+                    <i class="fas fa-rotate fa-spin"></i> Refresh
+                </button>
+            </div>
+        </div>
+
+        <div id="modalPlaceHolder" aria-hidden="true"></div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">
+                            <i class="fas fa-list me-2 text-primary"></i>
+                            Categories
+                        </h4>
+                        <div class="spinner-border text-info" role="status" style="display: none;">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="categoriesTable" class="display table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Category Name</th>
+                                        <th>Description</th>
+                                        <th>Is Active?</th>
+                                        <th>Is Deleted?</th>
+                                        <th>Note</th>
+                                        <th>Created Date</th>
+                                        <th>Created By Name</th>
+                                        <th>Updated Date</th>
+                                        <th>Updated By Name</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Category Name</th>
+                                        <th>Description</th>
+                                        <th>Is Active?</th>
+                                        <th>Is Deleted?</th>
+                                        <th>Note</th>
+                                        <th>Created Date</th>
+                                        <th>Created By Name</th>
+                                        <th>Updated Date</th>
+                                        <th>Updated By Name</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                    @foreach (var category in Model.Categories)
+                                    {
+                                        <tr name="@category.Id">
+                                            <td>@category.Id</td>
+                                            <td>@category.Name</td>
+                                            <td>@category.Description</td>
+                                            <td>@(category.IsActive ? "Yes" : "No")</td>
+                                            <td>@(category.IsDeleted ? "Yes" : "No")</td>
+                                            <td>@category.Note</td>
+                                            <td>@category.CreatedDate.ToShortDateString()</td>
+                                            <td>@category.CreatedByName</td>
+                                            <td>@category.ModifiedDate.ToShortDateString()</td>
+                                            <td>@category.ModifiedByName</td>
+                                            <td>
+                                                <div class="form-button-action">
+                                                    <button class="btn btn-link btn-primary btn-update" data-id="@category.Id">
+                                                        <span class="fas fa-pen-to-square"></span>
+                                                    </button>
+                                                    <button class="btn btn-link btn-danger btn-delete" data-id="@category.Id">
+                                                        <span class="fas fa-trash"></span>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 }
 
 @if (Model.ResultStatus == ResultStatus.Error)
 {
-	<div class="alert alert-danger" mt-3>
-		@Model.Message <br />
-		Go to the dashboard page <a class="alert-link" asp-area="Admin" asp-controller="Home" asp-action="Index">by clicking here</a>.
-	</div>
+    <div class="alert alert-danger mt-3">
+        @Model.Message <br />
+        Go to the dashboard page
+        <a class="alert-link" asp-area="Admin" asp-controller="Home" asp-action="Index">by clicking here</a>.
+    </div>
 }
+
 @section Scripts {
-	<script src="~/js/categoryIndex.js" type="application/ecmascript"></script>
+    <script src="~/js/categoryIndex.js" type="application/ecmascript"></script>
 }

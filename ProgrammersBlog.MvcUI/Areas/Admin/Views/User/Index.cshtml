@@ -1,99 +1,137 @@
-﻿﻿@using ProgrammersBlog.Core.Utilities.Results.ComplexTypes
+﻿@using ProgrammersBlog.Core.Utilities.Results.ComplexTypes
 @using ProgrammersBlog.Entities.Dtos.UserDtos
 @model UserListDto
+
 @{
 	Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 	ViewBag.Title = "User Index";
 }
 
-
 @if (Model.ResultStatus == ResultStatus.Success)
 {
-	<div id="modalPlaceHolder" aria-hidden="true"></div>
-	<div class="row">
-		<div class="col-md-12">
-			<div class="card">
-				<div class="card-header">
-					<h4 class="card-title">Users</h4>
-					<div class="spinner-border text-info" role="status" style="display: none;">
-						<span class="visually-hidden">Loading...</span>
-					</div>
-					<div class="d-flex align-items-center">
-						<button class="btn btn-primary btn-round ms-auto"
-								id="btnAdd">
-							<i class="fa fa-plus"></i>
-							Add User
-						</button>
-						<button class="btn btn-warning btn-round ms-1"
-								id="btnRefresh">
-							<i class="fas fa-rotate fa-spin"></i>
-							Refresh
-						</button>
-					</div>
-				</div>
+	<style>
+		.card-stats:hover {
+			transform: translateY(-5px);
+			box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+			transition: all 0.3s ease-in-out;
+			cursor: pointer;
+		}
+	</style>
 
-				<div class="card-body">
-					<div class="table-responsive">
-						<table id="usersTable" class="display table table-striped table-hover">
-							<thead>
-								<tr>
-									<th class="text-center align-middle">ID</th>
-									<th class="text-center align-middle">User Name</th>
-									<th class="text-center align-middle">E-Mail</th>
-									<th class="text-center align-middle">Phone Number</th>
-									<th class="text-center align-middle">Image</th>
-									<th class="text-center align-middle">Action</th>
-								</tr>
-							</thead>
-							<tfoot>
-								<tr>
-									<th class="text-center align-middle">ID</th>
-									<th class="text-center align-middle">User Name</th>
-									<th class="text-center align-middle">E-Mail</th>
-									<th class="text-center align-middle">Phone Number</th>
-									<th class="text-center align-middle">Image</th>
-									<th class="text-center align-middle">Action</th>
-								</tr>
-							</tfoot>
-							<tbody>
-								@foreach (var user in Model.Users)
-								{
-									<tr name="@user.Id">
-										<td class="text-center align-middle">@user.Id</td>
-										<td class="text-center align-middle">@user.UserName</td>
-										<td class="text-center align-middle">@user.Email</td>
-										<td class="text-center align-middle">@user.PhoneNumber</td>
-										<td class="text-center align-middle">
-											<img src="~/images/@user.Picture"
-												 alt="@user.UserName"
-												 class="my-image-table"
-												 title="@user.UserName" />
-										</td>
-										<td class="text-center align-middle">
-											<div class="form-button-action">
-												<button class="btn btn-link btn-primary btn-update" data-id="@user.Id"><span class="fas fa-pen-to-square"></span></button>
-												<button class="btn btn-link btn-danger btn-delete" data-id="@user.Id"><span class="fas fa-trash"></span></button>
-											</div>
-										</td>
+	<div class="page-inner">
+		<div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
+			<div>
+				<div class="page-header">
+					<h3 class="fw-bold mb-3">Users</h3>
+					<ul class="breadcrumbs mb-3">
+						<li class="nav-home">
+							<a asp-area="Admin" asp-controller="Home" asp-action="Index">
+								<i class="icon-home"></i>
+							</a>
+						</li>
+						<li class="separator">
+							<i class="icon-arrow-right"></i>
+						</li>
+						<li class="nav-item">
+							<a asp-area="Admin" asp-controller="User" asp-action="Index">User Index</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+
+			<div class="ms-md-auto py-2 py-md-0">
+				<button class="btn btn-primary btn-round me-2" id="btnAdd">
+					<i class="fa fa-plus"></i> Add User
+				</button>
+				<button class="btn btn-warning btn-round" id="btnRefresh">
+					<i class="fas fa-rotate fa-spin"></i> Refresh
+				</button>
+			</div>
+		</div>
+
+		<div id="modalPlaceHolder" aria-hidden="true"></div>
+
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<div class="card-header">
+						<h4 class="card-title">
+							<i class="fas fa-users me-2 text-primary"></i>
+							Users
+						</h4>
+						<div class="spinner-border text-info" role="status" style="display: none;">
+							<span class="visually-hidden">Loading...</span>
+						</div>
+					</div>
+
+					<div class="card-body">
+						<div class="table-responsive">
+							<table id="usersTable" class="display table table-striped table-hover">
+								<thead>
+									<tr>
+										<th class="text-center align-middle">ID</th>
+										<th class="text-center align-middle">User Name</th>
+										<th class="text-center align-middle">E-Mail</th>
+										<th class="text-center align-middle">Phone Number</th>
+										<th class="text-center align-middle">Image</th>
+										<th class="text-center align-middle">Action</th>
 									</tr>
-								}
-							</tbody>
-						</table>
+								</thead>
+								<tfoot>
+									<tr>
+										<th class="text-center align-middle">ID</th>
+										<th class="text-center align-middle">User Name</th>
+										<th class="text-center align-middle">E-Mail</th>
+										<th class="text-center align-middle">Phone Number</th>
+										<th class="text-center align-middle">Image</th>
+										<th class="text-center align-middle">Action</th>
+									</tr>
+								</tfoot>
+								<tbody>
+									@foreach (var user in Model.Users)
+									{
+										<tr name="@user.Id">
+											<td class="text-center align-middle">@user.Id</td>
+											<td class="text-center align-middle">@user.UserName</td>
+											<td class="text-center align-middle">@user.Email</td>
+											<td class="text-center align-middle">@user.PhoneNumber</td>
+											<td class="text-center align-middle">
+												<img src="~/images/@user.Picture"
+													 alt="@user.UserName"
+													 class="my-image-table"
+													 title="@user.UserName" />
+											</td>
+											<td class="text-center align-middle">
+												<div class="form-button-action">
+													<button class="btn btn-link btn-primary btn-update" data-id="@user.Id">
+														<span class="fas fa-pen-to-square"></span>
+													</button>
+													<button class="btn btn-link btn-danger btn-delete" data-id="@user.Id">
+														<span class="fas fa-trash"></span>
+													</button>
+												</div>
+											</td>
+										</tr>
+									}
+								</tbody>
+							</table>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-
 }
 
 @if (Model.ResultStatus == ResultStatus.Error)
 {
-	<div class="alert alert-danger" mt-3>
+	<div class="alert alert-danger mt-3">
 		@Model.Message <br />
-		Go to the dashboard page <a class="alert-link" asp-area="Admin" asp-controller="Home" asp-action="Index">by clicking here</a>.
+		Go to the dashboard page
+		<a class="alert-link" asp-area="Admin" asp-controller="Home" asp-action="Index">by clicking here</a>.
 	</div>
 }
+
 @section Scripts {
 	<script src="~/js/userIndex.js" type="application/ecmascript"></script>
 }

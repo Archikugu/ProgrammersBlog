@@ -21,26 +21,15 @@ public class CategoryManager : ICategoryService
         _mapper = mapper;
     }
 
-    public async Task<IDataResult<CategoryDto>> Add(CategoryAddDto categoryAddDto, string createdByName)
+    /// <summary>
+    /// Adds a new category asynchronously.
+    /// </summary>
+    /// <param name="categoryAddDto">The data transfer object containing the new category's information.</param>
+    /// <param name="createdByName">The username of the person who created the category.</param>
+    /// <returns>Returns a result wrapped in a <see cref="Task"/> that contains the added category and status information.</returns>
+
+    public async Task<IDataResult<CategoryDto>> AddAsync(CategoryAddDto categoryAddDto, string createdByName)
     {
-        //await _unitOfWork.Categories.AddAsync(new Category
-        //{
-        //    Name = categoryAddDto.Name,
-        //    Description = categoryAddDto.Description,
-        //    Note = categoryAddDto.Note,
-        //    IsActive = categoryAddDto.IsActive,
-        //    CreatedByName = createdByName,
-        //    ModifiedByName = createdByName,
-        //    CreatedDate = DateTime.Now,
-        //    ModifiedDate = DateTime.Now,
-        //    IsDeleted = false
-        //}).ContinueWith(t => _unitOfWork.SaveAsync());
-        //return new Result(ResultStatus.Success, $"{categoryAddDto.Name} category has been successfully added");
-
-        //continue with -> await _unitOfWork.SaveAsync();
-
-        // Add Auto Mapper
-
         var category = _mapper.Map<Category>(categoryAddDto);
         category.CreatedByName = createdByName;
         category.ModifiedByName = createdByName;
@@ -53,28 +42,17 @@ public class CategoryManager : ICategoryService
                 ResultStatus = ResultStatus.Success,
                 Message = Messages.Category.Add(addedCategory.Name)
             });
-
     }
-    public async Task<IDataResult<CategoryDto>> Update(CategoryUpdateDto categoryUpdateDto, string modifiedByName)
+
+    /// <summary>
+    /// Updates an existing category asynchronously.
+    /// </summary>
+    /// <param name="categoryUpdateDto">The DTO containing the updated category data.</param>
+    /// <param name="modifiedByName">The username of the person who modified the category.</param>
+    /// <returns>Returns a result wrapped in a <see cref="Task"/> that includes the updated category and operation status.</returns>
+
+    public async Task<IDataResult<CategoryDto>> UpdateAsync(CategoryUpdateDto categoryUpdateDto, string modifiedByName)
     {
-        //var category = await _unitOfWork.Categories.GetAsync(c => c.Id == categoryUpdateDto.Id);
-
-        //if (category != null)
-        //{
-        //    category.Name = categoryUpdateDto.Name;
-        //    category.Description = categoryUpdateDto.Description;
-        //    category.Note = categoryUpdateDto.Note;
-        //    category.IsActive = categoryUpdateDto.IsActive;
-        //    category.IsDeleted = categoryUpdateDto.IsDeleted;
-        //    category.ModifiedByName = modifiedByName;
-        //    category.ModifiedDate = DateTime.Now;
-        //    await _unitOfWork.Categories.UpdateAsync(category).ContinueWith(t => _unitOfWork.SaveAsync());
-        //    return new Result(ResultStatus.Success, $"{categoryUpdateDto.Name} category has been successfully updated");
-        //}
-        //return new Result(ResultStatus.Error, "An error occurred while updating the category. Category cannot be found", null);
-
-        //Add Auto Mapper
-
         var oldCategory = await _unitOfWork.Categories.GetAsync(c => c.Id == categoryUpdateDto.Id);
 
         var category = _mapper.Map<CategoryUpdateDto, Category>(categoryUpdateDto, oldCategory);
@@ -90,7 +68,13 @@ public class CategoryManager : ICategoryService
             });
     }
 
-    public async Task<IDataResult<CategoryDto>> Delete(int categoryId, string modifiedByName)
+    /// <summary>
+    /// Soft deletes a category by setting its IsDeleted and IsActive flags.
+    /// </summary>
+    /// <param name="categoryId">The ID of the category to be deleted.</param>
+    /// <param name="modifiedByName">The username of the person performing the deletion.</param>
+    /// <returns>Returns the result of the operation including the updated category data.</returns>
+    public async Task<IDataResult<CategoryDto>> DeleteAsync(int categoryId, string modifiedByName)
     {
         var category = await _unitOfWork.Categories.GetAsync(c => c.Id == categoryId, c => c.Articles);
         if (category != null)
@@ -118,9 +102,14 @@ public class CategoryManager : ICategoryService
                });
     }
 
-    public async Task<IDataResult<CategoryDto>> Get(int categoryId)
+    /// <summary>
+    /// Retrieves a category with the specified ID.
+    /// </summary>
+    /// <param name="categoryId">The ID of the category to retrieve.</param>
+    /// <returns>Returns a data result containing the category if found.</returns>
+    public async Task<IDataResult<CategoryDto>> GetAsync(int categoryId)
     {
-        var category = await _unitOfWork.Categories.GetAsync(c => c.Id == categoryId, c => c.Articles);
+        var category = await _unitOfWork.Categories.GetAsync(c => c.Id == categoryId);
         if (category != null)
         {
             return new DataResult<CategoryDto>(ResultStatus.Success, new CategoryDto
@@ -137,9 +126,13 @@ public class CategoryManager : ICategoryService
         });
     }
 
-    public async Task<IDataResult<CategoryListDto>> GetAll()
+    /// <summary>
+    /// Retrieves all categories.
+    /// </summary>
+    /// <returns>Returns a list of all categories.</returns>
+    public async Task<IDataResult<CategoryListDto>> GetAllAsync()
     {
-        var categories = await _unitOfWork.Categories.GetAllAsync(null, c => c.Articles);
+        var categories = await _unitOfWork.Categories.GetAllAsync(null);
         if (categories.Count > -1)
         {
             return new DataResult<CategoryListDto>(ResultStatus.Error, new CategoryListDto
@@ -156,9 +149,13 @@ public class CategoryManager : ICategoryService
         });
     }
 
-    public async Task<IDataResult<CategoryListDto>> GetAllByNonDeleted()
+    /// <summary>
+    /// Retrieves all categories that are not marked as deleted.
+    /// </summary>
+    /// <returns>Returns a list of non-deleted categories.</returns>
+    public async Task<IDataResult<CategoryListDto>> GetAllByNonDeletedAsync()
     {
-        var categories = await _unitOfWork.Categories.GetAllAsync(c => !c.IsDeleted, c => c.Articles);
+        var categories = await _unitOfWork.Categories.GetAllAsync(c => !c.IsDeleted);
         if (categories.Count > -1)
         {
             return new DataResult<CategoryListDto>(ResultStatus.Error, new CategoryListDto
@@ -175,9 +172,14 @@ public class CategoryManager : ICategoryService
         });
     }
 
-    public async Task<IDataResult<CategoryListDto>> GetAllByNonDeletedAndActive()
+
+    /// <summary>
+    /// Retrieves all categories that are both not deleted and active.
+    /// </summary>
+    /// <returns>Returns a list of active, non-deleted categories.</returns>
+    public async Task<IDataResult<CategoryListDto>> GetAllByNonDeletedAndActiveAsync()
     {
-        var categories = await _unitOfWork.Categories.GetAllAsync(c => !c.IsDeleted && c.IsActive, c => c.Articles);
+        var categories = await _unitOfWork.Categories.GetAllAsync(c => !c.IsDeleted && c.IsActive);
         if (categories.Count > -1)
         {
             return new DataResult<CategoryListDto>(ResultStatus.Success, new CategoryListDto
@@ -189,7 +191,12 @@ public class CategoryManager : ICategoryService
         return new DataResult<CategoryListDto>(ResultStatus.Error, Messages.Category.NotFound(isPlural: true), null);
     }
 
-    public async Task<IResult> HardDelete(int categoryId)
+    /// <summary>
+    /// Permanently deletes a category from the database.
+    /// </summary>
+    /// <param name="categoryId">The ID of the category to delete permanently.</param>
+    /// <returns>Returns the result of the delete operation.</returns>
+    public async Task<IResult> HardDeleteAsync(int categoryId)
     {
         var category = await _unitOfWork.Categories.GetAsync(c => c.Id == categoryId, c => c.Articles);
         if (category != null)
@@ -201,7 +208,13 @@ public class CategoryManager : ICategoryService
         return new Result(ResultStatus.Error, Messages.Category.HardDelete(category.Name), null);
     }
 
-    public async Task<IDataResult<CategoryUpdateDto>> GetCategoryUpdateDto(int categoryId)
+    /// <summary>
+    /// Returns the CategoryUpdateDto representation of the category with the given ID parameter.
+    /// </summary>
+    /// <param name="categoryId">An integer ID value greater than 0</param>
+    /// <returns>Returns the result as a DataResult of type Task through an asynchronous operation</returns>
+
+    public async Task<IDataResult<CategoryUpdateDto>> GetCategoryUpdateDtoAsync(int categoryId)
     {
         var result = await _unitOfWork.Categories.AnyAsync(c => c.Id == categoryId);
         if (result)
@@ -217,7 +230,11 @@ public class CategoryManager : ICategoryService
 
     }
 
-    public async Task<IDataResult<int>> Count()
+    /// <summary>
+    /// Counts the total number of categories in the database.
+    /// </summary>
+    /// <returns>Returns the total count as a data result.</returns>
+    public async Task<IDataResult<int>> CountAsync()
     {
         var categoriesCount = await _unitOfWork.Categories.CountAsync();
         if (categoriesCount > -1)
@@ -230,7 +247,12 @@ public class CategoryManager : ICategoryService
         }
     }
 
-    public async Task<IDataResult<int>> CountByIsDeleted()
+
+    /// <summary>
+    /// Counts the number of categories that are not deleted.
+    /// </summary>
+    /// <returns>Returns the count of non-deleted categories.</returns>
+    public async Task<IDataResult<int>> CountByNonDeletedAsync()
     {
         var categoriesCount = await _unitOfWork.Categories.CountAsync(c => !c.IsDeleted);
         if (categoriesCount > -1)
