@@ -1,0 +1,151 @@
+﻿@using ProgrammersBlog.MvcUI.Areas.Admin.Models.ArticleViewModel
+@model ArticleUpdateViewModel
+@{
+	ViewData["Title"] = "Article Update";
+	Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<style>
+	textarea {
+		resize: vertical;
+	}
+
+	input[type="file"] {
+		width: 100%;
+	}
+</style>
+
+<div class="page-inner">
+	<div class="page-header mb-4">
+		<h3 class="fw-bold">Add New Article</h3>
+		<ul class="breadcrumbs">
+			<li class="nav-home">
+				<a asp-area="Admin" asp-controller="Home" asp-action="Index">
+					<i class="icon-home"></i>
+				</a>
+			</li>
+			<li class="separator"><i class="icon-arrow-right"></i></li>
+			<li class="nav-item">
+				<a asp-area="Admin" asp-controller="Article" asp-action="Index">Articles</a>
+			</li>
+			<li class="separator"><i class="icon-arrow-right"></i></li>
+			<li class="nav-item">
+				<a asp-area="Admin" asp-controller="Article" asp-action="Update">Update Article</a>
+			</li>
+		</ul>
+	</div>
+
+	<form asp-controller="Article" asp-action="Update" method="post" enctype="multipart/form-data">
+		<div asp-validation-summary="All" class="text-danger"></div>
+		<div class="row align-items-stretch">
+			<!-- Main Content -->
+			<div class="col-md-8 d-flex flex-column">
+				<div class="card shadow-sm mb-3 flex-fill">
+					<div class="card-body">
+						<input type="hidden" asp-for="Id" />
+						<input type="hidden" asp-for="UserId" />
+						<div class="form-group mb-3">
+							<label for="articleTitle" class="fw-semibold">Title</label>
+							<input type="text" id="articleTitle" asp-for="Title" class="form-control" placeholder="Enter article title" required />
+							<span asp-validation-for="Title" class="text-danger"></span>
+						</div>
+						<div class="form-group">
+							<textarea id="text-editor" asp-for="Content" class="form-control" rows="10" placeholder="Write your article..."></textarea>
+							<span asp-validation-for="Content" class="text-danger"></span>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Sidebar -->
+			<div class="col-md-4 d-flex flex-column">
+				<div class="card shadow-sm mb-3 flex-fill">
+					<div class="card-header fw-semibold">Basic Configuration</div>
+					<div class="card-body">
+						<div class="form-group mb-3">
+							<label for="categoryList" asp-for="CategoryId"></label>
+							<select id="categoryList" class="form-control" asp-for="CategoryId" asp-items="@(new SelectList(Model.Categories,"Id","Name"))" required></select>
+							<span asp-validation-for="CategoryId" class="text-danger"></span>
+						</div>
+						<div class="form-group mb-3">
+							<label for="datepicker" asp-for="Date"></label>
+							<input type="text" id="datepicker" asp-for="Date" class="form-control" value="@DateTime.Now.ToShortDateString()" />
+							<span asp-validation-for="Date" class="text-danger"></span>
+						</div>
+
+						<div class="form-group mb-3">
+							<label for="note" asp-for="Note"></label>
+							<input type="text" id="note" asp-for="Note" class="form-control" />
+							<span asp-validation-for="Note" class="text-danger"></span>
+						</div>
+
+						<div class="form-group mb-3">
+							<label for="thumbnail" asp-for="Thumbnail"></label>
+							<input type="hidden" id="thumbnail" asp-for="Thumbnail" class="form-control-file" />
+							<img class="my-image d-block mb-2 rounded" src="~/images/@Model.Thumbnail" alt="@Model.Title" style="max-width: 100px;" />
+							<span asp-validation-for="Thumbnail" class="text-danger"></span>
+						</div>
+						<div class="form-group mb-3">
+							<label for="thumbnailUpload" asp-for="ThumbnailFile"></label>
+							<input type="file" id="thumbnailUpload" asp-for="ThumbnailFile" class="form-control-file" accept="image/*" />
+							<span asp-validation-for="ThumbnailFile" class="text-danger"></span>
+						</div>
+						<div class="form-check mb-3">
+							<input type="checkbox" id="isActive" asp-for="IsActive" class="form-check-input" />
+							<label for="isActive" class="form-check-label" asp-for="IsActive"></label>
+							<span asp-validation-for="IsActive" class="text-danger"></span>
+						</div>
+						<button type="submit" class="btn btn-success w-100">Save Article</button>
+					</div>
+				</div>
+			</div>
+
+			<!-- SEO Section -->
+			<div class="col-md-12">
+				<div class="card shadow-sm">
+					<div class="card-header fw-semibold">SEO Optimization</div>
+					<div class="card-body">
+						<div class="row">
+							<div class="form-group col-md-6 mb-3">
+								<label for="seoWriter" asp-for="SeoAuthor"></label>
+								<input type="text" id="seoWriter" asp-for="SeoAuthor" class="form-control" placeholder="e.g. John Doe" />
+								<span asp-validation-for="SeoAuthor" class="text-danger"></span>
+							</div>
+							<div class="form-group col-md-6 mb-3">
+								<label for="seoTags" asp-for="SeoTags"></label>
+								<input type="text" id="seoTags" asp-for="SeoTags" class="form-control" placeholder="e.g. technology, programming" />
+								<span asp-validation-for="SeoTags" class="text-danger"></span>
+							</div>
+							<div class="form-group col-md-12">
+								<label for="seoDescription" asp-for="SeoDescription"></label>
+								<textarea id="seoDescription" asp-for="SeoDescription" class="form-control" rows="4" placeholder="Short description for SEO..."></textarea>
+								<span asp-validation-for="SeoDescription" class="text-danger"></span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+
+@section Scripts {
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.27.3/trumbowyg.min.js" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.27.3/langs/tr.min.js" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.27.3/plugins/colors/trumbowyg.colors.min.js" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.27.3/plugins/emoji/trumbowyg.emoji.min.js" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.27.3/plugins/fontfamily/trumbowyg.fontfamily.min.js" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.27.3/plugins/fontsize/trumbowyg.fontsize.min.js" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.14.1/jquery-ui.min.js" crossorigin="anonymous"></script>
+	<script src="~/js/articleAdd.js" type="application/ecmascript"></script>
+}
+
+@section Styles {
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.27.3/ui/trumbowyg.min.css" crossorigin="anonymous" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.27.3/plugins/colors/ui/trumbowyg.colors.min.css" crossorigin="anonymous" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.27.3/plugins/emoji/ui/trumbowyg.emoji.min.css" crossorigin="anonymous" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.14.1/themes/dot-luv/jquery-ui.min.css" crossorigin="anonymous" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.14.1/themes/dot-luv/theme.min.css" crossorigin="anonymous" />
+	<link href="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/css/tom-select.bootstrap5.min.css" rel="stylesheet">
+}

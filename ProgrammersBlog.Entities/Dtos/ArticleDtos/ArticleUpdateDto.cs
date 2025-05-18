@@ -61,4 +61,11 @@ public class ArticleUpdateDto
     [DisplayName("Is Deleted ?")]
     [Required(ErrorMessage = "{0} cannot be empty")]
     public bool IsDeleted { get; set; }
+
+    [DisplayName("Note")]
+    [MaxLength(500, ErrorMessage = "{0} cannot be more than {1} characters")]
+    public string? Note { get; set; }
+
+    [Required]
+    public int UserId { get; set; }
 }

@@ -2,6 +2,7 @@ using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using ProgrammersBlog.Business.Extensions;
 using ProgrammersBlog.DataAccess.Concrete.EntityFramework.Contexts;
+using ProgrammersBlog.MvcUI.AutoMapper;
 using ProgrammersBlog.MvcUI.Helpers.Abstract;
 using ProgrammersBlog.MvcUI.Helpers.Concrete;
 
@@ -12,10 +13,11 @@ builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation().AddJsonO
 {
     opt.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
     opt.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
-});
+}).AddNToastNotifyToastr();
 
 builder.Services.AddSession();
 builder.Services.LoadMyServices();
+builder.Services.AddAutoMapper(typeof(ViewModelsProfile));
 builder.Services.AddScoped<IImageHelper, ImageHelper>();
 
 builder.Services.ConfigureApplicationCookie(options =>
@@ -57,6 +59,8 @@ app.UseSession();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseNToastNotify();
 
 app.UseStatusCodePagesWithReExecute("/ErrorPage/Error404", "?code={0}");
 

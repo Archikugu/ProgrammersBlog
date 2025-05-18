@@ -1,0 +1,6 @@
+﻿//DataTable a bak tam çalışmıyor sıralama yapınca yeni eklenen article gelmiyor 
+
+//Article Add yapınca note kısmını nullabile yap 
+
+//Article sayfasında refresh yapınca ikinci sayfadaki veriler gelmiyor excel vs 0 değer dönüyor
+

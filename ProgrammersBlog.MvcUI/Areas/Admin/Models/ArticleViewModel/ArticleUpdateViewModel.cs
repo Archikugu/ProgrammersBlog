@@ -1,11 +1,15 @@
-﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel;
 using ProgrammersBlog.Entities.Concrete;
 
-namespace ProgrammersBlog.Entities.Dtos.ArticleDtos;
 
-public class ArticleAddDto
+namespace ProgrammersBlog.MvcUI.Areas.Admin.Models.ArticleViewModel;
+
+public class ArticleUpdateViewModel
 {
+    [Required]
+    public int Id { get; set; }
+
     [DisplayName("Title")]
     [Required(ErrorMessage = "{0} cannot be empty")]
     [MaxLength(100, ErrorMessage = "{0} cannot be more than {1} characters")]
@@ -18,10 +22,10 @@ public class ArticleAddDto
     public string Content { get; set; }
 
     [DisplayName("Thumbnail")]
-    [Required(ErrorMessage = "{0} cannot be empty")]
-    [MaxLength(250, ErrorMessage = "{0} cannot be more than {1} characters")]
-    [MinLength(5, ErrorMessage = "{0} cannot be less than {1} characters")]
     public string Thumbnail { get; set; }
+
+    [DisplayName("Thumbnail Add")]
+    public IFormFile? ThumbnailFile { get; set; }
 
     [DisplayName("Date")]
     [Required(ErrorMessage = "{0} cannot be empty")]
@@ -34,13 +38,13 @@ public class ArticleAddDto
     [MinLength(0, ErrorMessage = "{0} cannot be less than {1} characters")]
     public string SeoAuthor { get; set; }
 
-    [DisplayName("Seo Description")]
+    [DisplayName("Article Description")]
     [Required(ErrorMessage = "{0} cannot be empty")]
     [MaxLength(70, ErrorMessage = "{0} cannot be more than {1} characters")]
     [MinLength(0, ErrorMessage = "{0} cannot be less than {1} characters")]
     public string SeoDescription { get; set; }
 
-    [DisplayName("Seo Tags")]
+    [DisplayName("Article Tags")]
     [Required(ErrorMessage = "{0} cannot be empty")]
     [MaxLength(70, ErrorMessage = "{0} cannot be more than {1} characters")]
     [MinLength(0, ErrorMessage = "{0} cannot be less than {1} characters")]
@@ -49,13 +53,17 @@ public class ArticleAddDto
     [DisplayName("Category")]
     [Required(ErrorMessage = "{0} cannot be empty")]
     public int CategoryId { get; set; }
-    public Category Category { get; set; }
 
     [DisplayName("Is Active ?")]
     [Required(ErrorMessage = "{0} cannot be empty")]
     public bool IsActive { get; set; }
 
-    [DisplayName("Note")]
+ [DisplayName("Note")]
     [MaxLength(500, ErrorMessage = "{0} cannot be more than {1} characters")]
-    public string? Note { get; set; }
+    public string Note { get; set; }
+
+    [Required]
+    public int UserId { get; set; }
+
+    public IList<Category> Categories { get; set; }
 }

@@ -5,8 +5,8 @@ using ProgrammersBlog.Core.Utilities.Results.Abstract;
 using ProgrammersBlog.Core.Utilities.Results.ComplexTypes;
 using ProgrammersBlog.Core.Utilities.Results.Concrete;
 using ProgrammersBlog.DataAccess.Abstract;
-using ProgrammersBlog.Entities.Concrete;
 using ProgrammersBlog.Entities.Dtos.ArticleDtos;
+using Article = ProgrammersBlog.Entities.Concrete.Article;
 
 namespace ProgrammersBlog.Business.Concrete;
 
@@ -20,12 +20,12 @@ public class ArticleManager : IArticleService
         _mapper = mapper;
     }
 
-    public async Task<IResult> AddAsync(ArticleAddDto articleAddDto, string createdByName)
+    public async Task<IResult> AddAsync(ArticleAddDto articleAddDto, string createdByName, int userId)
     {
         var article = _mapper.Map<Article>(articleAddDto);
         article.CreatedByName = createdByName;
         article.ModifiedByName = createdByName;
-        article.UserId = 1;
+        article.UserId = userId;
         await _unitOfWork.Articles.AddAsync(article);
         await _unitOfWork.SaveAsync();
         return new Result(ResultStatus.Success, Messages.Article.Add(article.Title));
@@ -138,10 +138,10 @@ public class ArticleManager : IArticleService
 
     public async Task<IResult> UpdateAsync(ArticleUpdateDto articleUpdateDto, string modifiedByName)
     {
-        var article = _mapper.Map<Article>(articleUpdateDto);
-        article.ModifiedByName = modifiedByName;
+        var oldArticle = await _unitOfWork.Articles.GetAsync(a => a.Id == articleUpdateDto.Id);
+        var article = _mapper.Map<ArticleUpdateDto, Article>(articleUpdateDto, oldArticle);
+        article.ModifiedByName = modifiedByName; 
 
-        //await _unitOfWork.Articles.UpdateAsync(article).ContinueWith(t => _unitOfWork.SaveAsync());
         await _unitOfWork.Articles.UpdateAsync(article);
         await _unitOfWork.SaveAsync();
         return new Result(ResultStatus.Success, Messages.Article.Update(article.Title));
@@ -170,6 +170,21 @@ public class ArticleManager : IArticleService
         else
         {
             return new DataResult<int>(ResultStatus.Error, "An unexpected error occurred", -1);
+        }
+    }
+
+    public async Task<IDataResult<ArticleUpdateDto>> GetArticleUpdateAsync(int articleId)
+    {
+        var result = await _unitOfWork.Articles.AnyAsync(a => a.Id == articleId);
+        if (result)
+        {
+            var article = await _unitOfWork.Articles.GetAsync(a => a.Id == articleId);
+            var articleUpdateDto = _mapper.Map<ArticleUpdateDto>(article);
+            return new DataResult<ArticleUpdateDto>(ResultStatus.Success, articleUpdateDto);
+        }
+        else
+        {
+            return new DataResult<ArticleUpdateDto>(ResultStatus.Error, Messages.Article.NotFound(isPlural: false), null);
         }
     }
 }

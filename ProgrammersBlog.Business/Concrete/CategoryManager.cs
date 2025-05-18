@@ -135,10 +135,10 @@ public class CategoryManager : ICategoryService
         var categories = await _unitOfWork.Categories.GetAllAsync(null);
         if (categories.Count > -1)
         {
-            return new DataResult<CategoryListDto>(ResultStatus.Error, new CategoryListDto
+            return new DataResult<CategoryListDto>(ResultStatus.Success, new CategoryListDto
             {
                 Categories = categories,
-                ResultStatus = ResultStatus.Success,
+                ResultStatus = ResultStatus.Success
             });
         }
         return new DataResult<CategoryListDto>(ResultStatus.Error, Messages.Category.NotFound(isPlural: true), new CategoryListDto
@@ -158,10 +158,10 @@ public class CategoryManager : ICategoryService
         var categories = await _unitOfWork.Categories.GetAllAsync(c => !c.IsDeleted);
         if (categories.Count > -1)
         {
-            return new DataResult<CategoryListDto>(ResultStatus.Error, new CategoryListDto
+            return new DataResult<CategoryListDto>(ResultStatus.Success, new CategoryListDto
             {
                 Categories = categories,
-                ResultStatus = ResultStatus.Success,
+                ResultStatus = ResultStatus.Success
             });
         }
         return new DataResult<CategoryListDto>(ResultStatus.Error, Messages.Category.NotFound(isPlural: true), new CategoryListDto
@@ -171,7 +171,6 @@ public class CategoryManager : ICategoryService
             Message = Messages.Category.NotFound(isPlural: true)
         });
     }
-
 
     /// <summary>
     /// Retrieves all categories that are both not deleted and active.

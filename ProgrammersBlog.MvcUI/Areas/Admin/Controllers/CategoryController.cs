@@ -1,22 +1,26 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ProgrammersBlog.Business.Abstract;
 using ProgrammersBlog.Core.Utilities.Extensions;
 using ProgrammersBlog.Core.Utilities.Results.ComplexTypes;
+using ProgrammersBlog.Entities.Concrete;
 using ProgrammersBlog.Entities.Dtos.CategoryDtos;
 using ProgrammersBlog.MvcUI.Areas.Admin.Models.CategoryAjaxViewModels;
+using ProgrammersBlog.MvcUI.Helpers.Abstract;
 
 namespace ProgrammersBlog.MvcUI.Areas.Admin.Controllers;
 
 [Area("Admin")]
 [Authorize(Roles = "Admin,Editor")]
-public class CategoryController : Controller
+public class CategoryController : BaseController
 {
     private readonly ICategoryService _categoryService;
 
-    public CategoryController(ICategoryService categoryService)
+    public CategoryController(ICategoryService categoryService, UserManager<User> userManager, IMapper mapper, IImageHelper imageHelper) : base(userManager, mapper, imageHelper)
     {
         _categoryService = categoryService;
     }
@@ -37,7 +41,7 @@ public class CategoryController : Controller
     {
         if (ModelState.IsValid)
         {
-            var result = await _categoryService.AddAsync(categoryAddDto, "Gokhan Gok");
+            var result = await _categoryService.AddAsync(categoryAddDto, LoggedInUser.UserName);
             if (result.ResultStatus == ResultStatus.Success)
             {
                 var categoryAddAjaxModel = JsonSerializer.Serialize(new CategoryAddAjaxViewModel
@@ -68,7 +72,7 @@ public class CategoryController : Controller
     [HttpPost]
     public async Task<JsonResult> Delete(int categoryId)
     {
-        var result = await _categoryService.DeleteAsync(categoryId, "Gokhan Gok");
+        var result = await _categoryService.DeleteAsync(categoryId, LoggedInUser.UserName);
         var deletedCategory = JsonSerializer.Serialize(result.Data);
         return Json(deletedCategory);
     }
@@ -91,7 +95,7 @@ public class CategoryController : Controller
     {
         if (ModelState.IsValid)
         {
-            var result = await _categoryService.UpdateAsync(categoryUpdateDto, "Gokhan Gok");
+            var result = await _categoryService.UpdateAsync(categoryUpdateDto, LoggedInUser.UserName);
             if (result.ResultStatus == ResultStatus.Success)
             {
                 var categoryUpdateAjaxModel = JsonSerializer.Serialize(new CategoryUpdateAjaxViewModel

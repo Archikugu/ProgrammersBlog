@@ -1,0 +1,134 @@
+﻿@using ProgrammersBlog.Entities.Dtos.ArticleDtos
+@model ArticleListDto
+
+@{
+	ViewData["Title"] = "Article Index";
+	Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="page-inner">
+	<div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
+		<div>
+			<div class="page-header">
+				<h3 class="fw-bold mb-3">Articles</h3>
+				<ul class="breadcrumbs mb-3">
+					<li class="nav-home">
+						<a asp-area="Admin" asp-controller="Home" asp-action="Index">
+							<i class="icon-home"></i>
+						</a>
+					</li>
+					<li class="separator">
+						<i class="icon-arrow-right"></i>
+					</li>
+					<li class="nav-item">
+						<a asp-area="Admin" asp-controller="Article" asp-action="Index">Article Index</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="ms-md-auto py-2 py-md-0">
+			<button class="btn btn-primary btn-round me-2" id="btnAdd">
+				<i class="fa fa-plus"></i> Add Article
+			</button>
+			<button class="btn btn-warning btn-round" id="btnRefresh">
+				<i class="fas fa-rotate fa-spin"></i> Refresh
+			</button>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-12">
+			<div class="card">
+				<div class="card-header">
+					<h4 class="card-title">
+						<i class="fas fa-file-alt me-2 text-primary"></i>
+						Articles
+					</h4>
+				</div>
+				<div class="card-body">
+					<div class="table-responsive">
+						<table id="articlesTable"
+							   class="display table table-striped table-hover">
+							<thead>
+								<tr>
+									<th class="text-center align-middle">Id</th>
+									<th class="text-center align-middle">Category</th>
+									<th class="text-center align-middle">Title</th>
+									<th class="text-center align-middle">Thumbnail</th>
+									<th class="text-center align-middle">Date</th>
+									<th class="text-center align-middle">Views Count</th>
+									<th class="text-center align-middle">Comment Count</th>
+									<th class="text-center align-middle">Is Active?</th>
+									<th class="text-center align-middle">Is Deleted?</th>
+									<th class="text-center align-middle">Created Date</th>
+									<th class="text-center align-middle">Created By Name</th>
+									<th class="text-center align-middle">Updated Date</th>
+									<th class="text-center align-middle">Updated By Name</th>
+									<th class="text-center align-middle">Action</th>
+								</tr>
+							</thead>
+							<tfoot>
+								<tr>
+									<th class="text-center align-middle">Id</th>
+									<th class="text-center align-middle">Category</th>
+									<th class="text-center align-middle">Title</th>
+									<th class="text-center align-middle">Thumbnail</th>
+									<th class="text-center align-middle">Date</th>
+									<th class="text-center align-middle">Views Count</th>
+									<th class="text-center align-middle">Comment Count</th>
+									<th class="text-center align-middle">Is Active?</th>
+									<th class="text-center align-middle">Is Deleted?</th>
+									<th class="text-center align-middle">Created Date</th>
+									<th class="text-center align-middle">Created By Name</th>
+									<th class="text-center align-middle">Updated Date</th>
+									<th class="text-center align-middle">Updated By Name</th>
+									<th class="text-center align-middle">Action</th>
+								</tr>
+							</tfoot>
+							<tbody>
+								@foreach (var article in Model.Articles)
+								{
+									<tr name="@article.Id">
+										<td class="text-center align-middle">@article.Id</td>
+										<td class="text-center align-middle">@article.Category.Name</td>
+										<td class="text-center align-middle">@article.Title</td>
+										<td class="text-center align-middle"><img src="~/images/@article.Thumbnail" class="my-image-table" /></td>
+										<td class="text-center align-middle" data-order="@article.Date.ToString("yyyy-MM-ddTHH:mm:ss")">
+											@article.Date.ToShortDateString()
+										</td>
+										<td class="text-center align-middle">@article.ViewsCount</td>
+										<td class="text-center align-middle">@article.CommentCount</td>
+										<td class="text-center align-middle">@(article.IsActive ? "Yes" : "No")</td>
+										<td class="text-center align-middle">@(article.IsDeleted ? "Yes" : "No")</td>
+										<td>@article.CreatedDate.ToShortDateString()</td>
+										<td>@article.CreatedByName</td>
+										<td>@article.ModifiedDate.ToShortDateString()</td>
+										<td>@article.ModifiedByName</td>
+										<td>
+											<div class="form-button-action">
+												<a class="btn btn-link btn-primary btn-update" data-id="@article.Id" asp-area="Admin" asp-controller="Article" asp-action="Update" asp-route-articleId="@article.Id">
+													<span class="fas fa-pen-to-square"></span>
+												</a>
+												<button class="btn btn-link btn-danger btn-delete" data-id="@article.Id">
+													<span class="fas fa-trash"></span>
+												</button>
+											</div>
+										</td>
+									</tr>
+								}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+@section Scripts {
+	<script src="~/js/articleIndex.js" type="application/ecmascript"></script>
+}
+
+@section Styles {
+
+}

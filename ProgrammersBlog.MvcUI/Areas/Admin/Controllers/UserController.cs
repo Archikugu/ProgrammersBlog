@@ -6,8 +6,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using NToastNotify;
 using ProgrammersBlog.Core.Utilities.Extensions;
 using ProgrammersBlog.Core.Utilities.Results.ComplexTypes;
+using ProgrammersBlog.Entities.ComplexTypes;
 using ProgrammersBlog.Entities.Concrete;
 using ProgrammersBlog.Entities.Dtos.UserDtos;
 using ProgrammersBlog.MvcUI.Areas.Admin.Models.UserAjaxViewModels;
@@ -22,12 +24,14 @@ public class UserController : Controller
     private readonly SignInManager<User> _signInManager;
     private readonly IMapper _mapper;
     private readonly IImageHelper _imageHelper;
-    public UserController(UserManager<User> userManager, IMapper mapper, SignInManager<User> signInManager, IImageHelper imageHelper)
+    private readonly IToastNotification _toastNotification;
+    public UserController(UserManager<User> userManager, IMapper mapper, SignInManager<User> signInManager, IImageHelper imageHelper, IToastNotification toastNotification)
     {
         _userManager = userManager;
         _mapper = mapper;
         _signInManager = signInManager;
         _imageHelper = imageHelper;
+        _toastNotification = toastNotification;
     }
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Index()
@@ -70,7 +74,7 @@ public class UserController : Controller
     {
         if (ModelState.IsValid)
         {
-            var uploadedImageDtoResult = await _imageHelper.UploadUserImage(userAddDto.UserName, userAddDto.PictureFile);
+            var uploadedImageDtoResult = await _imageHelper.Upload(userAddDto.UserName, userAddDto.PictureFile, PictureType.User);
             userAddDto.Picture = uploadedImageDtoResult.ResultStatus == ResultStatus.Success
                 ? uploadedImageDtoResult.Data.FullName
                 : "userImages/defaultUser.png";
@@ -167,7 +171,7 @@ public class UserController : Controller
             var oldUserPicture = oldUser.Picture;
             if (userUpdateDto.PictureFile != null)
             {
-                var uploadedImageDtoResult = await _imageHelper.UploadUserImage(userUpdateDto.UserName, userUpdateDto.PictureFile);
+                var uploadedImageDtoResult = await _imageHelper.Upload(userUpdateDto.UserName, userUpdateDto.PictureFile, PictureType.User);
                 userUpdateDto.Picture = uploadedImageDtoResult.ResultStatus == ResultStatus.Success
                     ? uploadedImageDtoResult.Data.FullName
                     : "userImages/defaultUser.png";
@@ -294,7 +298,7 @@ public class UserController : Controller
             var oldUserPicture = oldUser.Picture;
             if (userUpdateDto.PictureFile != null)
             {
-                var uploadedImageDtoResult = await _imageHelper.UploadUserImage(userUpdateDto.UserName, userUpdateDto.PictureFile);
+                var uploadedImageDtoResult = await _imageHelper.Upload(userUpdateDto.UserName, userUpdateDto.PictureFile, PictureType.User);
                 userUpdateDto.Picture = uploadedImageDtoResult.ResultStatus == ResultStatus.Success
                     ? uploadedImageDtoResult.Data.FullName
                     : "userImages/defaultUser.png";
@@ -313,7 +317,11 @@ public class UserController : Controller
                 {
                     _imageHelper.Delete(oldUserPicture);
                 }
-                TempData["SuccessMessage"] = $"{updatedUser.UserName} has been successfully updated.";
+
+                _toastNotification.AddWarningToastMessage($"{updatedUser.UserName} has been successfully updated.", new ToastrOptions
+                {
+                    Title = "User Change Details Succesfuly"
+                });
 
                 return View(userUpdateDto);
             }
@@ -355,7 +363,10 @@ public class UserController : Controller
                     await _userManager.UpdateSecurityStampAsync(user);
                     await _signInManager.SignOutAsync();
                     await _signInManager.PasswordSignInAsync(user, userPasswordChangeDto.NewPassword, true, false);
-                    TempData.Add("SuccessMessage", $"Your password has been successfully changed.");
+                    _toastNotification.AddSuccessToastMessage($"Your password has been successfully changed.", new ToastrOptions
+                    {
+                        Title = "User Password Change Succesfuly"
+                    });
                     return View();
                 }
                 else
