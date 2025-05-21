@@ -52,4 +52,39 @@ public static class Messages
             return $"{articleName} article has been successfully updated.";
         }
     }
+
+    //Messages for Comment
+
+    public static class Comment
+    {
+        public static string NotFound(bool isPlural)
+        {
+            return isPlural ? "No comments could be found." : "Such a comment could not be found.";
+        }
+
+        public static string Add(string createdByName)
+        {
+            return $"Comment by {createdByName} has been successfully added.";
+        }
+        public static string Approve(int commentId)
+        {
+            return $"Comment by {commentId} has been successfully approved.";
+        }
+
+        public static string Update(string createdByName)
+        {
+            return $"Comment by {createdByName} has been successfully updated.";
+        }
+
+        public static string Delete(string createdByName)
+        {
+            return $"Comment by {createdByName} has been successfully deleted.";
+        }
+
+        public static string HardDelete(string createdByName)
+        {
+            return $"Comment by {createdByName} has been permanently deleted from the database.";
+        }
+    }
+
 }

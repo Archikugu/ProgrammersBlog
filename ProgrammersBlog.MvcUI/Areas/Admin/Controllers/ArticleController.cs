@@ -13,7 +13,7 @@ using ProgrammersBlog.Entities.ComplexTypes;
 using ProgrammersBlog.Entities.Concrete;
 using ProgrammersBlog.Entities.Dtos.ArticleDtos;
 using ProgrammersBlog.Entities.Dtos.UserDtos;
-using ProgrammersBlog.MvcUI.Areas.Admin.Models.ArticleViewModel;
+using ProgrammersBlog.MvcUI.Areas.Admin.Models.ArticleViewModels;
 using ProgrammersBlog.MvcUI.Helpers.Abstract;
 using ProgrammersBlog.MvcUI.Helpers.Concrete;
 

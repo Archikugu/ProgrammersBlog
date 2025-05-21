@@ -1,0 +1,127 @@
+﻿@using ProgrammersBlog.Entities.Dtos.CommentDtos
+@model CommentListDto
+
+@{
+	ViewData["Title"] = "Comment Index";
+	Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="page-inner">
+	<div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
+		<div>
+			<div class="page-header">
+				<h3 class="fw-bold mb-3">Comments</h3>
+				<ul class="breadcrumbs mb-3">
+					<li class="nav-home">
+						<a asp-area="Admin" asp-controller="Home" asp-action="Index">
+							<i class="icon-home"></i>
+						</a>
+					</li>
+					<li class="separator">
+						<i class="icon-arrow-right"></i>
+					</li>
+					<li class="nav-item">
+						<a asp-area="Admin" asp-controller="Comment" asp-action="Index">Comments</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="ms-md-auto py-2 py-md-0">
+			<button class="btn btn-warning btn-round" id="btnRefresh">
+				<i class="fas fa-rotate fa-spin"></i> Refresh
+			</button>
+		</div>
+	</div>
+
+	<div id="modalPlaceHolder" aria-hidden="true"></div>
+
+	<div class="row">
+		<div class="col-md-12">
+			<div class="card">
+				<div class="card-header">
+					<h4 class="card-title">
+						<i class="fas fa-comments me-2 text-primary"></i>
+						Comments
+					</h4>
+				</div>
+				<div class="card-body">
+					<div class="table-responsive">
+						<table id="commentsTable" class="display table table-striped table-hover">
+							<thead>
+								<tr>
+									<th>#</th>
+									<th>Article</th>
+									<th>Comment</th>
+									<th>Is Active?</th>
+									<th>Is Deleted?</th>
+									<th>Created Date</th>
+									<th>Created By</th>
+									<th>Modified Date</th>
+									<th>Modified By</th>
+									<th>Actions</th>
+								</tr>
+							</thead>
+							<tfoot>
+								<tr>
+									<th>#</th>
+									<th>Article</th>
+									<th>Comment</th>
+									<th>Is Active?</th>
+									<th>Is Deleted?</th>
+									<th>Created Date</th>
+									<th>Created By</th>
+									<th>Modified Date</th>
+									<th>Modified By</th>
+									<th>Actions</th>
+								</tr>
+							</tfoot>
+							<tbody>
+								@foreach (var comment in Model.Comments)
+								{
+									<tr name="@comment.Id">
+										<td class="text-center">@comment.Id</td>
+										<td class="text-center">@comment.Article.Title</td>
+										<td class="text-center">@(comment.Text.Length > 75 ? comment.Text.Substring(0, 75) + "..." : comment.Text)</td>
+										<td class="text-center">@(comment.IsActive ? "Yes" : "No")</td>
+										<td class="text-center">@(comment.IsDeleted ? "Yes" : "No")</td>
+										<td class="text-center">@comment.CreatedDate.ToShortDateString()</td>
+										<td class="text-center">@comment.CreatedByName</td>
+										<td class="text-center">@comment.ModifiedDate.ToShortDateString()</td>
+										<td class="text-center">@comment.ModifiedByName</td>
+										<td class="text-center">
+											<div class="form-button-action">
+												@if (!comment.IsActive)
+												{
+													<button class="btn btn-link btn-success btn-approve" data-id="@comment.Id" title="Approve">
+														<i class="fas fa-thumbs-up"></i>
+													</button>
+												}
+												<button class="btn btn-link btn-primary btn-detail" data-id="@comment.Id" title="Details">
+													<i class="fas fa-eye"></i> 
+												</button>
+												<button class="btn btn-link btn-warning btn-update mt-1" data-id="@comment.Id" title="Update">
+													<i class="fas fa-edit"></i>
+												</button>
+												<button class="btn btn-link btn-danger btn-delete mt-1" data-id="@comment.Id" title="Delete">
+													<i class="fas fa-trash"></i> 
+												</button>
+
+											</div>
+										</td>
+									</tr>
+								}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+@section Scripts {
+	<script src="~/js/commentIndex.js" type="application/ecmascript"></script>
+}
+
+@section Styles {
+}

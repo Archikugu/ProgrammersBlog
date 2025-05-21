@@ -3,10 +3,13 @@ using System.ComponentModel;
 using ProgrammersBlog.Entities.Concrete;
 
 
-namespace ProgrammersBlog.MvcUI.Areas.Admin.Models.ArticleViewModel;
+namespace ProgrammersBlog.MvcUI.Areas.Admin.Models.ArticleViewModels;
 
-public class ArticleAddViewModel
+public class ArticleUpdateViewModel
 {
+    [Required]
+    public int Id { get; set; }
+
     [DisplayName("Title")]
     [Required(ErrorMessage = "{0} cannot be empty")]
     [MaxLength(100, ErrorMessage = "{0} cannot be more than {1} characters")]
@@ -19,8 +22,10 @@ public class ArticleAddViewModel
     public string Content { get; set; }
 
     [DisplayName("Thumbnail")]
-    [Required(ErrorMessage = "{0} cannot be empty")]
-    public IFormFile ThumbnailFile { get; set; }
+    public string Thumbnail { get; set; }
+
+    [DisplayName("Thumbnail Add")]
+    public IFormFile? ThumbnailFile { get; set; }
 
     [DisplayName("Date")]
     [Required(ErrorMessage = "{0} cannot be empty")]
@@ -53,9 +58,12 @@ public class ArticleAddViewModel
     [Required(ErrorMessage = "{0} cannot be empty")]
     public bool IsActive { get; set; }
 
-    [DisplayName("Note")]
+ [DisplayName("Note")]
     [MaxLength(500, ErrorMessage = "{0} cannot be more than {1} characters")]
     public string Note { get; set; }
+
+    [Required]
+    public int UserId { get; set; }
 
     public IList<Category> Categories { get; set; }
 }

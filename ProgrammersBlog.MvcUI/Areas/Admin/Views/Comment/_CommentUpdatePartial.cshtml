@@ -1,0 +1,44 @@
+﻿@using ProgrammersBlog.Entities.Dtos.CommentDtos
+@model CommentUpdateDto
+
+<div class="modal fade" id="commentUpdateModal" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title"><span class="fas fa-pen-to-square"></span> Editing comment by ID: @Model.Id</h5>
+				<button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form asp-area="Admin" asp-controller="Comment" asp-action="Update" id="form-comment-update">
+					<input name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()" />
+					<div asp-validation-summary="All" class="text-danger" id="validation-summary" aria-hidden="true" style="display: none;"></div>
+
+					<input type="hidden" asp-for="Id" />
+					<input type="hidden" asp-for="ArticleId" />
+
+					<div class="form-group">
+						<label asp-for="Text"></label>
+						<textarea class="form-control" asp-for="Text" rows="4"></textarea>
+						<span class="text-danger" asp-validation-for="Text"></span>
+					</div>
+
+					<div class="form-group form-check">
+						<input type="checkbox" class="form-check-input" asp-for="IsActive" />
+						<label asp-for="IsActive" class="form-check-label"></label>
+						<span class="text-danger" asp-validation-for="IsActive"></span>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-warning btn-block" id="btnUpdate">
+					<span class="fas fa-save"></span> Update Comment
+				</button>
+				<button type="button" class="btn btn-danger btn-block" data-bs-dismiss="modal">
+					<span class="fas fa-times"></span> Cancel
+				</button>
+			</div>
+		</div>
+	</div>
+</div>

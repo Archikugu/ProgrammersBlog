@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using ProgrammersBlog.Entities.Dtos.ArticleDtos;
-using ProgrammersBlog.MvcUI.Areas.Admin.Models.ArticleViewModel;
+using ProgrammersBlog.MvcUI.Areas.Admin.Models.ArticleViewModels;
 
 namespace ProgrammersBlog.MvcUI.AutoMapper;
 
