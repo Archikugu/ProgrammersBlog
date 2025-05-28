@@ -2,83 +2,183 @@
 @model UserUpdateDto
 
 @{
-	ViewData["Title"] = "Edit Profile Details";
-	Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Edit Profile Details";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
 <div class="row">
-	<div class="col-lg-6 offset-lg-3">
-		<div class="card mt-2 shadow-sm border-0 rounded-4 overflow-hidden">
-			<div class="card-header bg-warning text-dark">
-				<h4 class="text-center mb-0"><i class="fas fa-user-edit me-2"></i> Edit Profile</h4>
-			</div>
+    <div class="col-lg-6 offset-lg-3">
+        <div class="card mt-2 shadow-sm border-0 rounded-4 overflow-hidden">
+            <div class="card-header bg-warning text-dark">
+                <h4 class="text-center mb-0"><i class="fas fa-user-edit me-2"></i> Edit Profile</h4>
+            </div>
 
-			<div class="card-body">
-				<form asp-controller="User" asp-action="ChangeDetails" method="post" id="form-user-update" enctype="multipart/form-data">
-					<input name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()" />
-					<div asp-validation-summary="All" class="text-danger" id="validation-summary"></div>
-					<input type="hidden" asp-for="Id" />
+            <div class="card-body">
+                <form asp-controller="User" asp-action="ChangeDetails" method="post" id="form-user-update" enctype="multipart/form-data">
+                    <input name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()" />
+                    <div asp-validation-summary="All" class="text-danger" id="validation-summary"></div>
+                    <input type="hidden" asp-for="Id" />
 
-					<!-- Username -->
-					<div class="form-group mb-2">
-						<label asp-for="UserName"></label>
-						<div class="input-group">
-							<span class="input-group-text"><i class="fas fa-user"></i></span>
-							<input class="form-control" asp-for="UserName" placeholder="Please enter your username" />
-						</div>
-						<span class="text-danger" asp-validation-for="UserName"></span>
-					</div>
+                    <!-- Username -->
+                    <div class="form-group mb-2">
+                        <label asp-for="UserName"></label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            <input class="form-control" asp-for="UserName" placeholder="Please enter your username" />
+                        </div>
+                        <span class="text-danger" asp-validation-for="UserName"></span>
+                    </div>
 
-					<!-- Email -->
-					<div class="form-group mb-2">
-						<label asp-for="Email"></label>
-						<div class="input-group">
-							<span class="input-group-text"><i class="fas fa-envelope"></i></span>
-							<input type="email" class="form-control" asp-for="Email" placeholder="Please enter your email" />
-						</div>
-						<span class="text-danger" asp-validation-for="Email"></span>
-					</div>
+                    <!-- Email -->
+                    <div class="form-group mb-2">
+                        <label asp-for="Email"></label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                            <input type="email" class="form-control" asp-for="Email" placeholder="Please enter your email" />
+                        </div>
+                        <span class="text-danger" asp-validation-for="Email"></span>
+                    </div>
 
-					<!-- Phone Number -->
-					<div class="form-group mb-2">
-						<label asp-for="PhoneNumber"></label>
-						<div class="input-group">
-							<span class="input-group-text"><i class="fas fa-phone"></i></span>
-							<input type="text" class="form-control" asp-for="PhoneNumber" placeholder="Please enter your phone number" />
-						</div>
-						<span class="text-danger" asp-validation-for="PhoneNumber"></span>
-					</div>
+                    <!-- First Name -->
+                    <div class="form-group mb-2">
+                        <label asp-for="FirstName"></label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-id-card"></i></span>
+                            <input type="text" class="form-control" asp-for="FirstName" placeholder="Please enter your first name" />
+                        </div>
+                        <span class="text-danger" asp-validation-for="FirstName"></span>
+                    </div>
 
-					<!-- Current Picture -->
-					<div class="form-group mb-2">
-						<label asp-for="Picture"></label>
-						<input asp-for="Picture" type="hidden" />
-						<img class="my-image d-block mb-2 rounded-3 shadow" src="~/images/@Model.Picture" alt="@Model.UserName" style="max-width: 150px;" />
-					</div>
+                    <!-- Last Name -->
+                    <div class="form-group mb-2">
+                        <label asp-for="LastName"></label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-id-card-alt"></i></span>
+                            <input type="text" class="form-control" asp-for="LastName" placeholder="Please enter your last name" />
+                        </div>
+                        <span class="text-danger" asp-validation-for="LastName"></span>
+                    </div>
 
-					<!-- Upload Picture -->
-					<div class="form-group mb-2">
-						<label asp-for="PictureFile"></label>
-						<div class="input-group">
-							<span class="input-group-text"><i class="fas fa-image"></i></span>
-							<input type="file" accept="image/*" class="form-control" asp-for="PictureFile" />
-						</div>
-						<span class="text-danger" asp-validation-for="PictureFile"></span>
-					</div>
+                    <!-- Phone Number -->
+                    <div class="form-group mb-2">
+                        <label asp-for="PhoneNumber"></label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                            <input type="text" class="form-control" asp-for="PhoneNumber" placeholder="Please enter your phone number" />
+                        </div>
+                        <span class="text-danger" asp-validation-for="PhoneNumber"></span>
+                    </div>
 
-					<!-- Buttons -->
-					<div class="form-group mb-2 text-center">
-						<button type="submit" class="btn btn-success btn-lg rounded-pill px-5 shadow mb-3">
-							<i class="fas fa-save me-2"></i> Save Changes
-						</button>
-						<br />
-						<a class="btn btn-danger btn-lg rounded-pill px-5 shadow" asp-area="Admin" asp-controller="User" asp-action="Index">
-							<i class="fas fa-times-circle me-2"></i> Cancel
-						</a>
-					</div>
+                    <!-- Website Link -->
+                    <div class="form-group mb-2">
+                        <label asp-for="WebsiteLink"></label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-globe"></i></span>
+                            <input type="text" class="form-control" asp-for="WebsiteLink" placeholder="Please enter your website link" />
+                        </div>
+                        <span class="text-danger" asp-validation-for="WebsiteLink"></span>
+                    </div>
 
-				</form>
-			</div>
-		</div>
-	</div>
+                    <!-- About -->
+                    <div class="form-group mb-3">
+                        <label asp-for="About"></label>
+                        <textarea class="form-control" asp-for="About" placeholder="Please enter information about yourself" rows="4"></textarea>
+                        <span class="text-danger" asp-validation-for="About"></span>
+                    </div>
+
+                    <!-- Social Media Links Group -->
+                    <div class="row g-3">
+                        <!-- Twitter -->
+                        <div class="form-group col-md-6">
+                            <label asp-for="TwitterLink"></label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fab fa-twitter"></i></span>
+                                <input type="text" class="form-control" asp-for="TwitterLink" placeholder="Please enter your Twitter profile link" />
+                            </div>
+                            <span class="text-danger" asp-validation-for="TwitterLink"></span>
+                        </div>
+
+                        <!-- Facebook -->
+                        <div class="form-group col-md-6">
+                            <label asp-for="FacebookLink"></label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fab fa-facebook-f"></i></span>
+                                <input type="text" class="form-control" asp-for="FacebookLink" placeholder="Please enter your Facebook profile link" />
+                            </div>
+                            <span class="text-danger" asp-validation-for="FacebookLink"></span>
+                        </div>
+
+                        <!-- Instagram -->
+                        <div class="form-group col-md-6">
+                            <label asp-for="InstagramLink"></label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fab fa-instagram"></i></span>
+                                <input type="text" class="form-control" asp-for="InstagramLink" placeholder="Please enter your Instagram profile link" />
+                            </div>
+                            <span class="text-danger" asp-validation-for="InstagramLink"></span>
+                        </div>
+
+                        <!-- LinkedIn -->
+                        <div class="form-group col-md-6">
+                            <label asp-for="LinkedInLink"></label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fab fa-linkedin-in"></i></span>
+                                <input type="text" class="form-control" asp-for="LinkedInLink" placeholder="Please enter your LinkedIn profile link" />
+                            </div>
+                            <span class="text-danger" asp-validation-for="LinkedInLink"></span>
+                        </div>
+
+                        <!-- YouTube -->
+                        <div class="form-group col-md-6">
+                            <label asp-for="YoutubeLink"></label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fab fa-youtube"></i></span>
+                                <input type="text" class="form-control" asp-for="YoutubeLink" placeholder="Please enter your YouTube profile link" />
+                            </div>
+                            <span class="text-danger" asp-validation-for="YoutubeLink"></span>
+                        </div>
+
+                        <!-- GitHub -->
+                        <div class="form-group col-md-6">
+                            <label asp-for="GitHubLink"></label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fab fa-github"></i></span>
+                                <input type="text" class="form-control" asp-for="GitHubLink" placeholder="Please enter your GitHub profile link" />
+                            </div>
+                            <span class="text-danger" asp-validation-for="GitHubLink"></span>
+                        </div>
+                    </div>
+
+                    <!-- Current Picture -->
+                    <div class="form-group mb-2 mt-3">
+                        <label asp-for="Picture"></label>
+                        <input asp-for="Picture" type="hidden" />
+                        <img class="my-image d-block mb-2 rounded-3 shadow" src="~/images/@Model.Picture" alt="@Model.UserName" style="max-width: 150px;" />
+                    </div>
+
+                    <!-- Upload Picture -->
+                    <div class="form-group mb-2">
+                        <label asp-for="PictureFile"></label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-image"></i></span>
+                            <input type="file" accept="image/*" class="form-control" asp-for="PictureFile" />
+                        </div>
+                        <span class="text-danger" asp-validation-for="PictureFile"></span>
+                    </div>
+
+                    <!-- Buttons -->
+                    <div class="form-group mb-2 text-center">
+                        <button type="submit" class="btn btn-success btn-lg rounded-pill px-5 shadow mb-3">
+                            <i class="fas fa-save me-2"></i> Save Changes
+                        </button>
+                        <br />
+                        <a class="btn btn-danger btn-lg rounded-pill px-5 shadow" asp-area="Admin" asp-controller="User" asp-action="Index">
+                            <i class="fas fa-times-circle me-2"></i> Cancel
+                        </a>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
 </div>

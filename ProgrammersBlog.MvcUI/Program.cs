@@ -9,7 +9,10 @@ using ProgrammersBlog.MvcUI.Helpers.Concrete;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation().AddJsonOptions(opt =>
+builder.Services.AddControllersWithViews(options =>
+{
+    options.ModelBindingMessageProvider.SetValueMustNotBeNullAccessor(value => "This field must not be left empty!");
+}).AddRazorRuntimeCompilation().AddJsonOptions(opt =>
 {
     opt.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
     opt.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
@@ -22,8 +25,8 @@ builder.Services.AddScoped<IImageHelper, ImageHelper>();
 
 builder.Services.ConfigureApplicationCookie(options =>
 {
-    options.LoginPath = new PathString("/Admin/User/Login");
-    options.LogoutPath = new PathString("/Admin/User/Logout");
+    options.LoginPath = new PathString("/Admin/Auth/Login");
+    options.LogoutPath = new PathString("/Admin/Auth/Logout");
     options.Cookie = new CookieBuilder()
     {
         Name = "ProgrammersBlog",

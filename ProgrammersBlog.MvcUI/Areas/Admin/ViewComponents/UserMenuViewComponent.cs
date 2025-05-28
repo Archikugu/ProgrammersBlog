@@ -14,9 +14,11 @@ public class UserMenuViewComponent : ViewComponent
         _userManager = userManager;
     }
 
-    public IViewComponentResult Invoke()
+    public async Task<IViewComponentResult> InvokeAsync()
     {
-        var user = _userManager.GetUserAsync(HttpContext.User).Result;
+        var user = await _userManager.GetUserAsync(HttpContext.User);
+        if (user == null)
+            return Content("User Not Found!");
         return View(new UserViewModel
         {
             User = user

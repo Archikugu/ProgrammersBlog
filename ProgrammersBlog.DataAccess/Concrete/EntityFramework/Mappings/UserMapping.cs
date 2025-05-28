@@ -7,7 +7,20 @@ public class UserMapping : IEntityTypeConfiguration<User>
 {
     public void Configure(EntityTypeBuilder<User> builder)
     {
-        builder.Property(u => u.Picture).HasMaxLength(250).IsRequired();
+        builder.Property(u => u.Picture).IsRequired();
+        builder.Property(u => u.Picture).HasMaxLength(250);
+        // Social Media Links
+        builder.Property(u => u.YoutubeLink).HasMaxLength(250);
+        builder.Property(u => u.TwitterLink).HasMaxLength(250);
+        builder.Property(u => u.InstagramLink).HasMaxLength(250);
+        builder.Property(u => u.FacebookLink).HasMaxLength(250);
+        builder.Property(u => u.LinkedInLink).HasMaxLength(250);
+        builder.Property(u => u.GitHubLink).HasMaxLength(250);
+        builder.Property(u => u.WebsiteLink).HasMaxLength(250);
+        // About
+        builder.Property(u => u.FirstName).HasMaxLength(30);
+        builder.Property(u => u.LastName).HasMaxLength(30);
+        builder.Property(u => u.About).HasMaxLength(1000);
 
         // Primary key
         builder.HasKey(u => u.Id);
@@ -17,7 +30,7 @@ public class UserMapping : IEntityTypeConfiguration<User>
         builder.HasIndex(u => u.NormalizedEmail).HasDatabaseName("EmailIndex");
 
         // Maps to the AspNetUsers table
-        builder.ToTable("AspNetUsers");
+        builder.ToTable("Users");
 
         // A concurrency token for use with the optimistic concurrency checking
         builder.Property(u => u.ConcurrencyStamp).IsConcurrencyToken();
@@ -25,8 +38,8 @@ public class UserMapping : IEntityTypeConfiguration<User>
         // Limit the size of columns to use efficient database types
         builder.Property(u => u.UserName).HasMaxLength(50);
         builder.Property(u => u.NormalizedUserName).HasMaxLength(50);
-        builder.Property(u => u.Email).HasMaxLength(256);
-        builder.Property(u => u.NormalizedEmail).HasMaxLength(50);
+        builder.Property(u => u.Email).HasMaxLength(100);
+        builder.Property(u => u.NormalizedEmail).HasMaxLength(100);
 
         // The relationships between User and other entity types
         // Note that these relationships are configured with no navigation properties
@@ -51,7 +64,17 @@ public class UserMapping : IEntityTypeConfiguration<User>
             Email = "admin@gmail.com",
             NormalizedEmail = "ADMIN@GMAIL.COM",
             PhoneNumber = "+901234567890",
-            Picture = "default.png",
+            Picture = "/userImages/defaultUser.png",
+            FirstName = "Admin",
+            LastName = "User",
+            About = "Admin User of ProgrammersBlog",
+            TwitterLink = "https://twitter.com/adminuser",
+            InstagramLink = "https://instagram.com/adminuser",
+            YoutubeLink = "https://youtube.com/adminuser",
+            GitHubLink = "https://github.com/adminuser",
+            LinkedInLink = "https://linkedin.com/adminuser",
+            WebsiteLink = "https://programmersblog.com/",
+            FacebookLink = "https://facebook.com/adminuser",
             EmailConfirmed = true,
             PhoneNumberConfirmed = true,
             SecurityStamp = "c871b9bb-8c2e-4f3e-8881-9f5f1635f8a9",
@@ -66,7 +89,17 @@ public class UserMapping : IEntityTypeConfiguration<User>
             Email = "editor@gmail.com",
             NormalizedEmail = "EDITOR@GMAIL.COM",
             PhoneNumber = "+901234567890",
-            Picture = "default.png",
+            Picture = "/userImages/defaultUser.png",
+            FirstName = "Admin",
+            LastName = "User",
+            About = "Editor User of ProgrammersBlog",
+            TwitterLink = "https://twitter.com/editoruser",
+            InstagramLink = "https://instagram.com/editoruser",
+            YoutubeLink = "https://youtube.com/editoruser",
+            GitHubLink = "https://github.com/editoruser",
+            LinkedInLink = "https://linkedin.com/editoruser",
+            WebsiteLink = "https://programmersblog.com/",
+            FacebookLink = "https://facebook.com/editoruser",
             EmailConfirmed = true,
             PhoneNumberConfirmed = true,
             SecurityStamp = "5d8d2f57-0419-4aa6-b0f9-0fd94c6fc51b",

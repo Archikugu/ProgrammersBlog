@@ -16,6 +16,61 @@
 			transition: all 0.3s ease-in-out;
 			cursor: pointer;
 		}
+
+		.my-image-table {
+			width: 40px;
+			height: 40px;
+			object-fit: cover;
+			border-radius: 50%;
+		}
+
+		.form-button-action button {
+			background: transparent;
+			border: none;
+			color: rgba(50, 50, 50, 0.6);
+			transition: color 0.3s ease, transform 0.2s ease;
+			font-size: 1.1rem;
+			padding: 6px 10px;
+		}
+
+		/* Buton renkleri - pastel ve soft tonlar */
+		.btn-detail {
+			color: #6c757d; /* Soft gri */
+		}
+
+			.btn-detail:hover {
+				color: #495057; /* Koyu gri */
+			}
+
+		.btn-assign {
+			color: #adb5bd; /* Açık gri-mavi */
+		}
+
+			.btn-assign:hover {
+				color: #868e96; /* Orta gri */
+			}
+
+		.btn-update {
+			color: #74b9ff; /* Pastel mavi */
+		}
+
+			.btn-update:hover {
+				color: #0984e3; /* Orta mavi */
+			}
+
+		.btn-delete {
+			color: #fab1a0; /* Pastel kırmızı */
+		}
+
+			.btn-delete:hover {
+				color: #d63031; /* Koyu kırmızı */
+			}
+
+		.form-button-action button:hover {
+			transform: scale(1.3);
+			cursor: pointer;
+		}
+
 	</style>
 
 	<div class="page-inner">
@@ -54,8 +109,8 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="card">
-					<div class="card-header">
-						<h4 class="card-title">
+					<div class="card-header d-flex justify-content-between align-items-center">
+						<h4 class="card-title mb-0">
 							<i class="fas fa-users me-2 text-primary"></i>
 							Users
 						</h4>
@@ -66,15 +121,18 @@
 
 					<div class="card-body">
 						<div class="table-responsive">
-							<table id="usersTable" class="display table table-striped table-hover">
+							<table id="usersTable" class="display table table-striped table-hover" width="100%" cellspacing="0">
 								<thead>
 									<tr>
 										<th class="text-center align-middle">ID</th>
 										<th class="text-center align-middle">User Name</th>
 										<th class="text-center align-middle">E-Mail</th>
+										<th class="text-center align-middle">First Name</th>
+										<th class="text-center align-middle">Last Name</th>
 										<th class="text-center align-middle">Phone Number</th>
+										<th class="text-center align-middle">About</th>
 										<th class="text-center align-middle">Image</th>
-										<th class="text-center align-middle">Action</th>
+										<th class="text-center align-middle">Actions</th>
 									</tr>
 								</thead>
 								<tfoot>
@@ -82,9 +140,12 @@
 										<th class="text-center align-middle">ID</th>
 										<th class="text-center align-middle">User Name</th>
 										<th class="text-center align-middle">E-Mail</th>
+										<th class="text-center align-middle">First Name</th>
+										<th class="text-center align-middle">Last Name</th>
 										<th class="text-center align-middle">Phone Number</th>
+										<th class="text-center align-middle">About</th>
 										<th class="text-center align-middle">Image</th>
-										<th class="text-center align-middle">Action</th>
+										<th class="text-center align-middle">Actions</th>
 									</tr>
 								</tfoot>
 								<tbody>
@@ -94,7 +155,12 @@
 											<td class="text-center align-middle">@user.Id</td>
 											<td class="text-center align-middle">@user.UserName</td>
 											<td class="text-center align-middle">@user.Email</td>
+											<td class="text-center align-middle">@user.FirstName</td>
+											<td class="text-center align-middle">@user.LastName</td>
 											<td class="text-center align-middle">@user.PhoneNumber</td>
+											<td class="text-center align-middle" title="@user.About">
+												@(user.About != null && user.About.Length > 75 ? user.About.Substring(0, 75) + "..." : user.About)
+											</td>
 											<td class="text-center align-middle">
 												<img src="~/images/@user.Picture"
 													 alt="@user.UserName"
@@ -103,10 +169,16 @@
 											</td>
 											<td class="text-center align-middle">
 												<div class="form-button-action">
-													<button class="btn btn-link btn-primary btn-update" data-id="@user.Id">
+													<button class="btn btn-info btn-sm btn-detail me-1" data-id="@user.Id" title="Details">
+														<span class="fas fa-user-circle"></span>
+													</button>
+													<button class="btn btn-warning btn-sm btn-assign me-1" data-id="@user.Id" title="Assign Roles">
+														<span class="fas fa-user-shield"></span>
+													</button>
+													<button class="btn btn-primary btn-sm btn-update me-1" data-id="@user.Id" title="Edit">
 														<span class="fas fa-pen-to-square"></span>
 													</button>
-													<button class="btn btn-link btn-danger btn-delete" data-id="@user.Id">
+													<button class="btn btn-danger btn-sm btn-delete" data-id="@user.Id" title="Delete">
 														<span class="fas fa-trash"></span>
 													</button>
 												</div>

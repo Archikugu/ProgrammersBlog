@@ -143,11 +143,34 @@ public class CommentManager : ManagerBase, ICommentService
         if (comment != null)
         {
             comment.IsDeleted = true;
+            comment.IsActive = false;
             comment.ModifiedByName = modifiedByName;
             comment.ModifiedDate = DateTime.Now;
             var deletedComment = await UnitOfWork.Comments.UpdateAsync(comment);
             await UnitOfWork.SaveAsync();
             return new DataResult<CommentDto>(ResultStatus.Success, Messages.Comment.Delete(deletedComment.CreatedByName), new CommentDto
+            {
+                Comment = deletedComment,
+            });
+        }
+        return new DataResult<CommentDto>(ResultStatus.Error, Messages.Comment.NotFound(isPlural: false), new CommentDto
+        {
+            Comment = null,
+        });
+    }
+
+    public async Task<IDataResult<CommentDto>> UndoDeleteAsync(int commentId, string modifiedByName)
+    {
+        var comment = await UnitOfWork.Comments.GetAsync(c => c.Id == commentId);
+        if (comment != null)
+        {
+            comment.IsDeleted = false;
+            comment.IsActive = true;
+            comment.ModifiedByName = modifiedByName;
+            comment.ModifiedDate = DateTime.Now;
+            var deletedComment = await UnitOfWork.Comments.UpdateAsync(comment);
+            await UnitOfWork.SaveAsync();
+            return new DataResult<CommentDto>(ResultStatus.Success, Messages.Comment.UndoDelete(deletedComment.CreatedByName), new CommentDto
             {
                 Comment = deletedComment,
             });
@@ -213,4 +236,6 @@ public class CommentManager : ManagerBase, ICommentService
         }
         return new DataResult<CommentDto>(ResultStatus.Error, Messages.Comment.NotFound(false), null);
     }
+
+
 }

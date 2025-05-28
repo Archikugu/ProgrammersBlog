@@ -33,7 +33,9 @@ public interface ICategoryService
     /// Retrieves all categories that are not marked as deleted.
     /// </summary>
     /// <returns>Returns a list of non-deleted categories.</returns>
-    Task<IDataResult<CategoryListDto>> GetAllByNonDeletedAsync();
+    Task<IDataResult<CategoryListDto>> GetAllByNonDeletedAsync(); 
+    
+    Task<IDataResult<CategoryListDto>> GetAllByDeletedAsync();
 
     /// <summary>
     /// Retrieves all categories that are both not deleted and active.
@@ -64,6 +66,8 @@ public interface ICategoryService
     /// <param name="modifiedByName">The username of the person performing the deletion.</param>
     /// <returns>Returns the result of the operation including the updated category data.</returns>
     Task<IDataResult<CategoryDto>> DeleteAsync(int categoryId, string modifiedByName);
+
+    Task<IDataResult<CategoryDto>> UndoDeleteAsync(int categoryId, string modifiedByName);
 
     /// <summary>
     /// Permanently deletes a category from the database.

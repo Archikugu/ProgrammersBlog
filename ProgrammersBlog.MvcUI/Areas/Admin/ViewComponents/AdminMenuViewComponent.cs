@@ -14,10 +14,16 @@ public class AdminMenuViewComponent : ViewComponent
         _userManager = userManager;
     }
 
-    public IViewComponentResult Invoke()
+    public async Task<IViewComponentResult> InvokeAsync()
     {
-        var user = _userManager.GetUserAsync(HttpContext.User).Result;
-        var roles = _userManager.GetRolesAsync(user).Result;
+        var user = await _userManager.GetUserAsync(HttpContext.User);
+        var roles = await _userManager.GetRolesAsync(user);
+        if (user == null)
+            return Content("User Not Found!");
+
+        if (roles == null)
+            return Content("Roles Not Found!");
+
         return View(new UserWithRolesViewModel
         {
             User = user,

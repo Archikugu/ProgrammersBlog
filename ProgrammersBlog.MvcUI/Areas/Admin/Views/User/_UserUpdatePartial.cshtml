@@ -2,10 +2,12 @@
 @model UserUpdateDto
 
 <div class="modal fade" id="userUpdateModal" tabindex="-1" role="dialog" aria-hidden="true">
-	<div class="modal-dialog" role="document">
+	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content">
 			<div class="modal-header bg-warning">
-				<h5 class="modal-title" style="color: #212529 !important;"><span class="fas fa-pen-to-square"></span> Editing User: @Model.UserName</h5>
+				<h5 class="modal-title" style="color: #212529 !important;">
+					<span class="fas fa-pen-to-square"></span> Editing User: @Model.UserName
+				</h5>
 				<button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
@@ -36,6 +38,33 @@
 						<span class="text-danger" asp-validation-for="Email"></span>
 					</div>
 
+					<!-- First Name -->
+					<div class="form-group mb-3">
+						<label asp-for="FirstName"></label>
+						<div class="input-group">
+							<span class="input-group-text"><i class="fas fa-id-badge"></i></span>
+							<input type="text" class="form-control" asp-for="FirstName" placeholder="Please enter your first name" />
+						</div>
+						<span class="text-danger" asp-validation-for="FirstName"></span>
+					</div>
+
+					<!-- Last Name -->
+					<div class="form-group mb-3">
+						<label asp-for="LastName"></label>
+						<div class="input-group">
+							<span class="input-group-text"><i class="fas fa-id-badge"></i></span>
+							<input type="text" class="form-control" asp-for="LastName" placeholder="Please enter your last name" />
+						</div>
+						<span class="text-danger" asp-validation-for="LastName"></span>
+					</div>
+
+					<!-- About -->
+					<div class="form-group mb-3">
+						<label asp-for="About"></label>
+						<textarea class="form-control" asp-for="About" placeholder="Please enter about info" rows="4"></textarea>
+						<span class="text-danger" asp-validation-for="About"></span>
+					</div>
+
 					<!-- Phone Number -->
 					<div class="form-group mb-3">
 						<label asp-for="PhoneNumber"></label>
@@ -44,6 +73,55 @@
 							<input type="text" class="form-control" asp-for="PhoneNumber" placeholder="Please enter your phone number" />
 						</div>
 						<span class="text-danger" asp-validation-for="PhoneNumber"></span>
+					</div>
+
+					<!-- Website Link -->
+					<div class="form-group mb-3">
+						<label asp-for="WebsiteLink"></label>
+						<input type="text" class="form-control" asp-for="WebsiteLink" placeholder="Please enter your website link" />
+						<span class="text-danger" asp-validation-for="WebsiteLink"></span>
+					</div>
+
+					<!-- Twitter Link -->
+					<div class="form-group mb-3">
+						<label asp-for="TwitterLink"></label>
+						<input type="text" class="form-control" asp-for="TwitterLink" placeholder="Please enter your Twitter profile link" />
+						<span class="text-danger" asp-validation-for="TwitterLink"></span>
+					</div>
+
+					<!-- Facebook Link -->
+					<div class="form-group mb-3">
+						<label asp-for="FacebookLink"></label>
+						<input type="text" class="form-control" asp-for="FacebookLink" placeholder="Please enter your Facebook profile link" />
+						<span class="text-danger" asp-validation-for="FacebookLink"></span>
+					</div>
+
+					<!-- Instagram Link -->
+					<div class="form-group mb-3">
+						<label asp-for="InstagramLink"></label>
+						<input type="text" class="form-control" asp-for="InstagramLink" placeholder="Please enter your Instagram profile link" />
+						<span class="text-danger" asp-validation-for="InstagramLink"></span>
+					</div>
+
+					<!-- LinkedIn Link -->
+					<div class="form-group mb-3">
+						<label asp-for="LinkedInLink"></label>
+						<input type="text" class="form-control" asp-for="LinkedInLink" placeholder="Please enter your LinkedIn profile link" />
+						<span class="text-danger" asp-validation-for="LinkedInLink"></span>
+					</div>
+
+					<!-- Youtube Link -->
+					<div class="form-group mb-3">
+						<label asp-for="YoutubeLink"></label>
+						<input type="text" class="form-control" asp-for="YoutubeLink" placeholder="Please enter your YouTube profile link" />
+						<span class="text-danger" asp-validation-for="YoutubeLink"></span>
+					</div>
+
+					<!-- GitHub Link -->
+					<div class="form-group mb-3">
+						<label asp-for="GitHubLink"></label>
+						<input type="text" class="form-control" asp-for="GitHubLink" placeholder="Please enter your GitHub profile link" />
+						<span class="text-danger" asp-validation-for="GitHubLink"></span>
 					</div>
 
 					<!-- Current Picture Preview -->

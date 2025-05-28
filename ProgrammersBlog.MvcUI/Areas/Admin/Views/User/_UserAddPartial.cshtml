@@ -1,77 +1,110 @@
 ﻿@using ProgrammersBlog.Entities.Dtos.UserDtos
 @model UserAddDto
 
-<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content">
-			<div class="modal-header bg-primary">
-				<h5 class="modal-title"><span class="fas fa-square-plus"></span> Add User</h5>
-				<button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
+<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="addUserModal">
+	<div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+		<div class="modal-content border-0 shadow-lg rounded-4">
+			<div class="modal-header bg-primary text-white rounded-top-4 px-4">
+				<h5 class="modal-title"><i class="fas fa-user-plus me-2"></i> Add New User</h5>
+				<button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
-			<div class="modal-body">
+			<div class="modal-body p-4">
 				<form asp-action="Add" id="form-user-add" enctype="multipart/form-data">
 					<input name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()" />
-					<div asp-validation-summary="All" class="text-danger" id="validation-summary" aria-hidden="true" style="display: none;"></div>
+					<div asp-validation-summary="All" class="text-danger mb-3" id="validation-summary" style="display: none;"></div>
 
-					<!-- Username -->
-					<div class="form-group mb-3">
-						<label asp-for="UserName"></label>
-						<div class="input-group">
-							<span class="input-group-text"><i class="fas fa-user"></i></span>
-							<input class="form-control" asp-for="UserName" placeholder="Please enter your username" />
+					<div class="row g-3">
+						<div class="col-md-6">
+							<label asp-for="UserName" class="form-label"></label>
+							<div class="input-group">
+								<span class="input-group-text"><i class="fas fa-user"></i></span>
+								<input class="form-control" asp-for="UserName" placeholder="Enter username" />
+							</div>
+							<span class="text-danger" asp-validation-for="UserName"></span>
 						</div>
-						<span class="text-danger" asp-validation-for="UserName"></span>
-					</div>
+						<div class="col-md-6">
+							<label asp-for="Email" class="form-label"></label>
+							<div class="input-group">
+								<span class="input-group-text"><i class="fas fa-envelope"></i></span>
+								<input type="email" class="form-control" asp-for="Email" placeholder="Enter email address" />
+							</div>
+							<span class="text-danger" asp-validation-for="Email"></span>
+						</div>
+						<div class="col-md-6">
+							<label asp-for="Password" class="form-label"></label>
+							<div class="input-group">
+								<span class="input-group-text"><i class="fas fa-lock"></i></span>
+								<input type="password" class="form-control" asp-for="Password" placeholder="Enter password" />
+							</div>
+							<span class="text-danger" asp-validation-for="Password"></span>
+						</div>
+						<div class="col-md-6">
+							<label asp-for="PhoneNumber" class="form-label"></label>
+							<div class="input-group">
+								<span class="input-group-text"><i class="fas fa-phone"></i></span>
+								<input type="text" class="form-control" asp-for="PhoneNumber" placeholder="Enter phone number" />
+							</div>
+							<span class="text-danger" asp-validation-for="PhoneNumber"></span>
+						</div>
+						<div class="col-md-6">
+							<label asp-for="FirstName" class="form-label"></label>
+							<div class="input-group">
+								<span class="input-group-text"><i class="fas fa-id-card"></i></span>
+								<input type="text" class="form-control" asp-for="FirstName" placeholder="Enter first name" />
+							</div>
+							<span class="text-danger" asp-validation-for="FirstName"></span>
+						</div>
+						<div class="col-md-6">
+							<label asp-for="LastName" class="form-label"></label>
+							<div class="input-group">
+								<span class="input-group-text"><i class="fas fa-id-card-alt"></i></span>
+								<input type="text" class="form-control" asp-for="LastName" placeholder="Enter last name" />
+							</div>
+							<span class="text-danger" asp-validation-for="LastName"></span>
+						</div>
+						<div class="col-12">
+							<label asp-for="About" class="form-label"></label>
+							<textarea class="form-control" asp-for="About" placeholder="Enter about info" rows="4"></textarea>
+							<span class="text-danger" asp-validation-for="About"></span>
+						</div>
 
-					<!-- Email -->
-					<div class="form-group mb-3">
-						<label asp-for="Email"></label>
-						<div class="input-group">
-							<span class="input-group-text"><i class="fas fa-envelope"></i></span>
-							<input type="email" class="form-control" asp-for="Email" placeholder="Please enter your email" />
-						</div>
-						<span class="text-danger" asp-validation-for="Email"></span>
-					</div>
+						@foreach (var field in new[] {
+						("Twitter", "fab fa-twitter", "Enter Twitter profile link"),
+						("Facebook", "fab fa-facebook", "Enter Facebook profile link"),
+						("Instagram", "fab fa-instagram", "Enter Instagram profile link"),
+						("LinkedIn", "fab fa-linkedin", "Enter LinkedIn profile link"),
+						("Youtube", "fab fa-youtube", "Enter YouTube profile link"),
+						("GitHub", "fab fa-github", "Enter GitHub profile link"),
+						("Website", "fas fa-globe", "Enter personal website link")
+						})
+						{
+							<div class="col-md-6">
+								<label class="form-label" for="@field.Item1">@field.Item1</label>
+								<div class="input-group">
+									<span class="input-group-text"><i class="@field.Item2"></i></span>
+									@Html.TextBox(field.Item1, ViewData.Model?.GetType().GetProperty(field.Item1)?.GetValue(Model, null), new { @class = "form-control", placeholder = field.Item3 })
+								</div>
+								<span class="text-danger">@Html.ValidationMessage(field.Item1)</span>
+							</div>
+						}
 
-					<!-- Password -->
-					<div class="form-group mb-3">
-						<label asp-for="Password"></label>
-						<div class="input-group">
-							<span class="input-group-text"><i class="fas fa-lock"></i></span>
-							<input type="password" class="form-control" asp-for="Password" placeholder="Please enter your password" />
+						<div class="col-12">
+							<label asp-for="PictureFile" class="form-label"></label>
+							<div class="input-group">
+								<span class="input-group-text"><i class="fas fa-image"></i></span>
+								<input type="file" accept="image/*" class="form-control" asp-for="PictureFile" />
+							</div>
+							<span class="text-danger" asp-validation-for="PictureFile"></span>
 						</div>
-						<span class="text-danger" asp-validation-for="Password"></span>
-					</div>
-
-					<!-- Phone Number -->
-					<div class="form-group mb-3">
-						<label asp-for="PhoneNumber"></label>
-						<div class="input-group">
-							<span class="input-group-text"><i class="fas fa-phone"></i></span>
-							<input type="text" class="form-control" asp-for="PhoneNumber" placeholder="Please enter your phone number" />
-						</div>
-						<span class="text-danger" asp-validation-for="PhoneNumber"></span>
-					</div>
-
-					<!-- Picture File -->
-					<div class="form-group mb-3">
-						<label asp-for="PictureFile"></label>
-						<div class="input-group">
-							<span class="input-group-text"><i class="fas fa-image"></i></span>
-							<input type="file" accept="image/*" class="form-control" asp-for="PictureFile" />
-						</div>
-						<span class="text-danger" asp-validation-for="PictureFile"></span>
 					</div>
 				</form>
 			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-success btn-block" id="btnSave">
-					<span class="fas fa-save"></span> Add User
+			<div class="modal-footer justify-content-between px-4 pb-4">
+				<button type="button" class="btn btn-success px-4" id="btnSave">
+					<i class="fas fa-save me-1"></i> Add User
 				</button>
-				<button type="button" class="btn btn-danger btn-block" data-bs-dismiss="modal">
-					<span class="fas fa-times"></span> Cancel
+				<button type="button" class="btn btn-danger px-4" data-bs-dismiss="modal">
+					<i class="fas fa-times me-1"></i> Cancel
 				</button>
 			</div>
 		</div>

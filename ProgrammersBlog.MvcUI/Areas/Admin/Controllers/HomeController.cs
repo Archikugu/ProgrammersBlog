@@ -10,7 +10,6 @@ using ProgrammersBlog.MvcUI.Areas.Admin.Models;
 namespace ProgrammersBlog.MvcUI.Areas.Admin.Controllers;
 
 [Area("Admin")]
-[Authorize(Roles = "Admin,Editor")]
 public class HomeController : Controller
 {
     private readonly ICategoryService _categoryService;
@@ -24,6 +23,9 @@ public class HomeController : Controller
         _articleService = articleService;
         _userManager = userManager;
     }
+
+    [HttpGet]
+    [Authorize(Roles = "SuperAdmin,AdminArea.Home.Read")]
     public async Task<IActionResult> Index()
     {
         var categoriesCountResult = await _categoryService.CountByNonDeletedAsync();

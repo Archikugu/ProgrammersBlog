@@ -12,6 +12,6 @@ public class RoleClaimMapping : IEntityTypeConfiguration<RoleClaim>
         builder.HasKey(rc => rc.Id);
 
         // Maps to the AspNetRoleClaims table
-        builder.ToTable("AspNetRoleClaims");
+        builder.ToTable("RoleClaims");
     }
 }

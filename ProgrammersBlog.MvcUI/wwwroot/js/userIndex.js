@@ -20,6 +20,13 @@
 
     // Update Butonuna Tıklama (Modal içinde)
     initializeUpdateUser();
+
+    //Role Assign modal
+    initializeRoleAssignModal();
+
+    // Role Assign POST işlemi
+    initializeRoleAssign();
+
 });
 
 // DataTable Başlatma
@@ -125,12 +132,22 @@ function appendNewUserRow(userAddAjaxModel) {
         userAddAjaxModel.UserDto.User.Id,
         userAddAjaxModel.UserDto.User.UserName,
         userAddAjaxModel.UserDto.User.Email,
+        userAddAjaxModel.UserDto.User.FirstName,
+        userAddAjaxModel.UserDto.User.LastName,
         userAddAjaxModel.UserDto.User.PhoneNumber,
+        userAddAjaxModel.UserDto.User.About.length > 75 ? userAddAjaxModel.UserDto.User.About.substring(0, 75) : userAddAjaxModel.UserDto.User.About,
         `<img src="/images/${userAddAjaxModel.UserDto.User.Picture}" alt="${userAddAjaxModel.UserDto.User.UserName}" class="my-image-table" />`,
         `<div class="form-button-action">
-            <button class="btn btn-link btn-primary btn-update" data-id="${userAddAjaxModel.UserDto.User.Id}"> <span class="fas fa-pen-to-square"></span></button>
-            <button class="btn btn-link btn-danger btn-delete" data-id="${userAddAjaxModel.UserDto.User.Id}"><span class="fas fa-trash"></span></button>
+
+              <button class="btn btn-info btn-sm btn-detail me-1" data-id="${userAddAjaxModel.UserDto.User.Id}" title="Details"><span class="fas fa-user-circle"></span></button>
+
+             <button class="btn btn-warning btn-sm btn-assign me-1" data-id="${userAddAjaxModel.UserDto.User.Id}" title="Assign Roles"><span class="fas fa-user-shield"></span></button>
+
+             <button class="btn btn-primary btn-sm btn-update me-1" data-id="${userAddAjaxModel.UserDto.User.Id}" title="Edit"><span class="fas fa-pen-to-square"></span></button>
+
+	       	 <button class="btn btn-danger btn-sm btn-delete" data-id="${userAddAjaxModel.UserDto.User.Id}" title="Delete"><span class="fas fa-trash"></span></button>
          </div>`
+
     ]).node();
 
     const jqueryTableRow = $(newTableRow);
@@ -189,11 +206,20 @@ function updateUserTable(userListDto) {
             user.Id,
             user.UserName,
             user.Email,
+            user.FirstName,
+            user.LastName,
             user.PhoneNumber,
+            user.About.length > 75 ? user.About.substring(0, 75) : user.About,
             `<img src="/images/${user.Picture}" alt="${user.UserName}" class="my-image-table" />`,
             `<div class="form-button-action">
-                <button class="btn btn-link btn-primary btn-update" data-id="${user.Id}"> <span class="fas fa-pen-to-square"></span></button>
-                <button class="btn btn-link btn-danger btn-delete" data-id="${user.Id}"><span class="fas fa-trash"></span></button>
+            
+             <button class="btn btn-info btn-sm btn-detail me-1" data-id="${user.Id}" title="Details"><span class="fas fa-user-circle"></span></button>
+
+             <button class="btn btn-warning btn-sm btn-assign me-1" data-id="${user.Id}" title="Assign Roles"><span class="fas fa-user-shield"></span></button>
+
+             <button class="btn btn-primary btn-sm btn-update me-1" data-id="${user.Id}" title="Edit"><span class="fas fa-pen-to-square"></span></button>
+
+	       	 <button class="btn btn-danger btn-sm btn-delete" data-id="${user.Id}" title="Delete"><span class="fas fa-trash"></span></button>
             </div>`
         ]).node();
 
@@ -337,13 +363,103 @@ function updateUserRow(userUpdateAjaxModel) {
         updatedUser.Id,
         updatedUser.UserName,
         updatedUser.Email,
+        updatedUser.FirstName,
+        updatedUser.LastName,
         updatedUser.PhoneNumber,
+        updatedUser.About.length > 75 ? user.About.substring(0, 75) : user.About,
         `<img src="/images/${updatedUser.Picture}" alt="${updatedUser.UserName}" class="my-image-table" />`,
         `<div class="form-button-action">
-            <button class="btn btn-link btn-primary btn-update" data-id="${updatedUser.Id}"><span class="fas fa-pen-to-square"></span></button>
-            <button class="btn btn-link btn-danger btn-delete" data-id="${updatedUser.Id}"><span class="fas fa-trash"></span></button>
+
+        <button class="btn btn-info btn-sm btn-detail me-1" data-id="${updatedUser.Id}" title="Details"><span class="fas fa-user-circle"></span></button>
+
+        <button class="btn btn-warning btn-sm btn-assign me-1" data-id="${updatedUser.Id}" title="Assign Roles"><span class="fas fa-user-shield"></span></button>
+
+        <button class="btn btn-primary btn-sm btn-update me-1" data-id="${updatedUser.Id}" title="Edit"><span class="fas fa-pen-to-square"></span></button>
+
+		<button class="btn btn-danger btn-sm btn-delete" data-id="${updatedUser.Id}" title="Delete"><span class="fas fa-trash"></span></button>
+
          </div>`
     ]).draw(false);
 
     tableRow.attr("name", updatedUser.Id);
+}
+
+
+function initializeRoleAssignModal() {
+    const url = '/Admin/Role/Assign';
+    const placeHolderDiv = $('#modalPlaceHolder');
+
+    $(document).on('click', '.btn-assign', function (e) {
+        e.preventDefault();
+        const id = $(this).data('id');
+
+        $.get(url, { userId: id })
+            .done(function (data) {
+                placeHolderDiv.html(data);
+                const modal = placeHolderDiv.find('.modal');
+                modal.modal('show');
+            })
+            .fail(function (err) {
+                console.error('Error loading modal:', err);
+                toastr.error(err.responseText, 'Error!');
+            });
+    });
+}
+
+function initializeRoleAssign() {
+    const placeHolderDiv = $('#modalPlaceHolder');
+
+    placeHolderDiv.on('submit', '#form-role-assign', function (event) {
+        event.preventDefault();
+    });
+
+    placeHolderDiv.on('click', '#btnAssign', function (event) {
+        event.preventDefault();
+        const form = $('#form-role-assign');
+        const actionUrl = form.attr('action');
+        const dataToSend = new FormData(form.get(0));
+
+        const userName = form.find('[name="UserName"]').val();
+        if (!userName) {
+            toastr.error('Username not found. Please refresh the page and try again.', 'Error!');
+            return;
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: actionUrl,
+            data: dataToSend,
+            processData: false,
+            contentType: false,
+            success: function (data) {
+                try {
+                    const roleAssignAjaxModel = jQuery.parseJSON(data);
+
+                    if (!roleAssignAjaxModel || !roleAssignAjaxModel.RoleAssignPartial) {
+                        toastr.error('Invalid response received from server.', 'Error!');
+                        return;
+                    }
+
+                    const newFormBody = $('.modal-body', roleAssignAjaxModel.RoleAssignPartial);
+                    placeHolderDiv.find('.modal-body').replaceWith(newFormBody);
+
+                    if (roleAssignAjaxModel.UserDto && roleAssignAjaxModel.UserDto.ResultStatus === 0) {
+                        toastr.success(roleAssignAjaxModel.UserDto.Message, 'Success!');
+                        placeHolderDiv.find('.modal').modal('hide');
+                    } else {
+                        const errorMessage = roleAssignAjaxModel.UserDto?.Message || 'Role assignment operation failed.';
+                        toastr.warning(errorMessage, 'Warning!');
+                        showValidationErrors();
+                    }
+                } catch (error) {
+                    console.error('JSON parse error:', error);
+                    toastr.error('An error occurred while processing the server response.', 'Error!');
+                }
+            },
+            error: function (err) {
+                console.error('Role Assignment Error:', err);
+                toastr.error(err.responseText || 'An error occurred during role assignment.', 'Error!');
+            }
+        });
+    });
 }

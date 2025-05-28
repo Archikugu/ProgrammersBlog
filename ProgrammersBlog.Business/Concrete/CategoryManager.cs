@@ -99,6 +99,36 @@ public class CategoryManager : ManagerBase, ICategoryService
                });
     }
 
+
+
+    public async Task<IDataResult<CategoryDto>> UndoDeleteAsync(int categoryId, string modifiedByName)
+    {
+        var category = await UnitOfWork.Categories.GetAsync(c => c.Id == categoryId);
+        if (category != null)
+        {
+            category.IsDeleted = false;
+            category.IsActive = true;
+            category.ModifiedByName = modifiedByName;
+            category.ModifiedDate = DateTime.Now;
+            var deletedCategory = await UnitOfWork.Categories.UpdateAsync(category);
+            await UnitOfWork.SaveAsync();
+            return new DataResult<CategoryDto>(ResultStatus.Success, Messages.Category.UndoDelete(deletedCategory.Name),
+                new CategoryDto
+                {
+                    Category = deletedCategory,
+                    ResultStatus = ResultStatus.Success,
+                    Message = Messages.Category.UndoDelete(deletedCategory.Name)
+                });
+        }
+        return new DataResult<CategoryDto>(ResultStatus.Error, Messages.Category.NotFound(isPlural: false),
+               new CategoryDto
+               {
+                   Category = null,
+                   ResultStatus = ResultStatus.Error,
+                   Message = Messages.Category.NotFound(isPlural: false)
+               });
+    }
+
     /// <summary>
     /// Retrieves a category with the specified ID.
     /// </summary>
@@ -187,6 +217,20 @@ public class CategoryManager : ManagerBase, ICategoryService
         return new DataResult<CategoryListDto>(ResultStatus.Error, Messages.Category.NotFound(isPlural: true), null);
     }
 
+    public async Task<IDataResult<CategoryListDto>> GetAllByDeletedAsync()
+    {
+        var categories = await UnitOfWork.Categories.GetAllAsync(c => c.IsDeleted);
+        if (categories.Count > -1)
+        {
+            return new DataResult<CategoryListDto>(ResultStatus.Success, new CategoryListDto
+            {
+                Categories = categories,
+                ResultStatus = ResultStatus.Success
+            });
+        }
+        return new DataResult<CategoryListDto>(ResultStatus.Error, Messages.Category.NotFound(isPlural: true), null);
+    }
+
     /// <summary>
     /// Permanently deletes a category from the database.
     /// </summary>
@@ -260,4 +304,6 @@ public class CategoryManager : ManagerBase, ICategoryService
             return new DataResult<int>(ResultStatus.Error, "An unexpected error occurred", -1);
         }
     }
+
+
 }

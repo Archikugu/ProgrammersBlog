@@ -1,0 +1,57 @@
+﻿@using ProgrammersBlog.Entities.Dtos.UserDtos
+@model UserDto
+
+<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header bg-info">
+				<h5 class="modal-title">
+					<span class="fas fa-user-circle"></span> Viewing User Details (ID: @Model.User.Id)
+				</h5>
+				<button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="form-group mb-3">
+					<label><i class="fas fa-info-circle me-1"></i> About</label>
+					<textarea class="form-control" asp-for="User.About" rows="5" disabled></textarea>
+				</div>
+
+				<div class="form-group mb-3">
+					<label><i class="fab fa-twitter me-1"></i> Twitter</label>
+					<input type="text" class="form-control" asp-for="User.TwitterLink" disabled />
+				</div>
+				<div class="form-group mb-3">
+					<label><i class="fab fa-facebook-f me-1"></i> Facebook</label>
+					<input type="text" class="form-control" asp-for="User.FacebookLink" disabled />
+				</div>
+				<div class="form-group mb-3">
+					<label><i class="fab fa-instagram me-1"></i> Instagram</label>
+					<input type="text" class="form-control" asp-for="User.InstagramLink" disabled />
+				</div>
+				<div class="form-group mb-3">
+					<label><i class="fab fa-linkedin me-1"></i> LinkedIn</label>
+					<input type="text" class="form-control" asp-for="User.LinkedInLink" disabled />
+				</div>
+				<div class="form-group mb-3">
+					<label><i class="fab fa-youtube me-1"></i> YouTube</label>
+					<input type="text" class="form-control" asp-for="User.YoutubeLink" disabled />
+				</div>
+				<div class="form-group mb-3">
+					<label><i class="fab fa-github me-1"></i> GitHub</label>
+					<input type="text" class="form-control" asp-for="User.GitHubLink" disabled />
+				</div>
+				<div class="form-group mb-3">
+					<label><i class="fas fa-globe me-1"></i> Website</label>
+					<input type="text" class="form-control" asp-for="User.WebsiteLink" disabled />
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-danger btn-block" data-bs-dismiss="modal">
+					<span class="fas fa-times"></span> Close
+				</button>
+			</div>
+		</div>
+	</div>
+</div>

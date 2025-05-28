@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
 using ProgrammersBlog.Business.Abstract;
 using ProgrammersBlog.Business.AutoMapper.Profiles;
 using ProgrammersBlog.Business.Concrete;
@@ -31,6 +32,12 @@ public static class ServiceCollectionExtensions
         }).AddEntityFrameworkStores<ProgrammersBlogContext>();
 
         serviceCollection.AddScoped<IUnitOfWork, UnitOfWork>();
+
+        serviceCollection.Configure<SecurityStampValidatorOptions>(options =>
+        {
+            options.ValidationInterval= TimeSpan.FromMinutes(15);
+        });
+
         serviceCollection.AddScoped<ICategoryService, CategoryManager>();
         serviceCollection.AddScoped<IArticleService, ArticleManager>();
         serviceCollection.AddScoped<ICommentService, CommentManager>();

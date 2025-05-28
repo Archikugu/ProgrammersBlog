@@ -110,6 +110,228 @@ namespace ProgrammersBlog.DataAccess.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Articles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CategoryId = 1,
+                            CommentCount = 0,
+                            Content = "Bu makalede C# 9.0 ile gelen record yapısı, init accessor’lar ve pattern matching gibi yenilikler ele alınmıştır.",
+                            CreatedByName = "InitialCreate",
+                            CreatedDate = new DateTime(2025, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2025, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsActive = true,
+                            IsDeleted = false,
+                            ModifiedByName = "InitialCreate",
+                            ModifiedDate = new DateTime(2025, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Note = "C# 9.0 ve .NET 5 Yenilikleri",
+                            SeoAuthor = "Alper Tunga",
+                            SeoDescription = "C# 9.0 ve .NET 5 Yenilikleri",
+                            SeoTags = "C#, C# 9, .NET5, .NET Framework, .NET Core",
+                            Thumbnail = "postImages/defaultThumbnail.jpg",
+                            Title = "C# 9.0 ve .NET 5 Yenilikleri",
+                            UserId = 1,
+                            ViewsCount = 100
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CategoryId = 2,
+                            CommentCount = 0,
+                            Content = "Pandas ve NumPy kütüphaneleriyle veri analizi yapmayı öğrenin. Bu yazıda temel veri işleme adımlarını keşfedeceksiniz.",
+                            CreatedByName = "InitialCreate",
+                            CreatedDate = new DateTime(2025, 5, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2025, 5, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsActive = true,
+                            IsDeleted = false,
+                            ModifiedByName = "InitialCreate",
+                            ModifiedDate = new DateTime(2025, 5, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Note = "Python ile Veri Analizi",
+                            SeoAuthor = "Ayşe Yılmaz",
+                            SeoDescription = "Python ile Veri Analizi",
+                            SeoTags = "Python, Veri Bilimi, Pandas, NumPy, Veri Analizi",
+                            Thumbnail = "postImages/defaultThumbnail.jpg",
+                            Title = "Python ile Veri Analizi",
+                            UserId = 1,
+                            ViewsCount = 150
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CategoryId = 3,
+                            CommentCount = 0,
+                            Content = "Bu içerikte JavaScript diline giriş yapıyor, DOM manipülasyonu ve olay yönetimini örneklerle anlatıyoruz.",
+                            CreatedByName = "InitialCreate",
+                            CreatedDate = new DateTime(2025, 5, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2025, 5, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsActive = true,
+                            IsDeleted = false,
+                            ModifiedByName = "InitialCreate",
+                            ModifiedDate = new DateTime(2025, 5, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Note = "JavaScript ile Web Geliştirme",
+                            SeoAuthor = "Mehmet Can",
+                            SeoDescription = "JavaScript ile Web Geliştirme",
+                            SeoTags = "JavaScript, Frontend, Web, DOM, Etkinlikler",
+                            Thumbnail = "postImages/defaultThumbnail.jpg",
+                            Title = "JavaScript ile Web Geliştirme",
+                            UserId = 1,
+                            ViewsCount = 200
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CategoryId = 4,
+                            CommentCount = 0,
+                            Content = "SELECT, JOIN ve GROUP BY komutlarını kullanarak etkili SQL sorguları yazmayı bu yazıda öğreneceksiniz.",
+                            CreatedByName = "InitialCreate",
+                            CreatedDate = new DateTime(2025, 5, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2025, 5, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsActive = true,
+                            IsDeleted = false,
+                            ModifiedByName = "InitialCreate",
+                            ModifiedDate = new DateTime(2025, 5, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Note = "SQL ile Veri Tabanı Yönetimi",
+                            SeoAuthor = "Zeynep Kaya",
+                            SeoDescription = "SQL ile Veri Tabanı Yönetimi",
+                            SeoTags = "SQL, Veri Tabanı, Sorgu, JOIN, SELECT",
+                            Thumbnail = "postImages/defaultThumbnail.jpg",
+                            Title = "SQL ile Veri Tabanı Yönetimi",
+                            UserId = 1,
+                            ViewsCount = 120
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CategoryId = 5,
+                            CommentCount = 0,
+                            Content = "HTML'in yapısal gücü ve CSS'in görsel düzenlemeleriyle modern web sayfaları tasarlayın.",
+                            CreatedByName = "InitialCreate",
+                            CreatedDate = new DateTime(2025, 5, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2025, 5, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsActive = true,
+                            IsDeleted = false,
+                            ModifiedByName = "InitialCreate",
+                            ModifiedDate = new DateTime(2025, 5, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Note = "HTML ve CSS ile Web Tasarımı",
+                            SeoAuthor = "Ali Demir",
+                            SeoDescription = "HTML ve CSS ile Web Tasarımı",
+                            SeoTags = "HTML, CSS, Web Tasarımı, Frontend, UI",
+                            Thumbnail = "postImages/defaultThumbnail.jpg",
+                            Title = "HTML ve CSS ile Web Tasarımı",
+                            UserId = 1,
+                            ViewsCount = 80
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CategoryId = 1,
+                            CommentCount = 0,
+                            Content = "RESTful servislerin temelleri, Controller yapısı ve JSON veri formatıyla Web API oluşturma teknikleri anlatılmıştır.",
+                            CreatedByName = "InitialCreate",
+                            CreatedDate = new DateTime(2025, 5, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2025, 5, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsActive = true,
+                            IsDeleted = false,
+                            ModifiedByName = "InitialCreate",
+                            ModifiedDate = new DateTime(2025, 5, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Note = "ASP.NET Core ile Web API Geliştirme",
+                            SeoAuthor = "Cem Yıldız",
+                            SeoDescription = "ASP.NET Core ile Web API Geliştirme",
+                            SeoTags = "ASP.NET Core, Web API, REST, Backend",
+                            Thumbnail = "postImages/defaultThumbnail.jpg",
+                            Title = "ASP.NET Core ile Web API Geliştirme",
+                            UserId = 1,
+                            ViewsCount = 170
+                        },
+                        new
+                        {
+                            Id = 7,
+                            CategoryId = 2,
+                            CommentCount = 0,
+                            Content = "Bu yazıda, makine öğrenmesinin temel prensipleri, algoritma türleri ve kullanım alanlarına genel bir bakış sunulmuştur.",
+                            CreatedByName = "InitialCreate",
+                            CreatedDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsActive = true,
+                            IsDeleted = false,
+                            ModifiedByName = "InitialCreate",
+                            ModifiedDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Note = "Makine Öğrenmesine Giriş",
+                            SeoAuthor = "Elif Kurt",
+                            SeoDescription = "Makine Öğrenmesine Giriş",
+                            SeoTags = "Machine Learning, Yapay Zeka, Python, Veri",
+                            Thumbnail = "postImages/defaultThumbnail.jpg",
+                            Title = "Makine Öğrenmesine Giriş",
+                            UserId = 1,
+                            ViewsCount = 190
+                        },
+                        new
+                        {
+                            Id = 8,
+                            CategoryId = 3,
+                            CommentCount = 0,
+                            Content = "React kütüphanesiyle tek sayfa uygulamaları (SPA) geliştirme adımları ve component yapısı detaylıca anlatılmıştır.",
+                            CreatedByName = "InitialCreate",
+                            CreatedDate = new DateTime(2025, 5, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2025, 5, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsActive = true,
+                            IsDeleted = false,
+                            ModifiedByName = "InitialCreate",
+                            ModifiedDate = new DateTime(2025, 5, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Note = "React ile SPA Uygulamaları",
+                            SeoAuthor = "Serkan Aydın",
+                            SeoDescription = "React ile SPA Uygulamaları",
+                            SeoTags = "React, SPA, Frontend, JavaScript, Web",
+                            Thumbnail = "postImages/defaultThumbnail.jpg",
+                            Title = "React ile SPA Uygulamaları",
+                            UserId = 1,
+                            ViewsCount = 130
+                        },
+                        new
+                        {
+                            Id = 9,
+                            CategoryId = 5,
+                            CommentCount = 0,
+                            Content = "iOS uygulamaları geliştirmek için Swift dilinin temelleri, Xcode kullanımı ve storyboard yapısı anlatılmıştır.",
+                            CreatedByName = "InitialCreate",
+                            CreatedDate = new DateTime(2025, 5, 9, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2025, 5, 9, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsActive = true,
+                            IsDeleted = false,
+                            ModifiedByName = "InitialCreate",
+                            ModifiedDate = new DateTime(2025, 5, 9, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Note = "Swift ile IOS Programlama",
+                            SeoAuthor = "Nazlı Tekin",
+                            SeoDescription = "Swift ile IOS Programlama",
+                            SeoTags = "Swift, iOS, Apple, Mobil Geliştirme",
+                            Thumbnail = "postImages/defaultThumbnail.jpg",
+                            Title = "Swift ile IOS Programlama",
+                            UserId = 1,
+                            ViewsCount = 110
+                        },
+                        new
+                        {
+                            Id = 10,
+                            CategoryId = 4,
+                            CommentCount = 0,
+                            Content = "Ruby dili ve Ruby on Rails framework’ü ile web uygulamaları geliştirme süreci adım adım anlatılmaktadır.",
+                            CreatedByName = "InitialCreate",
+                            CreatedDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsActive = true,
+                            IsDeleted = false,
+                            ModifiedByName = "InitialCreate",
+                            ModifiedDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Note = "Ruby ile Web Geliştirme",
+                            SeoAuthor = "Berna Şahin",
+                            SeoDescription = "Ruby ile Web Geliştirme",
+                            SeoTags = "Ruby, Rails, Web Geliştirme, Backend",
+                            Thumbnail = "postImages/defaultThumbnail.jpg",
+                            Title = "Ruby ile Web Geliştirme",
+                            UserId = 1,
+                            ViewsCount = 95
+                        });
                 });
 
             modelBuilder.Entity("ProgrammersBlog.Entities.Concrete.Category", b =>
@@ -167,40 +389,131 @@ namespace ProgrammersBlog.DataAccess.Migrations
                         {
                             Id = 1,
                             CreatedByName = "InitialCreate",
-                            CreatedDate = new DateTime(2025, 3, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "C# Programming Language",
+                            CreatedDate = new DateTime(2023, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "C# dili ile .NET platformunda modern uygulamalar geliştirin.",
                             IsActive = true,
                             IsDeleted = false,
                             ModifiedByName = "InitialCreate",
-                            ModifiedDate = new DateTime(2025, 3, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedDate = new DateTime(2023, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "C#",
-                            Note = "C# Category"
+                            Note = ".NET ile C# rehberi"
                         },
                         new
                         {
                             Id = 2,
                             CreatedByName = "InitialCreate",
-                            CreatedDate = new DateTime(2025, 3, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "C++ Programming Language",
+                            CreatedDate = new DateTime(2023, 10, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Yüksek performanslı uygulamalar ve sistem programlama için C++.",
                             IsActive = true,
                             IsDeleted = false,
                             ModifiedByName = "InitialCreate",
-                            ModifiedDate = new DateTime(2025, 3, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedDate = new DateTime(2023, 10, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "C++",
-                            Note = "C++ Category"
+                            Note = "C++ modern teknikleri"
                         },
                         new
                         {
                             Id = 3,
                             CreatedByName = "InitialCreate",
-                            CreatedDate = new DateTime(2025, 3, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "JavaScript Programming Language",
+                            CreatedDate = new DateTime(2023, 10, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Web geliştirme için en popüler betik dili JavaScript'i keşfedin.",
                             IsActive = true,
                             IsDeleted = false,
                             ModifiedByName = "InitialCreate",
-                            ModifiedDate = new DateTime(2025, 3, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedDate = new DateTime(2023, 10, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "JavaScript",
-                            Note = "JavaScript Category"
+                            Note = "Frontend JavaScript içerikleri"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CreatedByName = "InitialCreate",
+                            CreatedDate = new DateTime(2023, 10, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "JavaScript'e tip güvenliği kazandıran TypeScript ile güçlü uygulamalar yazın.",
+                            IsActive = true,
+                            IsDeleted = false,
+                            ModifiedByName = "InitialCreate",
+                            ModifiedDate = new DateTime(2023, 10, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "TypeScript",
+                            Note = "TypeScript eğitim serisi"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CreatedByName = "InitialCreate",
+                            CreatedDate = new DateTime(2023, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Kurumsal uygulamalar geliştirmek için Java platformu ve Spring ekosistemi.",
+                            IsActive = true,
+                            IsDeleted = false,
+                            ModifiedByName = "InitialCreate",
+                            ModifiedDate = new DateTime(2023, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Java",
+                            Note = "Java Spring ile geliştirme"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CreatedByName = "InitialCreate",
+                            CreatedDate = new DateTime(2023, 11, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Veri bilimi, yapay zeka ve web geliştirme için güçlü bir dil olan Python.",
+                            IsActive = true,
+                            IsDeleted = false,
+                            ModifiedByName = "InitialCreate",
+                            ModifiedDate = new DateTime(2023, 11, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Python",
+                            Note = "Python ile uygulamalı projeler"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            CreatedByName = "InitialCreate",
+                            CreatedDate = new DateTime(2023, 11, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Dinamik web sayfaları için popüler bir sunucu tarafı dili olan PHP.",
+                            IsActive = true,
+                            IsDeleted = false,
+                            ModifiedByName = "InitialCreate",
+                            ModifiedDate = new DateTime(2023, 11, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "PHP",
+                            Note = "PHP & Laravel geliştirme"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            CreatedByName = "InitialCreate",
+                            CreatedDate = new DateTime(2023, 11, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Android uygulamaları geliştirmek için modern ve güvenli bir dil.",
+                            IsActive = true,
+                            IsDeleted = false,
+                            ModifiedByName = "InitialCreate",
+                            ModifiedDate = new DateTime(2023, 11, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Kotlin",
+                            Note = "Android Kotlin dersleri"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            CreatedByName = "InitialCreate",
+                            CreatedDate = new DateTime(2023, 11, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "iOS ve macOS uygulamaları için Apple’ın modern programlama dili Swift.",
+                            IsActive = true,
+                            IsDeleted = false,
+                            ModifiedByName = "InitialCreate",
+                            ModifiedDate = new DateTime(2023, 11, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Swift",
+                            Note = "Swift ile mobil geliştirme"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            CreatedByName = "InitialCreate",
+                            CreatedDate = new DateTime(2023, 11, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Web uygulamaları geliştirmek için yalın ve güçlü bir dil: Ruby ve Rails.",
+                            IsActive = true,
+                            IsDeleted = false,
+                            ModifiedByName = "InitialCreate",
+                            ModifiedDate = new DateTime(2023, 11, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Ruby",
+                            Note = "Ruby on Rails eğitimi"
                         });
                 });
 
@@ -254,6 +567,138 @@ namespace ProgrammersBlog.DataAccess.Migrations
                     b.HasIndex("ArticleId");
 
                     b.ToTable("Comments", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ArticleId = 1,
+                            CreatedByName = "InitialCreate",
+                            CreatedDate = new DateTime(2023, 11, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsActive = true,
+                            IsDeleted = false,
+                            ModifiedByName = "InitialCreate",
+                            ModifiedDate = new DateTime(2023, 11, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Note = "C# Makale Yorumu",
+                            Text = "C# dilinde yazılmış bu makale, temel sözdizimi ve OOP kavramları açısından oldukça bilgilendiriciydi. Yeni başlayanlar için harika bir kaynak olmuş."
+                        },
+                        new
+                        {
+                            Id = 2,
+                            ArticleId = 2,
+                            CreatedByName = "InitialCreate",
+                            CreatedDate = new DateTime(2023, 12, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsActive = true,
+                            IsDeleted = false,
+                            ModifiedByName = "InitialCreate",
+                            ModifiedDate = new DateTime(2023, 12, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Note = "C++ Makale Yorumu",
+                            Text = "C++ konusuna oldukça derinlemesine değinilmiş. Hafıza yönetimi ve pointerlar hakkında verdiğiniz örnekler çok açıklayıcıydı."
+                        },
+                        new
+                        {
+                            Id = 3,
+                            ArticleId = 3,
+                            CreatedByName = "InitialCreate",
+                            CreatedDate = new DateTime(2024, 1, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsActive = true,
+                            IsDeleted = false,
+                            ModifiedByName = "InitialCreate",
+                            ModifiedDate = new DateTime(2024, 1, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Note = "JavaScript Makale Yorumu",
+                            Text = "JavaScript'in async/await yapısı ve event loop mekanizması çok iyi anlatılmış. Özellikle yeni başlayanlar için sade bir anlatım olmuş."
+                        },
+                        new
+                        {
+                            Id = 4,
+                            ArticleId = 4,
+                            CreatedByName = "InitialCreate",
+                            CreatedDate = new DateTime(2024, 2, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsActive = true,
+                            IsDeleted = false,
+                            ModifiedByName = "InitialCreate",
+                            ModifiedDate = new DateTime(2024, 2, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Note = "TypeScript Makale Yorumu",
+                            Text = "TypeScript ile tip güvenliğini sağlamak büyük avantaj. Bu yazı sayesinde projeme kolayca TypeScript entegre edebildim."
+                        },
+                        new
+                        {
+                            Id = 5,
+                            ArticleId = 5,
+                            CreatedByName = "InitialCreate",
+                            CreatedDate = new DateTime(2024, 2, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsActive = true,
+                            IsDeleted = false,
+                            ModifiedByName = "InitialCreate",
+                            ModifiedDate = new DateTime(2024, 2, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Note = "Java Makale Yorumu",
+                            Text = "Java'nın çoklu platform desteği ve JVM hakkında verdiğiniz teknik bilgiler oldukça doyurucuydu. Emeğinize sağlık!"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            ArticleId = 6,
+                            CreatedByName = "InitialCreate",
+                            CreatedDate = new DateTime(2024, 3, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsActive = true,
+                            IsDeleted = false,
+                            ModifiedByName = "InitialCreate",
+                            ModifiedDate = new DateTime(2024, 3, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Note = "Python Makale Yorumu",
+                            Text = "Python’un yalın sözdizimi ve veri analizi konularındaki gücünü çok iyi özetlemişsiniz. Pandas örnekleri çok faydalıydı."
+                        },
+                        new
+                        {
+                            Id = 7,
+                            ArticleId = 7,
+                            CreatedByName = "InitialCreate",
+                            CreatedDate = new DateTime(2024, 3, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsActive = true,
+                            IsDeleted = false,
+                            ModifiedByName = "InitialCreate",
+                            ModifiedDate = new DateTime(2024, 3, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Note = "PHP Makale Yorumu",
+                            Text = "PHP ile backend geliştirme konusunda bu kadar net ve güncel bilgiler görmek sevindirici. Laravel konusuna da değinmeniz harika olmuş."
+                        },
+                        new
+                        {
+                            Id = 8,
+                            ArticleId = 8,
+                            CreatedByName = "InitialCreate",
+                            CreatedDate = new DateTime(2024, 4, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsActive = true,
+                            IsDeleted = false,
+                            ModifiedByName = "InitialCreate",
+                            ModifiedDate = new DateTime(2024, 4, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Note = "Kotlin Makale Yorumu",
+                            Text = "Kotlin’in Android geliştirmede Java’ya göre sağladığı avantajları çok güzel anlatmışsınız. Özellikle null safety konusu çok iyi işlenmiş."
+                        },
+                        new
+                        {
+                            Id = 9,
+                            ArticleId = 9,
+                            CreatedByName = "InitialCreate",
+                            CreatedDate = new DateTime(2024, 4, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsActive = true,
+                            IsDeleted = false,
+                            ModifiedByName = "InitialCreate",
+                            ModifiedDate = new DateTime(2024, 4, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Note = "Swift Makale Yorumu",
+                            Text = "Swift ile iOS uygulama geliştirme süreçleri hakkında verdiğiniz detaylar oldukça açıklayıcı. SwiftUI konusuna da değinmeniz çok iyi olmuş."
+                        },
+                        new
+                        {
+                            Id = 10,
+                            ArticleId = 10,
+                            CreatedByName = "InitialCreate",
+                            CreatedDate = new DateTime(2024, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsActive = true,
+                            IsDeleted = false,
+                            ModifiedByName = "InitialCreate",
+                            ModifiedDate = new DateTime(2024, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Note = "Ruby Makale Yorumu",
+                            Text = "Ruby’nin yazım kolaylığı ve Rails framework’ünün güçlü yapısı net bir şekilde aktarılmış. Özellikle RESTful API mimarisi anlatımı çok başarılı."
+                        });
                 });
 
             modelBuilder.Entity("ProgrammersBlog.Entities.Concrete.Role", b =>
@@ -283,22 +728,162 @@ namespace ProgrammersBlog.DataAccess.Migrations
                         .HasDatabaseName("RoleNameIndex")
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
-                    b.ToTable("AspNetRoles", (string)null);
+                    b.ToTable("Roles", (string)null);
 
                     b.HasData(
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "4b82c981-4a0b-4d84-9f5e-cdc69c0ad2d1",
-                            Name = "Admin",
-                            NormalizedName = "ADMIN"
+                            ConcurrencyStamp = "b1f3d1ad-73ef-4d88-b2f9-7a4f8de6315a",
+                            Name = "Category.Create",
+                            NormalizedName = "CATEGORY.CREATE"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "9c7c3c6d-9137-4f0d-8e0d-47fbe677b0f8",
-                            Name = "Editor",
-                            NormalizedName = "EDITOR"
+                            ConcurrencyStamp = "3e2829cd-2c84-42fa-8b7d-46fdc6b7852e",
+                            Name = "Category.Read",
+                            NormalizedName = "CATEGORY.READ"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            ConcurrencyStamp = "cb84d622-b68e-4652-9a06-9930ac5f2a90",
+                            Name = "Category.Update",
+                            NormalizedName = "CATEGORY.UPDATE"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            ConcurrencyStamp = "87ae055e-0e40-4ae2-b16b-f9fd7a0f237b",
+                            Name = "Category.Delete",
+                            NormalizedName = "CATEGORY.DELETE"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            ConcurrencyStamp = "2ffcb143-7aa2-4a0a-90cb-6939fc2fefb9",
+                            Name = "Article.Create",
+                            NormalizedName = "ARTICLE.CREATE"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            ConcurrencyStamp = "16417743-e07d-4f91-9a5d-0ef321248e4f",
+                            Name = "Article.Read",
+                            NormalizedName = "ARTICLE.READ"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            ConcurrencyStamp = "edc3bc89-7192-4a89-b3d3-7e8b11527a30",
+                            Name = "Article.Update",
+                            NormalizedName = "ARTICLE.UPDATE"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            ConcurrencyStamp = "7a7b7de1-369e-4e92-9e94-b037a3c51b3f",
+                            Name = "Article.Delete",
+                            NormalizedName = "ARTICLE.DELETE"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            ConcurrencyStamp = "065cb9c1-5a9c-45e7-bcbc-7d4f1bb79862",
+                            Name = "User.Create",
+                            NormalizedName = "USER.CREATE"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            ConcurrencyStamp = "3b1c64ff-8c16-4ea4-91cb-0a612cb2609e",
+                            Name = "User.Read",
+                            NormalizedName = "USER.READ"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            ConcurrencyStamp = "3f58eb11-d0a1-4fd6-8ee2-36bc74008350",
+                            Name = "User.Update",
+                            NormalizedName = "USER.UPDATE"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            ConcurrencyStamp = "c2824ad5-e35e-4b49-ae0c-f1b8e3078c40",
+                            Name = "User.Delete",
+                            NormalizedName = "USER.DELETE"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            ConcurrencyStamp = "a8e3d6a9-9085-4122-a2ff-1cb7279c7db0",
+                            Name = "Role.Create",
+                            NormalizedName = "ROLE.CREATE"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            ConcurrencyStamp = "ff925ae8-0bc5-4f29-8ab7-b39e215f9a8f",
+                            Name = "Role.Read",
+                            NormalizedName = "ROLE.READ"
+                        },
+                        new
+                        {
+                            Id = 15,
+                            ConcurrencyStamp = "3dcce071-e735-426e-bfb1-dcfe2f546623",
+                            Name = "Role.Update",
+                            NormalizedName = "ROLE.UPDATE"
+                        },
+                        new
+                        {
+                            Id = 16,
+                            ConcurrencyStamp = "b9aa0d9a-bdef-4399-b57c-3d2793e4fc68",
+                            Name = "Role.Delete",
+                            NormalizedName = "ROLE.DELETE"
+                        },
+                        new
+                        {
+                            Id = 17,
+                            ConcurrencyStamp = "0fa12664-0c6d-4ac5-8018-95e96c9c82d4",
+                            Name = "Comment.Create",
+                            NormalizedName = "COMMENT.CREATE"
+                        },
+                        new
+                        {
+                            Id = 18,
+                            ConcurrencyStamp = "80ae1c0f-0900-4d56-9a0b-92c761da49d1",
+                            Name = "Comment.Read",
+                            NormalizedName = "COMMENT.READ"
+                        },
+                        new
+                        {
+                            Id = 19,
+                            ConcurrencyStamp = "b7f69e2b-3089-4ee0-99de-4db71d58660f",
+                            Name = "Comment.Update",
+                            NormalizedName = "COMMENT.UPDATE"
+                        },
+                        new
+                        {
+                            Id = 20,
+                            ConcurrencyStamp = "1d8ce7b1-d21e-4c2e-b4d7-693b39b80cb2",
+                            Name = "Comment.Delete",
+                            NormalizedName = "COMMENT.DELETE"
+                        },
+                        new
+                        {
+                            Id = 21,
+                            ConcurrencyStamp = "d4797352-c3d8-4f10-a301-0dfd474bb4c1",
+                            Name = "AdminArea.Home.Read",
+                            NormalizedName = "ADMINAREA.HOME.READ"
+                        },
+                        new
+                        {
+                            Id = 22,
+                            ConcurrencyStamp = "e2bb9f0a-bbd1-4da5-9f8f-b5f6cba9c3c3",
+                            Name = "SuperAdmin",
+                            NormalizedName = "SUPERADMIN"
                         });
                 });
 
@@ -323,7 +908,7 @@ namespace ProgrammersBlog.DataAccess.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("AspNetRoleClaims", (string)null);
+                    b.ToTable("RoleClaims", (string)null);
                 });
 
             modelBuilder.Entity("ProgrammersBlog.Entities.Concrete.User", b =>
@@ -334,6 +919,11 @@ namespace ProgrammersBlog.DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("About")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
@@ -342,11 +932,37 @@ namespace ProgrammersBlog.DataAccess.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<string>("FacebookLink")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("GitHubLink")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<string>("InstagramLink")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("LinkedInLink")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -355,8 +971,8 @@ namespace ProgrammersBlog.DataAccess.Migrations
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("NormalizedUserName")
                         .HasMaxLength(50)
@@ -379,12 +995,24 @@ namespace ProgrammersBlog.DataAccess.Migrations
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("TwitterLink")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
 
                     b.Property<string>("UserName")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("WebsiteLink")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<string>("YoutubeLink")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
                     b.HasKey("Id");
 
@@ -396,44 +1024,64 @@ namespace ProgrammersBlog.DataAccess.Migrations
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.ToTable("AspNetUsers", (string)null);
+                    b.ToTable("Users", (string)null);
 
                     b.HasData(
                         new
                         {
                             Id = 1,
+                            About = "Admin User of ProgrammersBlog",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a592923a-b131-4e88-b18e-1a752d84622f",
+                            ConcurrencyStamp = "4cd73791-6646-4c36-b00b-57f6bdd9f6f8",
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
+                            FacebookLink = "https://facebook.com/adminuser",
+                            FirstName = "Admin",
+                            GitHubLink = "https://github.com/adminuser",
+                            InstagramLink = "https://instagram.com/adminuser",
+                            LastName = "User",
+                            LinkedInLink = "https://linkedin.com/adminuser",
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@GMAIL.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEDXAmwG14n411aXJZPDYif4qaEyTK09ubbIDblyOWHoeHW2dTK9PdVNW/wSxzO2Ypw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEPS7yvw9JXa05VdovXwI0ESFB6zOv34ArFDj6wuSxiJuVodITMClaZpDzNmuxwKM0w==",
                             PhoneNumber = "+901234567890",
                             PhoneNumberConfirmed = true,
-                            Picture = "default.png",
+                            Picture = "/userImages/defaultUser.png",
                             SecurityStamp = "c871b9bb-8c2e-4f3e-8881-9f5f1635f8a9",
+                            TwitterLink = "https://twitter.com/adminuser",
                             TwoFactorEnabled = false,
-                            UserName = "admin"
+                            UserName = "admin",
+                            WebsiteLink = "https://programmersblog.com/",
+                            YoutubeLink = "https://youtube.com/adminuser"
                         },
                         new
                         {
                             Id = 2,
+                            About = "Editor User of ProgrammersBlog",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c28cc5a9-41d3-4f47-8464-163ad94d032b",
+                            ConcurrencyStamp = "d2693d92-71fa-43f6-bc22-c13b4736dde6",
                             Email = "editor@gmail.com",
                             EmailConfirmed = true,
+                            FacebookLink = "https://facebook.com/editoruser",
+                            FirstName = "Admin",
+                            GitHubLink = "https://github.com/editoruser",
+                            InstagramLink = "https://instagram.com/editoruser",
+                            LastName = "User",
+                            LinkedInLink = "https://linkedin.com/editoruser",
                             LockoutEnabled = false,
                             NormalizedEmail = "EDITOR@GMAIL.COM",
                             NormalizedUserName = "EDITOR",
-                            PasswordHash = "AQAAAAIAAYagAAAAELY2ZliZfMUlULoCRxIiVW8Ydg1oSS3oOIn8tYJA/9rOq98IuJWs/Z0jd2B7t9o0qA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEPlQGNVU9RkRA55InZ1md5Q9+p9EWIfPry1A2idsF/j/z2DET2psru9b7QaQpq0C3A==",
                             PhoneNumber = "+901234567890",
                             PhoneNumberConfirmed = true,
-                            Picture = "default.png",
+                            Picture = "/userImages/defaultUser.png",
                             SecurityStamp = "5d8d2f57-0419-4aa6-b0f9-0fd94c6fc51b",
+                            TwitterLink = "https://twitter.com/editoruser",
                             TwoFactorEnabled = false,
-                            UserName = "editor"
+                            UserName = "editor",
+                            WebsiteLink = "https://programmersblog.com/",
+                            YoutubeLink = "https://youtube.com/editoruser"
                         });
                 });
 
@@ -458,7 +1106,7 @@ namespace ProgrammersBlog.DataAccess.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AspNetUserClaims", (string)null);
+                    b.ToTable("UserClaims", (string)null);
                 });
 
             modelBuilder.Entity("ProgrammersBlog.Entities.Concrete.UserLogin", b =>
@@ -481,7 +1129,7 @@ namespace ProgrammersBlog.DataAccess.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AspNetUserLogins", (string)null);
+                    b.ToTable("UserLogins", (string)null);
                 });
 
             modelBuilder.Entity("ProgrammersBlog.Entities.Concrete.UserRole", b =>
@@ -496,7 +1144,7 @@ namespace ProgrammersBlog.DataAccess.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("AspNetUserRoles", (string)null);
+                    b.ToTable("UserRoles", (string)null);
 
                     b.HasData(
                         new
@@ -506,8 +1154,173 @@ namespace ProgrammersBlog.DataAccess.Migrations
                         },
                         new
                         {
+                            UserId = 1,
+                            RoleId = 2
+                        },
+                        new
+                        {
+                            UserId = 1,
+                            RoleId = 3
+                        },
+                        new
+                        {
+                            UserId = 1,
+                            RoleId = 4
+                        },
+                        new
+                        {
+                            UserId = 1,
+                            RoleId = 5
+                        },
+                        new
+                        {
+                            UserId = 1,
+                            RoleId = 6
+                        },
+                        new
+                        {
+                            UserId = 1,
+                            RoleId = 7
+                        },
+                        new
+                        {
+                            UserId = 1,
+                            RoleId = 8
+                        },
+                        new
+                        {
+                            UserId = 1,
+                            RoleId = 9
+                        },
+                        new
+                        {
+                            UserId = 1,
+                            RoleId = 10
+                        },
+                        new
+                        {
+                            UserId = 1,
+                            RoleId = 11
+                        },
+                        new
+                        {
+                            UserId = 1,
+                            RoleId = 12
+                        },
+                        new
+                        {
+                            UserId = 1,
+                            RoleId = 13
+                        },
+                        new
+                        {
+                            UserId = 1,
+                            RoleId = 14
+                        },
+                        new
+                        {
+                            UserId = 1,
+                            RoleId = 15
+                        },
+                        new
+                        {
+                            UserId = 1,
+                            RoleId = 16
+                        },
+                        new
+                        {
+                            UserId = 1,
+                            RoleId = 17
+                        },
+                        new
+                        {
+                            UserId = 1,
+                            RoleId = 18
+                        },
+                        new
+                        {
+                            UserId = 1,
+                            RoleId = 19
+                        },
+                        new
+                        {
+                            UserId = 1,
+                            RoleId = 20
+                        },
+                        new
+                        {
+                            UserId = 1,
+                            RoleId = 21
+                        },
+                        new
+                        {
+                            UserId = 1,
+                            RoleId = 22
+                        },
+                        new
+                        {
+                            UserId = 2,
+                            RoleId = 1
+                        },
+                        new
+                        {
                             UserId = 2,
                             RoleId = 2
+                        },
+                        new
+                        {
+                            UserId = 2,
+                            RoleId = 3
+                        },
+                        new
+                        {
+                            UserId = 2,
+                            RoleId = 4
+                        },
+                        new
+                        {
+                            UserId = 2,
+                            RoleId = 5
+                        },
+                        new
+                        {
+                            UserId = 2,
+                            RoleId = 6
+                        },
+                        new
+                        {
+                            UserId = 2,
+                            RoleId = 7
+                        },
+                        new
+                        {
+                            UserId = 2,
+                            RoleId = 8
+                        },
+                        new
+                        {
+                            UserId = 2,
+                            RoleId = 17
+                        },
+                        new
+                        {
+                            UserId = 2,
+                            RoleId = 18
+                        },
+                        new
+                        {
+                            UserId = 2,
+                            RoleId = 19
+                        },
+                        new
+                        {
+                            UserId = 2,
+                            RoleId = 20
+                        },
+                        new
+                        {
+                            UserId = 2,
+                            RoleId = 21
                         });
                 });
 
@@ -529,7 +1342,7 @@ namespace ProgrammersBlog.DataAccess.Migrations
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
-                    b.ToTable("AspNetUserTokens", (string)null);
+                    b.ToTable("UserTokens", (string)null);
                 });
 
             modelBuilder.Entity("ProgrammersBlog.Entities.Concrete.Article", b =>

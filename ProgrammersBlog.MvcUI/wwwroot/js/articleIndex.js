@@ -165,7 +165,10 @@ function initializeDeleteArticle() {
         event.preventDefault();
         const id = $(this).attr('data-id');
         const tableRow = $(`[name="${id}"]`);
-        const articleTitle = tableRow.find('th:eq(2)').text();
+        console.log('Table Row:', tableRow);
+        console.log('All cells:', tableRow.find('td'));
+        const articleTitle = tableRow.find('td').eq(2).text().trim();
+        console.log('Article Title (from DOM):', articleTitle);
         Swal.fire({
             title: 'Are you sure you want to delete?',
             text: `The selected article "${articleTitle}" will be permanently deleted!`,

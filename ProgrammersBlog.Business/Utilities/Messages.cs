@@ -21,6 +21,10 @@ public static class Messages
         {
             return $"{categoryName} category has been permanently deleted from the database.";
         }
+        public static string UndoDelete(string categoryName)
+        {
+            return $"The \"{categoryName}\" category has been successfully restored from the archive.";
+        }
         public static string Update(string categoryName)
         {
             return $"{categoryName} category has been successfully updated.";
@@ -42,6 +46,11 @@ public static class Messages
         public static string Delete(string articleName)
         {
             return $"{articleName} article has been successfully deleted.";
+        }
+
+        public static string UndoDelete(string articleName)
+        {
+            return $"The \"{articleName}\" article has been successfully restored from the archive.";
         }
         public static string HardDelete(string articleName)
         {
@@ -81,10 +90,14 @@ public static class Messages
             return $"Comment by {createdByName} has been successfully deleted.";
         }
 
+        public static string UndoDelete(string createdByName)
+        {
+            return $"The \"{createdByName}\" comment has been successfully restored from the archive.";
+        }
+
         public static string HardDelete(string createdByName)
         {
             return $"Comment by {createdByName} has been permanently deleted from the database.";
         }
     }
-
 }

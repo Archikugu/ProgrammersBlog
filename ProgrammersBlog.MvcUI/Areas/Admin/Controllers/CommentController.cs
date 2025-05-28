@@ -10,6 +10,7 @@ using ProgrammersBlog.Entities.Dtos.CommentDtos;
 using ProgrammersBlog.MvcUI.Helpers.Abstract;
 using ProgrammersBlog.MvcUI.Areas.Admin.Models.CommentAjaxViewModels;
 using ProgrammersBlog.Core.Utilities.Extensions;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ProgrammersBlog.MvcUI.Areas.Admin.Controllers;
 
@@ -21,13 +22,17 @@ public class CommentController : BaseController
     {
         _commentService = commentService;
     }
+
     [HttpGet]
+    [Authorize(Roles = "SuperAdmin,Comment.Read")]
     public async Task<IActionResult> Index()
     {
         var result = await _commentService.GetAllByNonDeletedAsync();
         return View(result.Data);
     }
+
     [HttpGet]
+    [Authorize(Roles = "SuperAdmin,Comment.Read")]
     public async Task<IActionResult> GetAllComments()
     {
         var result = await _commentService.GetAllByNonDeletedAsync();
@@ -39,6 +44,7 @@ public class CommentController : BaseController
     }
 
     [HttpGet]
+    [Authorize(Roles = "SuperAdmin,Comment.Read")]
     public async Task<IActionResult> GetDetail(int commentId)
     {
         var result = await _commentService.GetAsync(commentId);
@@ -51,7 +57,9 @@ public class CommentController : BaseController
             return NotFound();
         }
     }
+
     [HttpPost]
+    [Authorize(Roles = "SuperAdmin,Comment.Delete")]
     public async Task<IActionResult> Delete(int commentId)
     {
         var result = await _commentService.DeleteAsync(commentId, LoggedInUser.UserName);
@@ -60,6 +68,7 @@ public class CommentController : BaseController
     }
 
     [HttpPost]
+    [Authorize(Roles = "SuperAdmin,Comment.Update")]
     public async Task<IActionResult> Approve(int commentId)
     {
         var result = await _commentService.ApproveAsync(commentId, LoggedInUser.UserName);
@@ -71,6 +80,7 @@ public class CommentController : BaseController
     }
 
     [HttpGet]
+    [Authorize(Roles = "SuperAdmin,Comment.Update")]
     public async Task<IActionResult> Update(int commentId)
     {
         var result = await _commentService.GetCommentUpdateDtoAsync(commentId);
@@ -83,7 +93,9 @@ public class CommentController : BaseController
             return NotFound();
         }
     }
+
     [HttpPost]
+    [Authorize(Roles = "SuperAdmin,Comment.Update")]
     public async Task<IActionResult> Update(CommentUpdateDto commentUpdateDto)
     {
         if (ModelState.IsValid)
@@ -107,5 +119,41 @@ public class CommentController : BaseController
             CommentUpdatePartial = await this.RenderViewToStringAsync("_CommentUpdatePartial", commentUpdateDto)
         });
         return Json(commentUpdateAjaxErrorModel);
+    }
+
+    [Authorize(Roles = "SuperAdmin,Comment.Read")]
+    [HttpGet]
+    public async Task<IActionResult> DeletedComments()
+    {
+        var result = await _commentService.GetAllByDeletedAsync();
+        return View(result.Data);
+
+    }
+    [Authorize(Roles = "SuperAdmin,Comment.Read")]
+    [HttpGet]
+    public async Task<JsonResult> GetAllDeletedComments()
+    {
+        var result = await _commentService.GetAllByDeletedAsync();
+        var comments = JsonSerializer.Serialize(result, new JsonSerializerOptions
+        {
+            ReferenceHandler = ReferenceHandler.Preserve
+        });
+        return Json(comments);
+    }
+    [Authorize(Roles = "SuperAdmin,Comment.Update")]
+    [HttpPost]
+    public async Task<JsonResult> UndoDelete(int commentId)
+    {
+        var result = await _commentService.UndoDeleteAsync(commentId, LoggedInUser.UserName);
+        var undoDeleteCommentResult = JsonSerializer.Serialize(result);
+        return Json(undoDeleteCommentResult);
+    }
+    [Authorize(Roles = "SuperAdmin,Comment.Delete")]
+    [HttpPost]
+    public async Task<JsonResult> HardDelete(int commentId)
+    {
+        var result = await _commentService.HardDeleteAsync(commentId);
+        var hardDeletedCommentResult = JsonSerializer.Serialize(result);
+        return Json(hardDeletedCommentResult);
     }
 }

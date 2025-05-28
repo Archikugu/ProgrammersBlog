@@ -1,0 +1,84 @@
+﻿@using ProgrammersBlog.Entities.Dtos.RoleDtos
+@model RoleListDto
+
+@{
+	ViewData["Title"] = "Role Index";
+	Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="page-inner">
+	<div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
+		<div>
+			<div class="page-header">
+				<h3 class="fw-bold mb-3">Roles</h3>
+				<ul class="breadcrumbs mb-3">
+					<li class="nav-home">
+						<a asp-area="Admin" asp-controller="Home" asp-action="Index">
+							<i class="icon-home"></i>
+						</a>
+					</li>
+					<li class="separator">
+						<i class="icon-arrow-right"></i>
+					</li>
+					<li class="nav-item">
+						<a asp-area="Admin" asp-controller="Role" asp-action="Index">Roles</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="ms-md-auto py-2 py-md-0">
+			<button class="btn btn-warning btn-round" id="btnRefresh">
+				<i class="fas fa-rotate fa-spin"></i> Refresh
+			</button>
+		</div>
+	</div>
+
+	<div id="modalPlaceHolder" aria-hidden="true"></div>
+
+	<div class="row">
+		<div class="col-md-12">
+			<div class="card">
+				<div class="card-header">
+					<h4 class="card-title">
+						<i class="fas fa-comments me-2 text-primary"></i>
+						Roles
+					</h4>
+				</div>
+				<div class="card-body">
+					<div class="table-responsive">
+						<table id="rolesTable" class="display table table-striped table-hover">
+							<thead>
+								<tr>
+									<th>#</th>
+									<th>Role Name</th>
+								</tr>
+							</thead>
+							<tfoot>
+								<tr>
+									<th>#</th>
+									<th>Role Name</th>
+								</tr>
+							</tfoot>
+							<tbody>
+								@foreach (var role in Model.Roles)
+								{
+									<tr name="@role.Id">
+										<td>@role.Id</td>
+										<td>@role.Name</td>
+									</tr>
+								}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+@section Scripts {
+	<script src="~/js/roleIndex.js" type="application/ecmascript"></script>
+}
+
+@section Styles {
+}

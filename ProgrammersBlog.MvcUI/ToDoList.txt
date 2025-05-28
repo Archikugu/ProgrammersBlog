@@ -4,3 +4,11 @@
 
 //Article sayfasında refresh yapınca ikinci sayfadaki veriler gelmiyor excel vs 0 değer dönüyor
 
+//Article delete yapınca name gelmiyor sweal fire da 
+
+//article datatbale execel fakan çalışmıyor 
+
+//article delete yapınca is active false olunca tüm resmi sildirdim onu düzelt komple silinmedi
+
+//user update atınca güncelleme oluyor ama datatable refresh olmuyor kendim yapınca düzeliyor
+
