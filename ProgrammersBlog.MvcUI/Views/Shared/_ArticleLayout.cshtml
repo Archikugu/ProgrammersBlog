@@ -5,8 +5,9 @@
 
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta name="description" content="">
-	<meta name="author" content="ProgrammersBlog">
+	<meta name="description" content="@ViewBag.Description">
+	<meta name="author" content="@ViewBag.Author">
+	<meta name="keywords" content="@ViewBag.Tags">
 
 	<title>@ViewBag.Title | Programmers Blog</title>
 
@@ -73,7 +74,7 @@
 	<!-- Bootstrap core JavaScript -->
 	<script src="~/ProgrammersBlogTemplate/vendor/jquery/jquery.min.js"></script>
 	<script src="~/ProgrammersBlogTemplate/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-	@RenderSection("Scripts", required: false)
+
 </body>
 
 </html>

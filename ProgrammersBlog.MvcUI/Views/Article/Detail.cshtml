@@ -1,0 +1,59 @@
+﻿@model ProgrammersBlog.Entities.Dtos.ArticleDtos.ArticleDto
+@{
+    Layout = "_ArticleLayout";
+    ViewBag.Title = Model.Article.Title;
+    ViewBag.Description = Model.Article.SeoDescription;
+    ViewBag.Author = Model.Article.SeoAuthor;
+    ViewBag.Tags = Model.Article.SeoTags;
+}
+<!-- Post Content Column -->
+<div class="col-lg-8">
+
+    <!-- Title -->
+    <h1 class="mt-4">@Model.Article.Title</h1>
+
+    <!-- Author -->
+    <p class="lead">
+        Published by @Model.Article.User.UserName on @Model.Article.Date.ToShortDateString().
+    </p>
+
+    <hr>
+
+    <!-- Preview Image -->
+    <div class="text-center">
+        <img class="img-fluid rounded" src="~/images/@Model.Article.Thumbnail" alt="@Model.Article.Title">
+    </div>
+    <hr>
+
+    <!-- Post Content -->
+    @Html.Raw(@Model.Article.Content)
+
+    <hr>
+
+    <p class="text-center">View Count: <span class="badge badge-info">@Model.Article.ViewsCount</span> Comment Count: <span class="badge badge-warning">@Model.Article.CommentCount</span></p>
+
+    <!-- Comments Form -->
+    <div class="card my-4">
+        <h5 class="card-header">Add a comment:</h5>
+        <div class="card-body">
+            <form>
+                <div class="form-group">
+                    <textarea class="form-control" rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Add</button>
+            </form>
+        </div>
+    </div>
+
+    @foreach (var comment in Model.Article.Comments)
+    {
+        <!-- Single Comment -->
+        <div class="media mb-4">
+            <img class="d-flex mr-3 rounded-circle" src="https://randomuser.me/api/portraits/men/34.jpg" alt="">
+            <div class="media-body">
+                <h5 class="mt-0">@comment.CreatedByName</h5>
+                @comment.Text
+            </div>
+        </div>
+    }
+</div>
