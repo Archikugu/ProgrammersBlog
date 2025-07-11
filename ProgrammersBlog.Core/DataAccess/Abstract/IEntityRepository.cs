@@ -10,6 +10,7 @@ public interface IEntityRepository<T> where T : class, IEntity, new()
     Task<T> AddAsync(T entity);
     Task<T> UpdateAsync(T entity);
     Task DeleteAsync(T entity);
+    Task<IList<T>> SearchAsync(IList<Expression<Func<T, bool>>> predicates, params Expression<Func<T, object>>[] includeProperties);
     Task<bool> AnyAsync(Expression<Func<T, bool>> predicate);
     Task<int> CountAsync(Expression<Func<T, bool>> predicate = null);
 }
