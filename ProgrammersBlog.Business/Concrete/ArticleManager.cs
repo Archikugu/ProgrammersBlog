@@ -66,9 +66,11 @@ public class ArticleManager : ManagerBase, IArticleService
 
     public async Task<IDataResult<ArticleDto>> GetAsync(int articleId)
     {
-        var article = await UnitOfWork.Articles.GetAsync(a => a.Id == articleId, a => a.User, a => a.Category, a => a.Comments);
+        var article = await UnitOfWork.Articles.GetAsync(a => a.Id == articleId, a => a.User, a => a.Category);
+
         if (article != null)
         {
+            article.Comments = await UnitOfWork.Comments.GetAllAsync(c => c.ArticleId == articleId && !c.IsDeleted && c.IsActive);
             return new DataResult<ArticleDto>(ResultStatus.Success, new ArticleDto
             {
                 Article = article,

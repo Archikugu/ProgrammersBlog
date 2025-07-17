@@ -16,6 +16,10 @@
 	<!-- Custom styles for this template -->
 	<link href="~/ProgrammersBlogTemplate/css/blog-home.css" rel="stylesheet">
 
+	<!--Toastr Css-->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
+
 </head>
 
 <body>
@@ -73,7 +77,10 @@
 	<!-- Bootstrap core JavaScript -->
 	<script src="~/ProgrammersBlogTemplate/vendor/jquery/jquery.min.js"></script>
 	<script src="~/ProgrammersBlogTemplate/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-	@RenderSection("Scripts", required: false)
+	<!--Toastr Js-->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+	@await RenderSectionAsync("Scripts", required: false)
 </body>
 
 </html>
