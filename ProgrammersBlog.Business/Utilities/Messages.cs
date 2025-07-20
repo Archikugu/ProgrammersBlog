@@ -60,6 +60,10 @@ public static class Messages
         {
             return $"{articleName} article has been successfully updated.";
         }
+        public static string IncreaseViewCount(string articleName)
+        {
+            return $"The view count of the article \"{articleName}\" has been successfully increased.";
+        }
     }
 
     //Messages for Comment

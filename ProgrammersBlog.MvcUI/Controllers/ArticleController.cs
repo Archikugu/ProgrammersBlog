@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ProgrammersBlog.Business.Abstract;
 using ProgrammersBlog.Core.Utilities.Results.ComplexTypes;
+using ProgrammersBlog.Entities.ComplexTypes;
 using ProgrammersBlog.Entities.Concrete;
 using ProgrammersBlog.Entities.Dtos.ArticleDtos;
 using ProgrammersBlog.MvcUI.Models;
@@ -33,7 +34,18 @@ public class ArticleController : Controller
         var articleResult = await _articleService.GetAsync(articleId);
         if (articleResult.ResultStatus == ResultStatus.Success)
         {
-            return View(articleResult.Data);
+            var userArticles = await _articleService.GetAllByUserIdOnFilter(articleResult.Data.Article.UserId, FilterBy.Category, OrderBy.Date, false, 10, articleResult.Data.Article.CategoryId, DateTime.Now, DateTime.Now, 0, int.MaxValue, 0, int.MaxValue);
+            await _articleService.IncreaseViewCountAsync(articleId);
+            return View(new ArticleDetailViewModel
+            {
+                ArticleDto = articleResult.Data,
+                ArticleDetailRightSideBarViewModel = new ArticleDetailRightSideBarViewModel
+                {
+                    ArticleListDto = userArticles.Data,
+                    Header = "User's Most Read Articles in the Same Category",
+                    User = articleResult.Data.Article.User
+                }
+            });
         }
 
         return NotFound();
