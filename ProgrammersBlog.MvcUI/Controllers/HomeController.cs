@@ -1,15 +1,19 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using ProgrammersBlog.Business.Abstract;
+using ProgrammersBlog.Entities.Concrete;
 
 namespace ProgrammersBlog.MvcUI.Controllers
 {
     public class HomeController : Controller
     {
         private readonly IArticleService _articleService;
+        private readonly AboutUsPageInfo _aboutUsPageInfo;
 
-        public HomeController(IArticleService articleService)
+        public HomeController(IArticleService articleService, IOptions<AboutUsPageInfo> aboutUsPageInfo)
         {
             _articleService = articleService;
+            _aboutUsPageInfo = aboutUsPageInfo.Value;
         }
 
         [HttpGet]
@@ -19,6 +23,11 @@ namespace ProgrammersBlog.MvcUI.Controllers
                 ? _articleService.GetAllByPagingAsync(null, currentPage, pageSize, isAscending)
                 : _articleService.GetAllByPagingAsync(categoryId.Value, currentPage, pageSize, isAscending));
             return View(articlesResult.Data);
+        }
+        [HttpGet]
+        public async Task<IActionResult> About()
+        {
+            return View(_aboutUsPageInfo);
         }
     }
 }

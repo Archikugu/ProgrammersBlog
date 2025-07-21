@@ -5,6 +5,7 @@ using ProgrammersBlog.DataAccess.Concrete.EntityFramework.Contexts;
 using ProgrammersBlog.MvcUI.AutoMapper;
 using ProgrammersBlog.MvcUI.Helpers.Abstract;
 using ProgrammersBlog.MvcUI.Helpers.Concrete;
+using ProgrammersBlog.Entities.Concrete;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +23,8 @@ builder.Services.AddSession();
 builder.Services.LoadMyServices();
 builder.Services.AddAutoMapper(typeof(ViewModelsProfile));
 builder.Services.AddScoped<IImageHelper, ImageHelper>();
+builder.Services.Configure<AboutUsPageInfo>(builder.Configuration.GetSection("AboutUsPageInfo"));
+builder.Services.Configure<WebsiteInfo>(builder.Configuration.GetSection("WebsiteInfo"));
 
 builder.Services.ConfigureApplicationCookie(options =>
 {

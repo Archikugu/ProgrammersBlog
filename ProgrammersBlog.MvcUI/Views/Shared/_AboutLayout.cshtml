@@ -1,33 +1,28 @@
-﻿@using Microsoft.Extensions.Options
-@using ProgrammersBlog.Entities.Concrete
-@inject IOptions<WebsiteInfo> WebsiteInfo
-@{
-	var websiteInfo = WebsiteInfo.Value;
-}
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
 
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta name="description" content="@websiteInfo.SeoDescription">
-	<meta name="author" content="@websiteInfo.SeoAuthor">
-	<meta name="keywords" content="@websiteInfo.SeoTags">
+	<meta name="description" content="@ViewBag.Description">
+	<meta name="author" content="@ViewBag.Author">
+	<meta name="keywords" content="@ViewBag.Tags">
 
-	<title>@ViewBag.Title | @websiteInfo.Title</title>
+	<title>@ViewBag.Title | Programmers Blog</title>
 
 	<!-- Bootstrap core CSS -->
 	<link href="~/ProgrammersBlogTemplate/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
 	<!-- Custom styles for this template -->
 	<link href="~/ProgrammersBlogTemplate/css/blog-home.css" rel="stylesheet">
-
+	<link href="~/ProgrammersBlogTemplate/css/site.css" rel="stylesheet">
 	<!--Toastr Css-->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css" />
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
 
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 </head>
 
 <body>
@@ -35,7 +30,7 @@
 	<!-- Navigation -->
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
 		<div class="container">
-			<a class="navbar-brand" asp-controller="Home" asp-action="Index">@websiteInfo.MenuTitle</a>
+			<a class="navbar-brand" asp-controller="Home" asp-action="Index">Programmers Blog</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
@@ -67,7 +62,7 @@
 			@RenderBody()
 
 			<!-- Sidebar Widgets Column -->
-			@await Component.InvokeAsync("RightSideBar")
+			@* @await Component.InvokeAsync("RightSideBar") *@
 
 		</div>
 		<!-- /.row -->
@@ -90,6 +85,7 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js" integrity="sha512-b+nQTCdtTBIRIbraqNEwsjB6UvL3UEMkXnhzd8awtCYh0Kcsjl9uEgwVFVbhoj3uu1DO1ZMacNvLoyJJiNfcvg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 	@await RenderSectionAsync("Scripts", required: false)
+
 </body>
 
 </html>
