@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Options;
 using ProgrammersBlog.Business.Abstract;
 using ProgrammersBlog.Entities.Concrete;
+using ProgrammersBlog.Entities.Dtos.EmailDtos;
 
 namespace ProgrammersBlog.MvcUI.Controllers
 {
@@ -28,6 +29,16 @@ namespace ProgrammersBlog.MvcUI.Controllers
         public async Task<IActionResult> About()
         {
             return View(_aboutUsPageInfo);
+        }
+        [HttpGet]
+        public IActionResult Contact()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Contact(EmailSendDto emailSendDto)
+        {
+            return View();
         }
     }
 }
