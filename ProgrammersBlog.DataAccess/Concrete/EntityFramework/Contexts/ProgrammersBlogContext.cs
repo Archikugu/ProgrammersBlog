@@ -23,6 +23,7 @@ public class ProgrammersBlogContext : IdentityDbContext<User, Role, int, UserCla
     public DbSet<Article> Articles { get; set; }
     public DbSet<Category> Categories { get; set; }
     public DbSet<Comment> Comments { get; set; }
+    public DbSet<Log> Logs { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -38,6 +39,8 @@ public class ProgrammersBlogContext : IdentityDbContext<User, Role, int, UserCla
 
         modelBuilder.ApplyConfiguration(new RoleMapping());
         modelBuilder.ApplyConfiguration(new RoleClaimMapping());
+
+        modelBuilder.ApplyConfiguration(new LogMap());
      
     }
 }

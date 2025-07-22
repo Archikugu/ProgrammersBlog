@@ -28,11 +28,13 @@ namespace ProgrammersBlog.MvcUI.Controllers
         [HttpGet]
         public async Task<IActionResult> About()
         {
+            throw new Exception("An error occurred while loading the About page."); // Simulating an error for demonstration purposes
             return View(_aboutUsPageInfo);
         }
         [HttpGet]
         public IActionResult Contact()
         {
+            throw new NullReferenceException(); // Simulating an error for demonstration purposes
             return View();
         }
         [HttpPost]
