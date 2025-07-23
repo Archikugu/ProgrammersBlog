@@ -22,7 +22,7 @@ try
     builder.Services.AddControllersWithViews(options =>
     {
         options.ModelBindingMessageProvider.SetValueMustNotBeNullAccessor(value => "This field must not be left empty!");
-        options.Filters.Add<MvcExceptionFilter>(); 
+        options.Filters.Add<MvcExceptionFilter>();
     }).AddRazorRuntimeCompilation().AddJsonOptions(opt =>
     {
         opt.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
@@ -35,6 +35,7 @@ try
     builder.Services.AddScoped<IImageHelper, ImageHelper>();
     builder.Services.Configure<AboutUsPageInfo>(builder.Configuration.GetSection("AboutUsPageInfo"));
     builder.Services.Configure<WebsiteInfo>(builder.Configuration.GetSection("WebsiteInfo"));
+    builder.Services.Configure<SmtpSettings>(builder.Configuration.GetSection("SmtpSettings"));
 
     builder.Services.ConfigureApplicationCookie(options =>
     {

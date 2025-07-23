@@ -41,6 +41,7 @@ public static class ServiceCollectionExtensions
         serviceCollection.AddScoped<ICategoryService, CategoryManager>();
         serviceCollection.AddScoped<IArticleService, ArticleManager>();
         serviceCollection.AddScoped<ICommentService, CommentManager>();
+        serviceCollection.AddSingleton<IMailService, MailManager>();
         serviceCollection.AddAutoMapper(typeof(CategoryProfile), typeof(ArticleProfile), typeof(UserProfile));
         return serviceCollection;
     }
