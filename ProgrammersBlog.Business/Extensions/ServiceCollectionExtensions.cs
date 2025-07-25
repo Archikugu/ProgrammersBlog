@@ -42,7 +42,12 @@ public static class ServiceCollectionExtensions
         serviceCollection.AddScoped<IArticleService, ArticleManager>();
         serviceCollection.AddScoped<ICommentService, CommentManager>();
         serviceCollection.AddSingleton<IMailService, MailManager>();
-        serviceCollection.AddAutoMapper(typeof(CategoryProfile), typeof(ArticleProfile), typeof(UserProfile));
+        serviceCollection.AddAutoMapper(cfg =>
+        {
+            cfg.AddProfile<CategoryProfile>();
+            cfg.AddProfile<ArticleProfile>();
+            cfg.AddProfile<UserProfile>();
+        });
         return serviceCollection;
     }
 }

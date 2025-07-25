@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Options;
 using NToastNotify;
 using ProgrammersBlog.Business.Abstract;
+using ProgrammersBlog.Core.Utilities.Helpers.Abstract;
 using ProgrammersBlog.Entities.Concrete;
 using ProgrammersBlog.Entities.Dtos.EmailDtos;
 
@@ -13,13 +14,15 @@ namespace ProgrammersBlog.MvcUI.Controllers
         private readonly AboutUsPageInfo _aboutUsPageInfo;
         private readonly IMailService _mailService;
         private readonly IToastNotification _toastNotification;
+        private readonly IWritableOptions<AboutUsPageInfo> _aboutUsPageInfoWriter;
 
-        public HomeController(IArticleService articleService, IOptions<AboutUsPageInfo> aboutUsPageInfo, IMailService mailService, IToastNotification toastNotification)
+        public HomeController(IArticleService articleService, IOptionsSnapshot<AboutUsPageInfo> aboutUsPageInfo, IMailService mailService, IToastNotification toastNotification, IWritableOptions<AboutUsPageInfo> aboutUsPageInfoWriter)
         {
             _articleService = articleService;
             _aboutUsPageInfo = aboutUsPageInfo.Value;
             _mailService = mailService;
             _toastNotification = toastNotification;
+            _aboutUsPageInfoWriter = aboutUsPageInfoWriter;
         }
 
         [HttpGet]
@@ -39,7 +42,6 @@ namespace ProgrammersBlog.MvcUI.Controllers
         [HttpGet]
         public IActionResult Contact()
         {
-            //throw new NullReferenceException(); // Simulating an error for demonstration purposes
             return View();
         }
         [HttpPost]

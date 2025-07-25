@@ -1,0 +1,53 @@
+﻿@model ProgrammersBlog.Entities.Concrete.WebsiteInfo
+
+@{
+    Layout = "_AdminLayout";
+    ViewBag.Title = "General Settings";
+
+}
+<div class="row">
+    <div class="col-lg-8 offset-lg-2">
+        <div class="card mt-1 mb-1">
+            <div class="card-header">
+                <h4 class="text-center"><span class="fas fa-edit"></span> General Settings</h4>
+            </div>
+            <div class="card-body">
+                <form asp-controller="Options" asp-action="GeneralSettings" method="post" id="form-generalsettings-update">
+                    <div asp-validation-summary="All" class="text-danger" id="validation-summary"></div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label asp-for="Title"></label>
+                            <input class="form-control" asp-for="Title" placeholder="Please enter your website name." />
+                            <span class="text-danger" asp-validation-for="Title"></span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label asp-for="MenuTitle"></label>
+                            <input class="form-control" asp-for="MenuTitle" placeholder="Please enter your website name for the menu." />
+                            <span class="text-danger" asp-validation-for="MenuTitle"></span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label asp-for="SeoAuthor"></label>
+                            <input type="text" class="form-control" asp-for="SeoAuthor" placeholder="Please enter your website's SEO author information." />
+                            <span class="text-danger" asp-validation-for="SeoAuthor"></span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label asp-for="SeoTags"></label>
+                            <input type="text" class="form-control" asp-for="SeoTags" placeholder="Please enter your website's SEO tags information." />
+                            <span class="text-danger" asp-validation-for="SeoTags"></span>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label asp-for="SeoDescription"></label>
+                            <input type="text" class="form-control" asp-for="SeoDescription" placeholder="Please enter your website's SEO description information." />
+                            <span class="text-danger" asp-validation-for="SeoDescription"></span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <button type="submit" class="btn btn-primary"><span class="fas fa-save"></span> Save</button>
+                            <a class="btn btn-danger" asp-area="Admin" asp-controller="Home" asp-action="Index"><span class="fas fa-times"></span> Cancel</a>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

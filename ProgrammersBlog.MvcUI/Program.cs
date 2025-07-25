@@ -1,18 +1,39 @@
 using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using NLog.Web;
+using ProgrammersBlog.Business.AutoMapper.Profiles;
 using ProgrammersBlog.Business.Extensions;
+using ProgrammersBlog.Core.Utilities.Extensions;
 using ProgrammersBlog.DataAccess.Concrete.EntityFramework.Contexts;
+using ProgrammersBlog.Entities.Concrete;
 using ProgrammersBlog.MvcUI.AutoMapper;
+using ProgrammersBlog.MvcUI.Filters;
 using ProgrammersBlog.MvcUI.Helpers.Abstract;
 using ProgrammersBlog.MvcUI.Helpers.Concrete;
-using ProgrammersBlog.Entities.Concrete;
-using ProgrammersBlog.MvcUI.Filters;
-using NLog.Web;
 
 var logger = NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
 try
 {
     var builder = WebApplication.CreateBuilder(args);
+
+    // Konfigürasyon kaynaklarını temizle ve yeniden ekle
+    builder.Configuration.Sources.Clear();
+
+    var env = builder.Environment;
+
+    builder.Configuration
+        .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+        .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true)
+        .AddEnvironmentVariables();
+
+    if (args != null)
+    {
+        builder.Configuration.AddCommandLine(args);
+    }
+
+    // Servisleri ekle
+    // builder.Services.AddControllersWithViews(); // örnek
 
     // NLog: Remove all default logging providers and use NLog
     builder.Logging.ClearProviders();
@@ -31,11 +52,18 @@ try
 
     builder.Services.AddSession();
     builder.Services.LoadMyServices();
-    builder.Services.AddAutoMapper(typeof(ViewModelsProfile));
+    builder.Services.AddAutoMapper(cfg => { cfg.AddProfile<ViewModelsProfile>(); });
+
     builder.Services.AddScoped<IImageHelper, ImageHelper>();
     builder.Services.Configure<AboutUsPageInfo>(builder.Configuration.GetSection("AboutUsPageInfo"));
     builder.Services.Configure<WebsiteInfo>(builder.Configuration.GetSection("WebsiteInfo"));
     builder.Services.Configure<SmtpSettings>(builder.Configuration.GetSection("SmtpSettings"));
+    builder.Services.Configure<ArticleRightSideBarWidgetOptions>(builder.Configuration.GetSection("ArticleRightSideBarWidgetOptions"));
+    builder.Services.ConfigureWritable<AboutUsPageInfo>(builder.Configuration.GetSection("AboutUsPageInfo"));
+    builder.Services.ConfigureWritable<WebsiteInfo>(builder.Configuration.GetSection("WebsiteInfo"));
+    builder.Services.ConfigureWritable<SmtpSettings>(builder.Configuration.GetSection("SmtpSettings"));
+    builder.Services.ConfigureWritable<ArticleRightSideBarWidgetOptions>(builder.Configuration.GetSection("ArticleRightSideBarWidgetOptions"));
+
 
     builder.Services.ConfigureApplicationCookie(options =>
     {

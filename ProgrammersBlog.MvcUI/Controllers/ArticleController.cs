@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using ProgrammersBlog.Business.Abstract;
 using ProgrammersBlog.Core.Utilities.Results.ComplexTypes;
 using ProgrammersBlog.Entities.ComplexTypes;
@@ -11,10 +12,12 @@ namespace ProgrammersBlog.MvcUI.Controllers;
 public class ArticleController : Controller
 {
     private readonly IArticleService _articleService;
+    private readonly ArticleRightSideBarWidgetOptions _articleRightSideBarWidgetOptions;
 
-    public ArticleController(IArticleService articleService)
+    public ArticleController(IArticleService articleService, IOptionsSnapshot<ArticleRightSideBarWidgetOptions> articleRightSideBarWidgetOptions)
     {
         _articleService = articleService;
+        _articleRightSideBarWidgetOptions = articleRightSideBarWidgetOptions.Value;
     }
     [HttpGet]
     public async Task<IActionResult> Search(string keyword, int currentPage = 1, int pageSize = 5, bool isAscending = false)
@@ -34,7 +37,10 @@ public class ArticleController : Controller
         var articleResult = await _articleService.GetAsync(articleId);
         if (articleResult.ResultStatus == ResultStatus.Success)
         {
-            var userArticles = await _articleService.GetAllByUserIdOnFilter(articleResult.Data.Article.UserId, FilterBy.Category, OrderBy.Date, false, 10, articleResult.Data.Article.CategoryId, DateTime.Now, DateTime.Now, 0, int.MaxValue, 0, int.MaxValue);
+            var userArticles = await _articleService.GetAllByUserIdOnFilter(articleResult.Data.Article.UserId, _articleRightSideBarWidgetOptions.FilterBy,
+                _articleRightSideBarWidgetOptions.OrderBy, _articleRightSideBarWidgetOptions.IsAscending, _articleRightSideBarWidgetOptions.TakeSize, _articleRightSideBarWidgetOptions.CategoryId,
+                _articleRightSideBarWidgetOptions.StartAt, _articleRightSideBarWidgetOptions.EndAt, _articleRightSideBarWidgetOptions.MinViewCount, _articleRightSideBarWidgetOptions.MaxViewCount,
+                _articleRightSideBarWidgetOptions.MinCommentCount, _articleRightSideBarWidgetOptions.MaxCommentCount);
             await _articleService.IncreaseViewCountAsync(articleId);
             return View(new ArticleDetailViewModel
             {
@@ -42,7 +48,7 @@ public class ArticleController : Controller
                 ArticleDetailRightSideBarViewModel = new ArticleDetailRightSideBarViewModel
                 {
                     ArticleListDto = userArticles.Data,
-                    Header = "User's Most Read Articles in the Same Category",
+                    Header = _articleRightSideBarWidgetOptions.Header,
                     User = articleResult.Data.Article.User
                 }
             });

@@ -21,7 +21,7 @@
 			</li>
 			<li class="nav-item">
 				<a href="/Home/Index">
-					<i class="fa fa-book"></i>
+					<i class="fas fa-book"></i>
 					<p>Blog</p>
 				</a>
 			</li>
@@ -40,23 +40,52 @@
 			</li>
 			<li class="nav-item">
 				<a href="/Admin/Article/Index">
-					<i class="fas fa-file-alt"></i>
+					<i class="fas fa-newspaper"></i>
 					<p>Articles</p>
 				</a>
 			</li>
 			<li class="nav-item">
 				<a href="/Admin/Comment/Index">
-					<i class="fas fa-comment-dots"></i>
+					<i class="fas fa-comments"></i>
 					<p>Comments</p>
 				</a>
 			</li>
-
+			<li class="nav-section">
+				<span class="sidebar-mini-icon">
+					<i class="fa fa-ellipsis-h"></i>
+				</span>
+				<h4 class="text-section">Options</h4>
+			</li>
+			<li class="nav-item">
+				<a href="/Admin/Options/GeneralSettings">
+					<i class="fas fa-cogs"></i>
+					<p>General Settings</p>
+				</a>
+			</li>
+			<li class="nav-item">
+				<a href="/Admin/Options/EmailSettings">
+					<i class="fas fa-envelope"></i>
+					<p>E-Mail Settings</p>
+				</a>
+			</li>
+			<li class="nav-item">
+				<a href="/Admin/Options/ArticleRightSideBarWidgetSettings">
+					<i class="fas fa-th-large"></i>
+					<p>Article Sidebar Widget Settings</p>
+				</a>
+			</li>
+			<li class="nav-item">
+				<a href="/Admin/Options/About">
+					<i class="fas fa-info-circle"></i>
+					<p>About Us Page Contents</p>
+				</a>
+			</li>
 
 			@if (Model.Roles.Any(r => r.Equals("SuperAdmin") || r.Equals("User.Read")))
 			{
 				<li class="nav-section">
 					<span class="sidebar-mini-icon">
-						<i class="fa fa-ellipsis-h"></i>
+						<i class="fas fa-ellipsis-h"></i>
 					</span>
 					<h4 class="text-section">Users</h4>
 				</li>
@@ -75,7 +104,7 @@
 				{
 					<li class="nav-item">
 						<a href="/Admin/Role/Index">
-							<i class="fas fa-users-cog"></i>
+							<i class="fas fa-user-shield"></i>
 							<p>Roles</p>
 						</a>
 					</li>
@@ -84,7 +113,7 @@
 
 			<li class="nav-section">
 				<span class="sidebar-mini-icon">
-					<i class="fa fa-archive"></i>
+					<i class="fas fa-archive"></i>
 				</span>
 				<h4 class="text-section">Archive</h4>
 			</li>

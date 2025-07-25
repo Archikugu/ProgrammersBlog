@@ -121,7 +121,7 @@ public class ArticleManager : ManagerBase, IArticleService
     public async Task<IDataResult<ArticleListDto>> GetAllByNonDeletedAsync()
     {
         var articles = await UnitOfWork.Articles.GetAllAsync(a => !a.IsDeleted && a.IsActive, a => a.User, a => a.Category);
-        throw new SqlNullValueException("An error occurred while retrieving deleted articles."); // Simulating an error for demonstration purposes
+       /* throw new SqlNullValueException("An error occurred while retrieving deleted articles."); */// Simulating an error for demonstration purposes
 
         if (articles.Count > -1)
         {
