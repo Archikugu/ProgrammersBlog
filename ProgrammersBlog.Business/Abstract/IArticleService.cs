@@ -9,8 +9,10 @@ namespace ProgrammersBlog.Business.Abstract;
 public interface IArticleService
 {
     Task<IDataResult<ArticleDto>> GetAsync(int articleId);
+    Task<IDataResult<ArticleDto>> GetByIdAsync(int articleId, bool includeCategory, bool includeComments, bool includeUser);
     Task<IDataResult<ArticleUpdateDto>> GetArticleUpdateAsync(int articleId);
     Task<IDataResult<ArticleListDto>> GetAllAsync();
+    Task<IDataResult<ArticleListDto>> GetAllAsyncV2(int? categoryId, int? userId, bool? isActive, bool? isDeleted, int currentPage, int pageSize, OrderByGeneral orderBy, bool isAscending, bool includeCategory, bool includeComments, bool includeUser);
     Task<IDataResult<ArticleListDto>> GetAllByNonDeletedAsync();
     Task<IDataResult<ArticleListDto>> GetAllByDeletedAsync();
     Task<IDataResult<ArticleListDto>> GetAllByViewCountAsync(bool isAscending, int? takeSize);

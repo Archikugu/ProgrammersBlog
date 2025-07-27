@@ -2,6 +2,14 @@
 
 public static class Messages
 {
+    public static class General
+    {
+        public static string ValidationError()
+        {
+            return "One or more validation errors were encountered.";
+        }
+    }
+
     // Messages for Category
     public static class Category
     {
@@ -9,22 +17,32 @@ public static class Messages
         {
             return isPlural ? "Such categories could not be found." : "Such a category could not be found.";
         }
+
+        public static string NotFoundById(int categoryId)
+        {
+            return $"Category with ID {categoryId} could not be found.";
+        }
+
         public static string Add(string categoryName)
         {
             return $"{categoryName} category has been successfully added.";
         }
+
         public static string Delete(string categoryName)
         {
             return $"{categoryName} category has been successfully deleted.";
         }
+
         public static string HardDelete(string categoryName)
         {
             return $"{categoryName} category has been permanently deleted from the database.";
         }
+
         public static string UndoDelete(string categoryName)
         {
             return $"The \"{categoryName}\" category has been successfully restored from the archive.";
         }
+
         public static string Update(string categoryName)
         {
             return $"{categoryName} category has been successfully updated.";
@@ -32,17 +50,23 @@ public static class Messages
     }
 
     // Messages for Article
-
     public static class Article
     {
         public static string NotFound(bool isPlural)
         {
             return isPlural ? "Such articles could not be found." : "Such an article could not be found.";
         }
+
+        public static string NotFoundById(int articleId)
+        {
+            return $"Article with ID {articleId} could not be found.";
+        }
+
         public static string Add(string articleName)
         {
             return $"{articleName} article has been successfully added.";
         }
+
         public static string Delete(string articleName)
         {
             return $"{articleName} article has been successfully deleted.";
@@ -52,22 +76,24 @@ public static class Messages
         {
             return $"The \"{articleName}\" article has been successfully restored from the archive.";
         }
+
         public static string HardDelete(string articleName)
         {
             return $"{articleName} article has been permanently deleted from the database.";
         }
+
         public static string Update(string articleName)
         {
             return $"{articleName} article has been successfully updated.";
         }
+
         public static string IncreaseViewCount(string articleName)
         {
             return $"The view count of the article \"{articleName}\" has been successfully increased.";
         }
     }
 
-    //Messages for Comment
-
+    // Messages for Comment
     public static class Comment
     {
         public static string NotFound(bool isPlural)
@@ -79,9 +105,10 @@ public static class Messages
         {
             return $"Comment by {createdByName} has been successfully added.";
         }
+
         public static string Approve(int commentId)
         {
-            return $"Comment by {commentId} has been successfully approved.";
+            return $"Comment with ID {commentId} has been successfully approved.";
         }
 
         public static string Update(string createdByName)
@@ -96,12 +123,21 @@ public static class Messages
 
         public static string UndoDelete(string createdByName)
         {
-            return $"The \"{createdByName}\" comment has been successfully restored from the archive.";
+            return $"The comment by \"{createdByName}\" has been successfully restored from the archive.";
         }
 
         public static string HardDelete(string createdByName)
         {
             return $"Comment by {createdByName} has been permanently deleted from the database.";
+        }
+    }
+
+    // Messages for User
+    public static class User
+    {
+        public static string NotFoundById(int userId)
+        {
+            return $"User with ID {userId} could not be found.";
         }
     }
 }

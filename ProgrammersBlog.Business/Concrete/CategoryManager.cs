@@ -245,7 +245,7 @@ public class CategoryManager : ManagerBase, ICategoryService
             await UnitOfWork.SaveAsync();
             return new Result(ResultStatus.Success, Messages.Category.HardDelete(category.Name));
         }
-        return new Result(ResultStatus.Error, Messages.Category.HardDelete(category.Name), null);
+        return new Result(ResultStatus.Error, Messages.Category.HardDelete(category.Name));
     }
 
     /// <summary>
