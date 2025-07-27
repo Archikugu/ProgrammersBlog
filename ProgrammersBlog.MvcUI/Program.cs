@@ -83,7 +83,7 @@ try
 
 
     builder.Services.AddDbContext<ProgrammersBlogContext>(options =>
-        options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+        options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")).UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
 
     var app = builder.Build();
 

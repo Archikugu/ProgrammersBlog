@@ -14,6 +14,7 @@ public class EfEntityRepositoryBase<TEntity> : IEntityRepository<TEntity>
     public EfEntityRepositoryBase(DbContext context)
     {
         _context = context;
+        //_context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking; // Disable change tracking for better performance
     }
 
     public async Task<TEntity> AddAsync(TEntity entity)
@@ -53,7 +54,7 @@ public class EfEntityRepositoryBase<TEntity> : IEntityRepository<TEntity>
                 query = query.Include(includeProperty);
             }
         }
-        return await query.ToListAsync();
+        return await query.AsNoTracking().ToListAsync();
     }
 
     public async Task<TEntity?> GetAsync(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, object>>[] includeProperties)
@@ -69,7 +70,7 @@ public class EfEntityRepositoryBase<TEntity> : IEntityRepository<TEntity>
                 query = query.Include(includeProperty);
             }
         }
-        return await query.SingleOrDefaultAsync();
+        return await query.AsNoTracking().SingleOrDefaultAsync();
     }
 
     public async Task<IList<TEntity>> SearchAsync(IList<Expression<Func<TEntity, bool>>> predicates, params Expression<Func<TEntity, object>>[] includeProperties)
@@ -96,7 +97,7 @@ public class EfEntityRepositoryBase<TEntity> : IEntityRepository<TEntity>
             }
         }
 
-        return await query.ToListAsync();
+        return await query.AsNoTracking().ToListAsync();
     }
 
     public async Task<TEntity> UpdateAsync(TEntity entity)
