@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using ProgrammersBlog.Business.Abstract;
 using ProgrammersBlog.Business.Utilities;
 using ProgrammersBlog.Core.Utilities.Results.Abstract;
@@ -136,6 +137,9 @@ public class CategoryManager : ManagerBase, ICategoryService
     /// <returns>Returns a data result containing the category if found.</returns>
     public async Task<IDataResult<CategoryDto>> GetAsync(int categoryId)
     {
+        var query = UnitOfWork.Categories.GetAsQueryable();
+        query.Include(c => c.Articles).ThenInclude(a => a.Comments);
+
         var category = await UnitOfWork.Categories.GetAsync(c => c.Id == categoryId);
         if (category != null)
         {
