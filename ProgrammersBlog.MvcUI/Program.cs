@@ -117,6 +117,11 @@ try
         pattern: "Admin/{controller=Home}/{action=Index}/{id?}");
 
     app.MapControllerRoute(
+        name: "article",
+        pattern: "{title}/{articleId}",
+        defaults: new { controller = "Article", action = "Detail" });
+
+    app.MapControllerRoute(
         name: "default",
         pattern: "{controller=Home}/{action=Index}/{id?}")
         .WithStaticAssets();

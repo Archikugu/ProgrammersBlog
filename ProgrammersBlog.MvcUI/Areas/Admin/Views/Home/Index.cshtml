@@ -12,6 +12,16 @@
 		transition: all 0.3s ease-in-out;
 		cursor: pointer;
 	}
+	
+	.chart-container {
+		position: relative;
+		height: 300px;
+		width: 100%;
+	}
+	
+	.chart-container canvas {
+		max-height: 300px;
+	}
 </style>
 
 <div class="page-inner">
@@ -129,7 +139,38 @@
 			</div>
 		</div>
 	</div>
-
+	<div class="row">
+		<div class="col-xl-12"> 
+			<div class="card mb-4">
+				<div class="card-header">
+					<div class="card-title">
+						<i class="fas fa-chart-bar me-2 text-primary"></i>
+						Most Read Articles Chart
+					</div>
+				</div>
+				<div class="card-body">
+					<div class="chart-container">
+						<canvas id="viewCountChart"></canvas>
+					</div>
+				</div>
+			</div>
+		</div>
+		@* <div class="col-xl-6">
+			<div class="card mb-4">
+				<div class="card-header">
+					<div class="card-title">
+						<i class="fas fa-chart-line me-2 text-success"></i>
+						Monthly Visitor Statistics
+					</div>
+				</div>
+				<div class="card-body">
+					<div class="chart-container">
+						<canvas id="myBarChart"></canvas>
+					</div>
+				</div>
+			</div>
+		</div> *@
+	</div>
 	<div class="row">
 		<div class="col-md-12">
 			<div class="card">

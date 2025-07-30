@@ -1,4 +1,5 @@
 ﻿@using System.Text.RegularExpressions
+@using ProgrammersBlog.MvcUI.Extensions
 @model ProgrammersBlog.Entities.Dtos.ArticleDtos.ArticleListDto
 @{
 	ViewData["Title"] = "Index";
@@ -46,7 +47,7 @@
 					}
 					@(article.Content.Length > 250 ? article.Content.Substring(0, 250) + "..." : article.Content))
 				</p>
-				<a asp-controller="Article" asp-action="Detail" asp-route-articleId="@article.Id" class="btn btn-primary">Read More</a>
+				<a href="/@Url.FriendlyUrlHelper(article.Title)/@article.Id" class="btn btn-primary">Read More</a>
 			</div>
 			<div class="card-footer text-muted">
 				Created by @article.User.UserName - @article.CreatedDate.ToString("dd/MM/yyyy")

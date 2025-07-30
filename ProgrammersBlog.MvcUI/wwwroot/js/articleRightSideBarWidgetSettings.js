@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-  
+
 
     //TomSelect
     new TomSelect('#categoryList', {
@@ -7,7 +7,7 @@
         allowEmptyOption: true,
         create: false
     });
-    
+
     new TomSelect('#filterByList', {
         placeholder: "Please select a filter type...",
         allowEmptyOption: true,
@@ -33,6 +33,11 @@
             duration: 1000,
             maxDate: 0,
             dateFormat: "dd.mm.yy",
+            onSelect: function (selectedDate) {
+                var date = $(this).datepicker('getDate');
+                date.setDate(date.getDate() + 1);
+                $("#endAtDatePicker").datepicker("option", "minDate", date);
+            }
         });
         $("#endAtDatePicker").datepicker({
             duration: 1000,
